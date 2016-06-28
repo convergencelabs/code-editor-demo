@@ -1,0 +1,18 @@
+{
+  "name": "convergence-code-editor-example",
+  "version": "1.0.0-SNAPSHOT",
+  "description": "A realtime collaborative code editor using Ace and Convergence",
+  "scripts": {
+    "example": "lite-server",
+    "postinstall": "cp connection.js.example connection.js"
+  },
+  "dependencies": {
+    "ace-builds": "ajaxorg/ace-builds",
+    "convergence-client": "^1.0.0-SNAPSHOT.1465945249042",
+    "convergence-js-examples-common": "^1.0.0-SNAPSHOT",
+    "es6-promise-polyfill": "^1.2.0"
+  },
+  "devDependencies": {
+    "lite-server": "^2.2.0"
+  }
+}

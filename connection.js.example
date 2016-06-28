@@ -1,0 +1,5 @@
+// Rename this to connection.js
+
+var ConvergenceConfig = {
+  "DOMAIN_URL": "https://localhost/realtime/domain/test/Examples"
+};

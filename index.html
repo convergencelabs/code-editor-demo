@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>ACE Convergence Demo</title>
+  <base href="/">
+
+  <link rel="stylesheet" href="ace-example.css"/>
+  <link rel="stylesheet" href="lib/ace_multi_cursor_manager.css"/>
+  <link rel="stylesheet" href="lib/ace_multi_selection_manager.css"/>
+
+  <script src="node_modules/ace-builds/src/ace.js"></script>
+  <script src="lib/ace_multi_cursor_manager.js" type="text/javascript" charset="utf-8"></script>
+  <script src="lib/ace_multi_selection_manager.js" type="text/javascript" charset="utf-8"></script>
+  <script src="node_modules/convergence-js-examples-common/colors.js" type="text/javascript" charset="utf-8"></script>
+
+  <!-- Convergence Resources -->
+  <script src="connection.js"></script>
+  <script src="node_modules/es6-promise-polyfill/promise.js"></script>
+  <script src="node_modules/convergence-client/convergence-client.umd.min.js"></script>
+  <script src="ace-example.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body>
+  <div id="banner"><img id="logo" src="node_modules/convergence-js-examples-common/images/cl_logo.png"/>Ace Editor Demo</div>
+  <div id="connect">
+    User:
+    <select id="username">
+      <option value="test1">Test 1</option>
+      <option value="test2">Test 2</option>
+      <option value="test3">Test 3</option>
+      <option value="test4">Test 4</option>
+    </select>
+    <button id="connectButton" onclick="aceExample.connect()">Connect</button>
+    <button id="disconnectButton" onclick="aceExample.disconnect()" disabled="disabled">Disconnect</button>
+  </div>
+  <div id="editor">
+    <div class="middle">Click 'Connect' in the upper right corner<br>to login as a particular user.</div>
+  </div>
+  <div id="usersTitle">Connected Users</div>
+  <div id="sessions"></div>
+</body>
+</html>
