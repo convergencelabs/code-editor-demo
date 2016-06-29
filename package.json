@@ -8,8 +8,7 @@
   },
   "dependencies": {
     "ace-builds": "ajaxorg/ace-builds",
-    "convergence-client": "^1.0.0-SNAPSHOT.1465945249042",
-    "convergence-js-examples-common": "^1.0.0-SNAPSHOT",
+    "convergence-js-examples-common": "git+https://gitlab.convergencelabs.tech/js-examples/shared.git",
     "es6-promise-polyfill": "^1.2.0"
   },
   "devDependencies": {
