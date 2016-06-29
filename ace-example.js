@@ -1,11 +1,11 @@
-var aceExample = (function(ace, AceMultiCursorManager, AceMultiSelectionManager, ConvergenceDomain, connectionConfig) {
+var aceExample = (function(ace, AceMultiCursorManager, AceMultiSelectionManager, ConvergenceExample, ConvergenceConfig) {
+  var example = new ConvergenceExample(ConvergenceConfig ? ConvergenceConfig.DOMAIN_URL : null);
 
   var AceRange = ace.require('ace/range').Range;
 
   ///////////////////////////////////////////////////////////////////////////////
   // Global settings
   ///////////////////////////////////////////////////////////////////////////////
-  ConvergenceDomain.debugFlags.protocol.messages = true;
   var suppressEvents = false;
   var defaultText = `
 (function(ConvergenceDomain, connectionConfig) {
@@ -115,7 +115,7 @@ var aceExample = (function(ace, AceMultiCursorManager, AceMultiSelectionManager,
   AceExample.prototype = {
     connect: function() {
       this.getDomElements();
-      this.domain = new ConvergenceDomain(ConvergenceConfig.DOMAIN_URL);
+      this.domain = example.createDomain();
       this.domain.on("connected", function () {
         this.connectButton.disabled = true;
         this.disconnectButton.disabled = false;
@@ -176,7 +176,7 @@ var aceExample = (function(ace, AceMultiCursorManager, AceMultiSelectionManager,
       }.bind(this));
     },
     addUser: function(userId, sessionId) {
-      var color = getConvergenceColor();
+      var color = example.getConvergenceColor();
       users[sessionId] = {
         userId: userId,
         sessionId: sessionId,
@@ -377,4 +377,4 @@ var aceExample = (function(ace, AceMultiCursorManager, AceMultiSelectionManager,
   };
 
   return new AceExample();
-}(ace, AceMultiCursorManager, AceMultiSelectionManager, ConvergenceDomain, ConvergenceConfig));
+}(ace, AceMultiCursorManager, AceMultiSelectionManager, ConvergenceExample, ConvergenceConfig));

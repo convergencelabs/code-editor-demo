@@ -3,8 +3,7 @@
   "version": "1.0.0-SNAPSHOT",
   "description": "A realtime collaborative code editor using Ace and Convergence",
   "scripts": {
-    "example": "lite-server",
-    "postinstall": "cp connection.js.example connection.js"
+    "example": "lite-server"
   },
   "dependencies": {
     "ace-builds": "ajaxorg/ace-builds",
