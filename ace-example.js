@@ -377,4 +377,4 @@ var aceExample = (function(ace, AceMultiCursorManager, AceMultiSelectionManager,
   };
 
   return new AceExample();
-}(ace, AceMultiCursorManager, AceMultiSelectionManager, ConvergenceExample, ConvergenceConfig));
+}(window.ace, window.AceMultiCursorManager, window.AceMultiSelectionManager, window.ConvergenceExample, window.ConvergenceConfig));
