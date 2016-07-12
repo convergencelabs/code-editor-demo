@@ -7,104 +7,7 @@ var aceExample = (function(ace, AceMultiCursorManager, AceMultiSelectionManager,
   // Global settings
   ///////////////////////////////////////////////////////////////////////////////
   var suppressEvents = false;
-  var defaultText = `
-(function(ConvergenceDomain, connectionConfig) {
-  function CodeEditor() { }
-  CodeEditor.prototype = {
-    connect: function() {
-      this.domain = new ConvergenceDomain(connectionConfig.DOMAIN_URL);
-      this.domain.on("connected", function () {
-        this.connectButton.disabled = true;
-        this.disconnectButton.disabled = false;
-        this.usernameSelect.disabled = true;
-      }.bind(this));
-    
-      var username = this.usernameSelect.options[this.usernameSelect.selectedIndex].value;
-      this.domain.authenticateWithPassword(username, "password").then(function (username) {
-        return this.domain.modelService().open("example", "ace-demo");
-      }.bind(this)).then(function (model) {
-        this.model = model;
-        // The RealTimeString that holds the text document
-        this.rtString = model.dataAt("text");
-      }.bind(this));
-    },
-    getDomElements: function() {
-      this.usernameSelect = document.getElementById("username");
-      this.connectButton = document.getElementById("connectButton");
-      this.disconnectButton = document.getElementById("disconnectButton");
-    }
-  };
-  return new CodeEditor();
-}(ConvergenceDomain, ConvergenceConfig));`;
   var users = {};
-
-  ///////////////////////////////////////////////////////////////////////////////
-  // Ace Editor Set Up
-  ///////////////////////////////////////////////////////////////////////////////
-  function Ace(ace) {
-    this.editor = ace.edit("editor");
-    this.editor.setReadOnly(true);
-    this.session = this.editor.getSession();
-    this.document = this.session.getDocument();
-
-    this.session.setMode("ace/mode/javascript");
-    this.editor.setTheme("ace/theme/monokai");
-
-    this.cursorManager = new AceMultiCursorManager(this.session);
-    this.selectionManager = new AceMultiSelectionManager(this.session);
-  }
-  Ace.prototype = {
-    initialize: function(rtString) {
-      this.editor.setReadOnly(false);
-
-      // Initialize editor with current text.
-      suppressEvents = true;
-      this.document.setValue(rtString.value());
-      suppressEvents = false;
-    },
-    onRemoteInsert: function(e) {
-      suppressEvents = true;
-      this.document.insert(this.document.indexToPosition(e.index), e.value);
-      suppressEvents = false;
-    },
-    onRemoteDelete: function(e) {
-      var start = this.document.indexToPosition(e.index);
-      var end = this.document.indexToPosition(e.index + e.value.length);
-      suppressEvents = true;
-      this.document.remove(new AceRange(start.row, start.column, end.row, end.column));
-      suppressEvents = false;
-    },
-    onRemoteAdd: function(e) {
-      suppressEvents = true;
-      this.document.setValue(e.value);
-      suppressEvents = false;
-    },
-    setSelection: function(id, value) { 
-      this.selectionManager.setSelection(id, this.toAceRange(value));
-    },
-    toAceRange: function(value) {
-      if (value === null || value === undefined) {
-        return null;
-      }
-
-      var start = value.start;
-      var end = value.end;
-
-      if (start > end) {
-        var temp = start;
-        start = end;
-        end = temp;
-      }
-
-      var selectionAnchor = this.document.indexToPosition(start);
-      var selectionLead = this.document.indexToPosition(end);
-      return new AceRange(selectionAnchor.row, selectionAnchor.column, selectionLead.row, selectionLead.column);
-    },
-    reset: function() {
-      this.editor.setValue("");
-      this.editor.setReadOnly(true);
-    }
-  };
 
   ///////////////////////////////////////////////////////////////////////////////
   // Connection and User List
@@ -264,6 +167,77 @@ var aceExample = (function(ace, AceMultiCursorManager, AceMultiSelectionManager,
     }
   };
 
+  ///////////////////////////////////////////////////////////////////////////////
+  // Ace Editor Set Up
+  ///////////////////////////////////////////////////////////////////////////////
+  function Ace(ace) {
+    this.editor = ace.edit("editor");
+    this.editor.setReadOnly(true);
+    this.session = this.editor.getSession();
+    this.document = this.session.getDocument();
+
+    this.session.setMode("ace/mode/javascript");
+    this.editor.setTheme("ace/theme/monokai");
+
+    this.cursorManager = new AceMultiCursorManager(this.session);
+    this.selectionManager = new AceMultiSelectionManager(this.session);
+  }
+  Ace.prototype = {
+    initialize: function(rtString) {
+      this.editor.setReadOnly(false);
+
+      // Initialize editor with current text.
+      suppressEvents = true;
+      this.document.setValue(rtString.value());
+      suppressEvents = false;
+    },
+    onRemoteInsert: function(e) {
+      suppressEvents = true;
+      this.document.insert(this.document.indexToPosition(e.index), e.value);
+      suppressEvents = false;
+    },
+    onRemoteDelete: function(e) {
+      var start = this.document.indexToPosition(e.index);
+      var end = this.document.indexToPosition(e.index + e.value.length);
+      suppressEvents = true;
+      this.document.remove(new AceRange(start.row, start.column, end.row, end.column));
+      suppressEvents = false;
+    },
+    onRemoteAdd: function(e) {
+      suppressEvents = true;
+      this.document.setValue(e.value);
+      suppressEvents = false;
+    },
+    setSelection: function(id, value) { 
+      this.selectionManager.setSelection(id, this.toAceRange(value));
+    },
+    toAceRange: function(value) {
+      if (value === null || value === undefined) {
+        return null;
+      }
+
+      var start = value.start;
+      var end = value.end;
+
+      if (start > end) {
+        var temp = start;
+        start = end;
+        end = temp;
+      }
+
+      var selectionAnchor = this.document.indexToPosition(start);
+      var selectionLead = this.document.indexToPosition(end);
+      return new AceRange(selectionAnchor.row, selectionAnchor.column, selectionLead.row, selectionLead.column);
+    },
+    reset: function() {
+      this.editor.setValue("");
+      this.editor.setReadOnly(true);
+    }
+  };
+
+  ///////////////////////////////////////////////////////////////////////////////
+  // Both publish and subscribe to cursor movements and selections
+  ///////////////////////////////////////////////////////////////////////////////
   function ReferenceHandler(rtString, ace) {
     this.ace = ace;
     // Create and publish a local cursor.
@@ -375,6 +349,31 @@ var aceExample = (function(ace, AceMultiCursorManager, AceMultiSelectionManager,
       this.ace.session.selection.off('changeSelection', this.handleAceSelectionChanged);
     }
   };
+
+  var defaultText = `
+(function(ConvergenceDomain, connectionConfig) {
+  function CodeEditor() { }
+  CodeEditor.prototype = {
+    connect: function() {
+      this.domain = new ConvergenceDomain(connectionConfig.DOMAIN_URL);
+      this.domain.on("connected", function () {
+        this.connectButton.disabled = true;
+        this.disconnectButton.disabled = false;
+        this.usernameSelect.disabled = true;
+      }.bind(this));
+    
+      var username = this.usernameSelect.options[this.usernameSelect.selectedIndex].value;
+      this.domain.authenticateWithPassword(username, "password").then(function (username) {
+        return this.domain.modelService().open("example", "ace-demo");
+      }.bind(this)).then(function (model) {
+        this.model = model;
+        // The RealTimeString that holds the text document
+        this.rtString = model.dataAt("text");
+      }.bind(this));
+    }
+  };
+  return new CodeEditor();
+}(ConvergenceDomain, ConvergenceConfig));`;
 
   return new AceExample();
 }(window.ace, window.AceMultiCursorManager, window.AceMultiSelectionManager, window.ConvergenceExample, window.ConvergenceConfig));
