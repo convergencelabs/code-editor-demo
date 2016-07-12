@@ -290,8 +290,7 @@ var aceExample = (function(ace, AceMultiCursorManager, AceMultiSelectionManager,
         reference.sessionId(),
         reference.userId(),
         color);
-
-      // fixme should this be "set"
+      
       reference.on("set", function () {
         this.ace.cursorManager.setCursor(reference.sessionId(), reference.value());
       }.bind(this));
