@@ -12,22 +12,16 @@ var aceExample = (function(ace, AceMultiCursorManager, AceMultiSelectionManager,
   ///////////////////////////////////////////////////////////////////////////////
   // Connection and User List
   ///////////////////////////////////////////////////////////////////////////////
-  function AceExample() {
-    
-  }
+  function AceExample() {}
   AceExample.prototype = {
     connect: function() {
       this.getDomElements();
-      this.domain = example.createDomain();
-      this.domain.on("connected", function () {
-        this.connectButton.disabled = true;
-        this.disconnectButton.disabled = false;
-        this.usernameSelect.disabled = true;
-      }.bind(this));
 
       var username = this.usernameSelect.options[this.usernameSelect.selectedIndex].value;
-      this.domain.authenticateWithPassword(username, "password").then(function (username) {
-        return this.domain.modelService().open("example", "ace-demo", function (collectionId, modelId) {
+      example.connectWithUser(username, "password").then(function (domain) {
+        this.toggleConnectionElements(true);
+        this.domain = domain;
+        return domain.modelService().open("example", "ace-demo", function (collectionId, modelId) {
           return {
             "text": defaultText
           };
@@ -146,11 +140,14 @@ var aceExample = (function(ace, AceMultiCursorManager, AceMultiSelectionManager,
           throw new Error("unknown action: " + delta.action);
       }
     },
+    toggleConnectionElements: function(isConnected) {
+      this.connectButton.disabled = isConnected;
+      this.disconnectButton.disabled = !isConnected;
+      this.usernameSelect.disabled = isConnected;
+    },
     disconnect: function() {
       this.domain.dispose();
-      this.connectButton.disabled = false;
-      this.disconnectButton.disabled = true;
-      this.usernameSelect.disabled = false;
+      this.toggleConnectionElements(false);
 
       this.ace.editor.off('change', this.handleAceEditEvent);
 
