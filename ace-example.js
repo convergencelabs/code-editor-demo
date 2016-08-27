@@ -21,7 +21,7 @@ var aceExample = (function(ace, AceMultiCursorManager, AceMultiSelectionManager,
       example.connectWithUser(username, "password").then(function (domain) {
         this.toggleConnectionElements(true);
         this.domain = domain;
-        return domain.modelService().open("example", "ace-demo", function (collectionId, modelId) {
+        return domain.models().open("example", "ace-demo", function (collectionId, modelId) {
           return {
             "text": defaultText
           };
@@ -29,7 +29,7 @@ var aceExample = (function(ace, AceMultiCursorManager, AceMultiSelectionManager,
       }.bind(this)).then(function (model) {
         this.model = model;
         // The RealTimeString that holds the text document
-        this.rtString = model.dataAt("text");
+        this.rtString = model.valueAt("text");
 
         this.ace = new Ace(ace);
         this.ace.initialize(this.rtString);
@@ -61,26 +61,26 @@ var aceExample = (function(ace, AceMultiCursorManager, AceMultiSelectionManager,
     ///////////////////////////////////////////////////////////////////////////////
     registerUserListeners: function() {
       this.model.connectedSessions().forEach(function (session) {
-        this.addUser(session.userId, session.sessionId);
+        this.addUser(session.username, session.sessionId);
       }.bind(this));
 
       this.model.on("session_opened", function (e) {
-        this.addUser(e.userId, e.sessionId);
+        this.addUser(e.username, e.sessionId);
       }.bind(this));
 
       this.model.on("session_closed", function (e) {
         this.removeUser(e.sessionId);
       }.bind(this));
     },
-    addUser: function(userId, sessionId) {
+    addUser: function(username, sessionId) {
       var color = example.getConvergenceColor();
       users[sessionId] = {
-        userId: userId,
+        username: username,
         sessionId: sessionId,
         color: color
       };
 
-      this.domain.identityService().getUser(userId).then(function (user) {
+      this.domain.identity().getUser(username).then(function (user) {
         var userDiv = document.createElement("div");
         userDiv.className = "session";
         userDiv.id = "user" + sessionId;
@@ -185,7 +185,7 @@ var aceExample = (function(ace, AceMultiCursorManager, AceMultiSelectionManager,
 
       // Initialize editor with current text.
       suppressEvents = true;
-      this.document.setValue(rtString.value());
+      this.document.setValue(rtString.data());
       suppressEvents = false;
     },
     onRemoteInsert: function(e) {
@@ -285,7 +285,7 @@ var aceExample = (function(ace, AceMultiCursorManager, AceMultiSelectionManager,
       var color = users[reference.sessionId()].color;
       this.ace.cursorManager.addCursor(
         reference.sessionId(),
-        reference.userId(),
+        reference.username(),
         color);
       
       reference.on("set", function () {
@@ -304,7 +304,7 @@ var aceExample = (function(ace, AceMultiCursorManager, AceMultiSelectionManager,
       var color = users[reference.sessionId()].color;
       this.ace.selectionManager.addSelection(
         reference.sessionId(),
-        reference.userId(),
+        reference.username(),
         color);
 
       reference.on("set", function (e) {
@@ -364,7 +364,7 @@ var aceExample = (function(ace, AceMultiCursorManager, AceMultiSelectionManager,
       }.bind(this)).then(function (model) {
         this.model = model;
         // The RealTimeString that holds the text document
-        this.rtString = model.dataAt("text");
+        this.rtString = model.valueAt("text");
       }.bind(this));
     }
   };

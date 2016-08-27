@@ -1,5 +1,5 @@
-// Rename this to connection.js
+// Copy this to connection.js
 
 var ConvergenceConfig = {
-  "DOMAIN_URL": "https://localhost/realtime/domain/test/Examples"
+  "DOMAIN_URL": "https://dev.convergencelabs.com/realtime/domain/test/Examples"
 };
