@@ -30,6 +30,13 @@ var aceExample = (function(ace, AceMultiCursorManager, AceMultiSelectionManager,
         this.model = model;
         // The RealTimeString that holds the text document
         this.rtString = model.valueAt("text");
+        var elementReference = model.elementReference("elementTest");
+        elementReference.publish();
+        elementReference.set(this.rtString);
+        model.on("reference", function(event) {
+          console.log("received event: " + event);
+          console.log(event.src.value().id());
+        });
 
         this.ace = new Ace(ace);
         this.ace.initialize(this.rtString);
@@ -80,7 +87,7 @@ var aceExample = (function(ace, AceMultiCursorManager, AceMultiSelectionManager,
         color: color
       };
 
-      this.domain.identity().getUser(username).then(function (user) {
+      this.domain.identity().user(username).then(function (user) {
         var userDiv = document.createElement("div");
         userDiv.className = "session";
         userDiv.id = "user" + sessionId;
