@@ -1,5 +1,0 @@
-// Copy this to connection.js
-
-var ConvergenceConfig = {
-  "DOMAIN_URL": "https://dev.convergencelabs.com/realtime/domain/test/Examples"
-};
