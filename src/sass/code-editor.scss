@@ -1,0 +1,15 @@
+.code-editor {
+  display: flex;
+  background: darkgray;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.right-pane {
+  width: 250px;
+  display: flex;
+  flex-direction: column;
+}

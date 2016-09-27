@@ -5,10 +5,10 @@ var BUILD_DIR = path.resolve(__dirname, 'build');
 var SRC_DIR = path.resolve(__dirname, 'src');
 
 var config = {
-  entry: SRC_DIR + '/js/index.js',
+  entry: SRC_DIR + '/jsx/index.jsx',
   output: {
     path: BUILD_DIR,
-    filename: 'bundle.js'
+    filename: 'code-editor.js'
   },
   externals: [{
     "ace": "ace"

@@ -5,16 +5,18 @@ const uglify = require('gulp-uglify');
 const sourcemaps = require('gulp-sourcemaps');
 const del = require('del');
 const cleanCSS = require('gulp-clean-css');
+const sass = require('gulp-sass');
+const concat = require('gulp-concat');
 
-gulp.task('default', ['webpack', 'minify', 'css', 'minify-css'], function() {
-
+gulp.task('default', ['webpack', 'sass'], function() {
+  return gulp.src('src/index.html')
+    .pipe(gulp.dest('build'));
 });
 
 gulp.task('webpack', function() {
   return gulp.src('src/js/index.js')
     .pipe(webpack(require('./webpack.config.js')))
-
-    .pipe(gulp.dest('dist'));
+    .pipe(gulp.dest('build'));
 });
 
 gulp.task('minify', ['webpack'], function() {
@@ -26,9 +28,11 @@ gulp.task('minify', ['webpack'], function() {
     .pipe(gulp.dest("lib"));
 });
 
-gulp.task('css', function() {
-  return gulp.src('src/css/*.css')
-    .pipe(gulp.dest('lib'));
+gulp.task('sass', function() {
+  return gulp.src('src/sass/**/*.scss')
+    .pipe(sass().on('error', sass.logError))
+    .pipe(concat('code-editor.css'))
+    .pipe(gulp.dest('build/'));
 });
 
 gulp.task('minify-css', ['css'], function() {
@@ -41,6 +45,6 @@ gulp.task('minify-css', ['css'], function() {
 });
 
 gulp.task('clean', function () {
-  return del(['lib']);
+  return del(['build']);
 });
 
