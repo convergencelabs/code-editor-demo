@@ -1,3 +1,6 @@
 {
-  "ghostMode": false
+  "ghostMode": false,
+  "server": {
+    "baseDir": "build"
+  }
 }
