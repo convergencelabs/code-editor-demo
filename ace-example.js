@@ -21,7 +21,7 @@ var aceExample = (function(ace, AceMultiCursorManager, AceMultiSelectionManager,
       example.connectWithUser(username, "password").then(function (domain) {
         this.toggleConnectionElements(true);
         this.domain = domain;
-        return domain.models().open("example", "ace-demo", function (collectionId, modelId) {
+        return domain.models().open("example", "ace-demo", function () {
           return {
             "text": defaultText
           };
@@ -30,13 +30,6 @@ var aceExample = (function(ace, AceMultiCursorManager, AceMultiSelectionManager,
         this.model = model;
         // The RealTimeString that holds the text document
         this.rtString = model.valueAt("text");
-        var elementReference = model.elementReference("elementTest");
-        elementReference.publish();
-        elementReference.set(this.rtString);
-        model.on("reference", function(event) {
-          console.log("received event: " + event);
-          console.log(event.src.value().id());
-        });
 
         this.ace = new Ace(ace);
         this.ace.initialize(this.rtString);
@@ -67,6 +60,9 @@ var aceExample = (function(ace, AceMultiCursorManager, AceMultiSelectionManager,
     // Incoming events
     ///////////////////////////////////////////////////////////////////////////////
     registerUserListeners: function() {
+      var presenceService = this.domain.presence();
+      presenceService.presence()
+
       this.model.connectedSessions().forEach(function (session) {
         this.addUser(session.username, session.sessionId);
       }.bind(this));
