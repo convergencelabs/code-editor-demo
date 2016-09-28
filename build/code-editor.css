@@ -82,6 +82,7 @@ div.userSquare {
 
 .code-editor {
   display: flex;
+  flex-direction: column;
   background: darkgray;
   position: absolute;
   top: 0;
@@ -89,10 +90,22 @@ div.userSquare {
   left: 0;
   right: 0; }
 
+.top-pane {
+  display: flex;
+  flex: 1; }
+
 .right-pane {
   width: 250px;
   display: flex;
   flex-direction: column; }
+
+.status-bar {
+  height: 20px;
+  background: lightblue; }
+
+.banner {
+  height: 20px;
+  background: lightblue; }
 
 .editor {
   width: 100%;
