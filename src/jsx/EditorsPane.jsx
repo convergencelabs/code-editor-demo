@@ -1,5 +1,6 @@
 import React from 'react';
 import {render} from 'react-dom';
+import Editor from './Editor.jsx'
 
 export default class EditorsPane extends React.Component {
   constructor(props) {
@@ -9,7 +10,7 @@ export default class EditorsPane extends React.Component {
   render() {
     return (
       <div className="editors-pane">
-        Editors Pane
+        <Editor></Editor>
       </div>
     );
   }
