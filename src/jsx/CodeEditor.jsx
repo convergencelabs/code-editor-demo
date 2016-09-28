@@ -1,6 +1,6 @@
 import React from 'react';
 import {render} from 'react-dom';
-import FileManager from './FileManager.jsx';
+import FileManager from './FileManager/FileManager.jsx';
 import EditorsPane from './EditorsPane.jsx';
 import ParticipantsList from './ParticipantsList.jsx';
 import GroupChatPane from './GroupChatPane.jsx';

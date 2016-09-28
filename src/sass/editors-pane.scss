@@ -3,19 +3,3 @@
   background: lightblue;
 }
 
-.file-actions {
-  padding: 5px; background-color: #fff;
-
-  button { font-size: 1em; outline: none; border: none; border-radius: 4px; background-color: #efefef; cursor: pointer; }
-  button:hover { background-color: #f5f5f5; }
-  button + button { margin-left: 10px; }
-
-  .fa-stack {
-    width: 1.3em; height: 1.25em; 
-
-    i { position: absolute; }
-    i:first-child { font-size: 1em; left: 4px; top: 4px; }
-    i:last-child { font-size: 0.6em; background: #fff; left: 0; top: 2px; }
-  }
-  .fa-stack.add-folder { margin: 2px 0 -2px; }
-}

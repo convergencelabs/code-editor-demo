@@ -115,40 +115,39 @@ div.userSquare {
   flex: 1;
   background: lightblue; }
 
-.file-actions {
-  padding: 5px;
-  background-color: #fff; }
-  .file-actions button {
-    font-size: 1em;
-    outline: none;
-    border: none;
-    border-radius: 4px;
-    background-color: #efefef;
-    cursor: pointer; }
-  .file-actions button:hover {
-    background-color: #f5f5f5; }
-  .file-actions button + button {
-    margin-left: 10px; }
-  .file-actions .fa-stack {
-    width: 1.3em;
-    height: 1.25em; }
-    .file-actions .fa-stack i {
-      position: absolute; }
-    .file-actions .fa-stack i:first-child {
-      font-size: 1em;
-      left: 4px;
-      top: 4px; }
-    .file-actions .fa-stack i:last-child {
-      font-size: 0.6em;
-      background: #fff;
-      left: 0;
-      top: 2px; }
-  .file-actions .fa-stack.add-folder {
-    margin: 2px 0 -2px; }
-
 .file-manager {
   border: 1px solid black;
   width: 300px; }
+  .file-manager .file-actions {
+    padding: 5px;
+    background-color: #fff; }
+    .file-manager .file-actions button {
+      font-size: 1em;
+      outline: none;
+      border: none;
+      border-radius: 4px;
+      background-color: #efefef;
+      cursor: pointer; }
+    .file-manager .file-actions button:hover {
+      background-color: #f5f5f5; }
+    .file-manager .file-actions button + button {
+      margin-left: 10px; }
+    .file-manager .file-actions .fa-stack {
+      width: 1.3em;
+      height: 1.25em; }
+      .file-manager .file-actions .fa-stack i {
+        position: absolute; }
+      .file-manager .file-actions .fa-stack i:first-child {
+        font-size: 1em;
+        left: 4px;
+        top: 4px; }
+      .file-manager .file-actions .fa-stack i:last-child {
+        font-size: 0.6em;
+        background: #fff;
+        left: 0;
+        top: 2px; }
+    .file-manager .file-actions .fa-stack.add-folder {
+      margin: 2px 0 -2px; }
 
 .group-chat {
   flex: 1;
