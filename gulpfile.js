@@ -8,7 +8,10 @@ const cleanCSS = require('gulp-clean-css');
 const sass = require('gulp-sass');
 const concat = require('gulp-concat');
 
-gulp.task('default', ['webpack', 'sass'], function() {
+const sassGlob = 'src/sass/**/*.scss';
+const assetsGlob = 'src/assets/**/*.*';
+
+gulp.task('default', ['webpack', 'sass', 'copy-assets'], function() {
   return gulp.src('src/index.html')
     .pipe(gulp.dest('build'));
 });
@@ -29,7 +32,7 @@ gulp.task('minify', ['webpack'], function() {
 });
 
 gulp.task('sass', function() {
-  return gulp.src('src/sass/**/*.scss')
+  return gulp.src(sassGlob)
     .pipe(sass().on('error', sass.logError))
     .pipe(concat('code-editor.css'))
     .pipe(gulp.dest('build/'));
@@ -42,6 +45,17 @@ gulp.task('minify-css', ['css'], function() {
     .pipe(rename({extname: '.min.css'}))
     .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest('dist'));
+});
+
+gulp.task('copy-assets', function() {
+  return gulp.src(assetsGlob)
+    .pipe(gulp.dest('build/assets'));
+})
+
+gulp.task('watch', function () {
+  gulp.watch(sassGlob, ['sass']);
+  gulp.watch('src/**/*.{js,jsx}', ['webpack']);
+  gulp.watch(assetsGlob, ['copy-assets']);
 });
 
 gulp.task('clean', function () {

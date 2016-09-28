@@ -21585,7 +21585,7 @@
 	  _createClass(FileManager, [{
 	    key: 'render',
 	    value: function render() {
-	      return _react2.default.createElement('div', { className: 'file-manager' }, 'File Manager');
+	      return _react2.default.createElement('div', { className: 'file-manager' }, _react2.default.createElement('div', { className: 'file-actions' }, _react2.default.createElement('button', { type: 'button' }, _react2.default.createElement('span', { className: 'fa-stack fa-lg icon' }, _react2.default.createElement('i', { className: 'fa fa-file-text-o' }), _react2.default.createElement('i', { className: 'fa fa-plus-circle' }))), _react2.default.createElement('button', { type: 'button' }, _react2.default.createElement('span', { className: 'fa-stack fa-lg icon add-folder' }, _react2.default.createElement('i', { className: 'fa fa-folder-o fa-flip-horizontal' }), _react2.default.createElement('i', { className: 'fa fa-plus-circle' })))));
 	    }
 	  }]);
 
