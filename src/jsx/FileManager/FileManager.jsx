@@ -1,7 +1,6 @@
 import React from 'react';
 import {render} from 'react-dom';
 import ActionButton from './ActionButton.jsx';
-import TreeView from './TreeView.jsx';
 
 const files = [{
   name: 'js',

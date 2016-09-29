@@ -21577,6 +21577,16 @@
 	  }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
 	}
 
+	var files = [{
+	  name: 'js',
+	  collapsed: false,
+	  children: [{ name: 'index.js' }, { name: 'app.js' }, {
+	    name: 'controllers',
+	    collapsed: false,
+	    children: [{ name: 'header.js' }, { name: 'footer.js' }]
+	  }]
+	}];
+
 	var FileManager = function (_React$Component) {
 	  _inherits(FileManager, _React$Component);
 
@@ -21595,7 +21605,7 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      return _react2.default.createElement('div', { className: 'file-manager' }, _react2.default.createElement('div', { className: 'file-actions' }, _react2.default.createElement(_ActionButton2.default, { onClick: this.newFile, bigIcon: 'fa-file-text-o' }), _react2.default.createElement(_ActionButton2.default, { className: 'add-folder', onClick: this.newFolder, bigIcon: 'fa-folder-o fa-flip-horizontal' })));
+	      return _react2.default.createElement('div', { className: 'file-manager' }, _react2.default.createElement('div', { className: 'file-actions' }, _react2.default.createElement(_ActionButton2.default, { bigIcon: 'fa-file-text-o', onClick: this.handleNewFile }), _react2.default.createElement(_ActionButton2.default, { bigIcon: 'fa-folder-o fa-flip-horizontal', className: 'add-folder', onClick: this.handleNewFolder })));
 	    }
 	  }]);
 

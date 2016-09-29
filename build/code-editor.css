@@ -115,6 +115,7 @@ div.userSquare {
   flex: 1;
   background: lightblue; }
 
+@charset "UTF-8";
 .file-manager {
   border: 1px solid black;
   width: 300px; }
@@ -148,6 +149,38 @@ div.userSquare {
         top: 2px; }
     .file-manager .file-actions .fa-stack.add-folder {
       margin: 2px 0 -2px; }
+
+.tree-view {
+  overflow-y: hidden; }
+
+.tree-view_item {
+  /* immediate child of .tree-view, for styling convenience */ }
+
+/* style for the children nodes container */
+.tree-view_children {
+  margin-left: 16px; }
+
+.tree-view_children-collapsed {
+  height: 0px; }
+
+.tree-view_arrow {
+  cursor: pointer;
+  margin-right: 6px;
+  display: inline-block;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none; }
+
+.tree-view_arrow:after {
+  content: '▾'; }
+
+/* rotate the triangle to close it */
+.tree-view_arrow-collapsed {
+  -webkit-transform: rotate(-90deg);
+  -moz-transform: rotate(-90deg);
+  -ms-transform: rotate(-90deg);
+  transform: rotate(-90deg); }
 
 .group-chat {
   flex: 1;
