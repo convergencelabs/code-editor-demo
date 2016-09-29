@@ -54,7 +54,7 @@ gulp.task('copy-assets', function() {
 
 gulp.task('watch', function () {
   gulp.watch(sassGlob, ['sass']);
-  gulp.watch('src/**/*.{js,jsx}', ['webpack']);
+  gulp.watch(['src/js/**/*.js', 'src/jsx/**/*.jsx'], ['webpack']);
   gulp.watch(assetsGlob, ['copy-assets']);
 });
 
