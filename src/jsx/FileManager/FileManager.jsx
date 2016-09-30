@@ -1,6 +1,7 @@
 import React from 'react';
 import {render} from 'react-dom';
 import ActionButton from './ActionButton.jsx';
+import TreeView from './TreeView.jsx';
 
 const files = [{
   name: 'js',
@@ -25,7 +26,23 @@ export default class FileManager extends React.Component {
   }
 
   newFile() {}
-  newFolder() {}
+  newFolder() {} 
+
+  renderNode(node, index) {
+    const name = node.name;
+    if(!node.children) {
+      return <div key={index} className="info">{node.name}</div>
+    }
+
+    let label = <span className="node">{name}</span>;
+    return (
+      <TreeView key={index} nodeLabel={label} defaultCollapsed={false}>
+        {node.children.map((child, childIndex) => {
+          return this.renderNode(child, '' + index + childIndex);
+        })}
+      </TreeView>
+    );
+  }
 
   render() {
     return (
@@ -34,6 +51,9 @@ export default class FileManager extends React.Component {
           <ActionButton bigIcon="fa-file-text-o" onClick={ this.handleNewFile } />
           <ActionButton bigIcon="fa-folder-o fa-flip-horizontal" className="add-folder" onClick={ this.handleNewFolder }  />
         </div>
+        {files.map((node, i) => {
+          {this.renderNode(node, i)}
+        })}
       </div>
     );
   }
