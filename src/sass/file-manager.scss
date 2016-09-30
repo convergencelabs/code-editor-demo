@@ -18,43 +18,32 @@
     }
     .fa-stack.add-folder { margin: 2px 0 -2px; }
   }
+
+  .tree-view {
+    overflow-y: hidden; margin-left: 5px; 
+
+    .node-label { 
+      margin-top: 3px; 
+
+      i { margin-right: 6px; }
+    }
+    .node-label.file i { margin-left: 2px; margin-right: 5px; font-size: 14px; }
+    & > .node-label { margin-top: 5px; }
+
+    /* style for the children nodes container */
+    .node-children { margin-left: 16px; margin-bottom: 2px; }
+    .node-children.collapsed { height: 0px; }
+
+    .arrow { 
+      position: relative; cursor: pointer; display: inline-block; user-select: none; 
+
+      .caret, i { display: inline-block; vertical-align: middle; }
+      i { padding-left: 6px; }
+    }
+    /* rotate the triangle to close it */
+    .arrow.collapsed .caret { transform: rotate(-90deg); }
+  }
 }
 
-.tree-view {
-  overflow-y: hidden;
-}
 
-.tree-view_item {
-  /* immediate child of .tree-view, for styling convenience */
-}
 
-/* style for the children nodes container */
-.tree-view_children {
-  margin-left: 16px;
-}
-
-.tree-view_children-collapsed {
-  height: 0px;
-}
-
-.tree-view_arrow {
-  cursor: pointer;
-  margin-right: 6px;
-  display: inline-block;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-}
-
-.tree-view_arrow:after {
-  content: '▾';
-}
-
-/* rotate the triangle to close it */
-.tree-view_arrow-collapsed {
-  -webkit-transform: rotate(-90deg);
-  -moz-transform: rotate(-90deg);
-  -ms-transform: rotate(-90deg);
-  transform: rotate(-90deg);
-}

@@ -1,21 +1,24 @@
 import React, {PropTypes} from 'react';
+import { autobind } from 'core-decorators';
+import classNames from 'classnames';
 
 export default class TreeView extends React.Component {
   static propTypes = {
-    className: PropTypes.string,
     collapsed: PropTypes.bool,
     defaultCollapsed: PropTypes.bool,
-    itemClassName: PropTypes.string,
     nodeLabel: PropTypes.node.isRequired,
     onClick: PropTypes.func
   };
 
   constructor(props) {
     super(props);
-     
-    this.state = {collapsed: this.props.defaultCollapsed};
+
+    this.state = {
+      collapsed: props.defaultCollapsed
+    };
   }
 
+  @autobind
   handleClick(...args) {
     this.setState({collapsed: !this.state.collapsed});
     if (this.props.onClick) {
@@ -26,30 +29,28 @@ export default class TreeView extends React.Component {
   render() {
     const {
       collapsed = this.state.collapsed,
-      className = '',
-      itemClassName = '',
       nodeLabel,
       children,
+      defaultCollapsed, 
       ...rest,
     } = this.props;
 
-    let arrowClassName = 'tree-view_arrow';
-    let containerClassName = 'tree-view_children';
-    if (collapsed) {
-      arrowClassName += ' tree-view_arrow-collapsed';
-      containerClassName += ' tree-view_children-collapsed';
-    }
+    let arrowClassName = classNames('arrow', collapsed ? 'collapsed' : 'open');
+    let containerClassName = classNames('node-children', collapsed ? 'collapsed' : 'open');
+    let folderClassName = classNames('fa', collapsed ? 'fa-folder-o' : 'fa-folder-open-o');
 
     const arrow = (
-      <div
-        {...rest}
-        className={className + ' ' + arrowClassName}
+      <div 
+        {...rest} 
+        className={arrowClassName} 
         onClick={this.handleClick}
-      />);
+      >
+        <span className="caret">▾</span><i className={folderClassName} />
+      </div>);
 
     return (
       <div className="tree-view">
-        <div className={'tree-view_item ' + itemClassName}>
+        <div className="node-label">
           {arrow}
           {nodeLabel}
         </div>

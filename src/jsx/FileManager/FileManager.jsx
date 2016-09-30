@@ -9,8 +9,7 @@ const files = [{
   children: [
     { name: 'index.js' }, 
     { name: 'app.js' }, 
-    {
-      name: 'controllers', 
+    { name: 'controllers', 
       collapsed: false, 
       children: [
         { name: 'header.js' }, 
@@ -31,12 +30,15 @@ export default class FileManager extends React.Component {
   renderNode(node, index) {
     const name = node.name;
     if(!node.children) {
-      return <div key={index} className="info">{node.name}</div>
+      return (
+        <div key={index} className="node-label file">
+          <i className="fa fa-file-code-o" /> {node.name}
+        </div>
+      );
     }
 
-    let label = <span className="node">{name}</span>;
     return (
-      <TreeView key={index} nodeLabel={label} defaultCollapsed={false}>
+      <TreeView key={index} nodeLabel={name} defaultCollapsed={false}>
         {node.children.map((child, childIndex) => {
           return this.renderNode(child, '' + index + childIndex);
         })}
@@ -52,7 +54,7 @@ export default class FileManager extends React.Component {
           <ActionButton bigIcon="fa-folder-o fa-flip-horizontal" className="add-folder" onClick={ this.handleNewFolder }  />
         </div>
         {files.map((node, i) => {
-          {this.renderNode(node, i)}
+          return this.renderNode(node, i);
         })}
       </div>
     );
