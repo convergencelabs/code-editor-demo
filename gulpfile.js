@@ -47,17 +47,6 @@ gulp.task('minify-css', ['css'], function() {
     .pipe(gulp.dest('dist'));
 });
 
-gulp.task('copy-assets', function() {
-  return gulp.src(assetsGlob)
-    .pipe(gulp.dest('build/assets'));
-})
-
-gulp.task('watch', function () {
-  gulp.watch(sassGlob, ['sass']);
-  gulp.watch(['src/js/**/*.js', 'src/jsx/**/*.jsx'], ['webpack']);
-  gulp.watch(assetsGlob, ['copy-assets']);
-});
-
 gulp.task('clean', function () {
   return del(['build']);
 });
