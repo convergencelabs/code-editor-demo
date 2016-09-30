@@ -2,59 +2,57 @@ import React, {PropTypes} from 'react';
 import { autobind } from 'core-decorators';
 import classNames from 'classnames';
 
+import Collapser from './Collapser.jsx';
+import FileNode from './FileNode.jsx';
+
 export default class TreeView extends React.Component {
   static propTypes = {
     collapsed: PropTypes.bool,
     defaultCollapsed: PropTypes.bool,
+    id: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.number]).isRequired,
     nodeLabel: PropTypes.node.isRequired,
-    onClick: PropTypes.func
+    onSelect: PropTypes.func,
+    selected: PropTypes.bool
   };
 
   constructor(props) {
     super(props);
 
     this.state = {
-      collapsed: props.defaultCollapsed
+      collapsed: props.collapsed || props.defaultCollapsed
     };
   }
 
   @autobind
-  handleClick(...args) {
+  handleCollapserClick() {
     this.setState({collapsed: !this.state.collapsed});
-    if (this.props.onClick) {
-      this.props.onClick(...args);
-    }
   }
 
   render() {
     const {
-      collapsed = this.state.collapsed,
-      nodeLabel,
       children,
-      defaultCollapsed, 
-      ...rest,
+      collapsed = this.state.collapsed,
+      id,
+      nodeLabel,
     } = this.props;
 
-    let arrowClassName = classNames('arrow', collapsed ? 'collapsed' : 'open');
-    let containerClassName = classNames('node-children', collapsed ? 'collapsed' : 'open');
-    let folderClassName = classNames('fa', collapsed ? 'fa-folder-o' : 'fa-folder-open-o');
-
-    const arrow = (
-      <div 
-        {...rest} 
-        className={arrowClassName} 
-        onClick={this.handleClick}
-      >
-        <span className="caret">▾</span><i className={folderClassName} />
-      </div>);
+    let containerClasses = classNames('node-children', collapsed ? 'collapsed' : 'open');
+    let folderClasses = classNames('fa', collapsed ? 'fa-folder-o' : 'fa-folder-open-o');
 
     return (
-      <div className="tree-view">
-        <div className="node-label">
-          {arrow}
-          {nodeLabel}
+      <div className="sub-tree">
+        <div className="node">
+          <Collapser onClick={this.handleCollapserClick} collapsed={collapsed} />
+          <FileNode 
+            iconClass={folderClasses}
+            id={id}
+            nodeClasses="folder-label"
+            name={nodeLabel} 
+            selected={this.props.selected} 
+            onClick={this.props.onSelect} 
+          />
         </div>
-        <div className={containerClassName}>
+        <div className={containerClasses}>
           {children}
         </div>
       </div>

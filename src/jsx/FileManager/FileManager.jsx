@@ -1,6 +1,8 @@
 import React from 'react';
-import {render} from 'react-dom';
+import { autobind } from 'core-decorators';
+
 import ActionButton from './ActionButton.jsx';
+import FileNode from './FileNode.jsx';
 import TreeView from './TreeView.jsx';
 
 const files = [{
@@ -22,23 +24,43 @@ const files = [{
 export default class FileManager extends React.Component {
   constructor(props) {
     super(props);
+
+    this.state = {};
   }
 
-  newFile() {}
-  newFolder() {} 
+  handleNewFile() {}
+  handleNewFolder() {} 
+
+  @autobind
+  handleSelect(key) {
+    this.setState({selected: key});
+  }
 
   renderNode(node, index) {
     const name = node.name;
     if(!node.children) {
       return (
-        <div key={index} className="node-label file">
-          <i className="fa fa-file-code-o" /> {node.name}
-        </div>
+        <FileNode 
+          iconClass="fa-file-code-o"
+          id={index}
+          key={index}
+          nodeClasses="node file"
+          name={node.name} 
+          onClick={this.handleSelect} 
+          selected={this.state.selected === index} 
+        />
       );
     }
 
     return (
-      <TreeView key={index} nodeLabel={name} defaultCollapsed={false}>
+      <TreeView 
+        defaultCollapsed={false} 
+        key={index}   
+        id={index}
+        nodeLabel={name} 
+        onSelect={this.handleSelect}
+        selected={this.state.selected === index} 
+      >
         {node.children.map((child, childIndex) => {
           return this.renderNode(child, '' + index + childIndex);
         })}
@@ -51,11 +73,17 @@ export default class FileManager extends React.Component {
       <div className="file-manager">
         <div className="file-actions">
           <ActionButton bigIcon="fa-file-text-o" onClick={ this.handleNewFile } />
-          <ActionButton bigIcon="fa-folder-o fa-flip-horizontal" className="add-folder" onClick={ this.handleNewFolder }  />
+          <ActionButton 
+            bigIcon="fa-folder-o fa-flip-horizontal" 
+            className="add-folder" 
+            onClick={ this.handleNewFolder } 
+          />
         </div>
-        {files.map((node, i) => {
-          return this.renderNode(node, i);
-        })}
+        <div className="file-tree">
+          {files.map((node, i) => {
+            return this.renderNode(node, i);
+          })}
+        </div>
       </div>
     );
   }

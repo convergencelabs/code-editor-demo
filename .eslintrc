@@ -41,6 +41,9 @@
     "react/jsx-no-literals": "off",
     "react/jsx-no-target-blank": "error",
     "react/jsx-pascal-case": "error",
-    "react/jsx-space-before-closing": "error"
+    "react/jsx-space-before-closing": "error",
+
+    // Other
+    "no-unused-vars": "error"
   }
 }

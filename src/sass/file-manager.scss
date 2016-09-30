@@ -1,9 +1,10 @@
 .file-manager {
   border: 1px solid black;
   width: 300px;
+  background-color: #E0E0E0;
 
   .file-actions {
-    padding: 5px; background-color: #fff;
+    padding: 5px; 
 
     button { font-size: 1em; outline: none; border: none; border-radius: 4px; background-color: #efefef; cursor: pointer; }
     button:hover { background-color: #f5f5f5; }
@@ -19,29 +20,41 @@
     .fa-stack.add-folder { margin: 2px 0 -2px; }
   }
 
-  .tree-view {
-    overflow-y: hidden; margin-left: 5px; 
+  .file-tree {
+    margin-left: 5px;
 
-    .node-label { 
-      margin-top: 3px; 
+    .sub-tree { overflow-y: hidden; padding: 3px 2px; float: left; clear: left; }
 
-      i { margin-right: 6px; }
+    .node { 
+      padding: 3px 5px; float: left; clear: left; cursor: pointer;
+
+      i { margin-right: 6px; display: inline-block; vertical-align: middle; }
     }
-    .node-label.file i { margin-left: 2px; margin-right: 5px; font-size: 14px; }
-    & > .node-label { margin-top: 5px; }
+    .node.file {
+      i { margin-left: 2px; margin-right: 5px; font-size: 14px; }
+
+      &.selected { background-color: #fff; border-radius: 4px; }
+    }
 
     /* style for the children nodes container */
-    .node-children { margin-left: 16px; margin-bottom: 2px; }
+    .node-children { margin-left: 16px; margin-bottom: 2px; clear: left; overflow-y: auto; }
     .node-children.collapsed { height: 0px; }
 
     .arrow { 
       position: relative; cursor: pointer; display: inline-block; user-select: none; 
 
-      .caret, i { display: inline-block; vertical-align: middle; }
-      i { padding-left: 6px; }
+      .caret { display: inline-block; vertical-align: middle; margin-right: 1px; }
     }
     /* rotate the triangle to close it */
     .arrow.collapsed .caret { transform: rotate(-90deg); }
+
+    .folder-label { 
+      padding: 3px 5px; display: inline-block; 
+
+      i { margin-right: 2px; }
+    }
+
+    .node.file.selected, .folder-label.selected { background-color: #fff; border-radius: 4px; }
   }
 }
 
