@@ -10,7 +10,7 @@
 .chat-container {
   flex: 1;
   border: 1px solid darkgray;
-  padding: 5px;
+  overflow: auto;
 }
 
 .chat-input {
@@ -32,22 +32,34 @@
 }
 
 .chat-message {
-  margin-bottom: 5px;
-  padding: 4px 10px 4px 10px;
   font-family: Helvetica, Arial, "Lucida Grande", sans-serif;
   font-size: 12px;
   clear: both;
-  max-width: 80%;
+  border-left: 4px solid;
+  color: white;
+  padding: 2px 5px 2px 5px;
+}
+.chat-message-wrapper {
+  border-bottom: 1px solid lightgray;
+}
+
+.chat-message-text {
+
+}
+
+.chat-message-time {
+  float: right;
+  font-size: 10px;
+}
+
+.chat-message-username {
+  font-size: 10px;
+}
+
+.chat-message-text {
+  margin-top: 4px;
 }
 
 .local-chat-message {
-  float: right;
-  color: white;
 
-  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#4096ee+0,2d62a3+100 */
-  background: #4096ee; /* Old browsers */
-  background: -moz-linear-gradient(top,  #4096ee 0%, #2d62a3 100%); /* FF3.6-15 */
-  background: -webkit-linear-gradient(top,  #4096ee 0%,#2d62a3 100%); /* Chrome10-25,Safari5.1-6 */
-  background: linear-gradient(to bottom,  #4096ee 0%,#2d62a3 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4096ee', endColorstr='#2d62a3',GradientType=0 ); /* IE6-9 */
 }
