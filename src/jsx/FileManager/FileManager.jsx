@@ -71,6 +71,7 @@ export default class FileManager extends React.Component {
   render() {
     return (
       <div className="file-manager">
+        <div className="section-title">Project</div>
         <div className="file-actions">
           <ActionButton bigIcon="fa-file-text-o" onClick={ this.handleNewFile } />
           <ActionButton 

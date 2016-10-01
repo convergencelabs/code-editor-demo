@@ -1,7 +1,9 @@
 .file-manager {
-  border: 1px solid black;
   width: 300px;
-  background-color: #E0E0E0;
+  background-color: #2F3129;
+  color: white;
+
+  user-select: none;
 
   .file-actions {
     padding: 5px; 
@@ -54,7 +56,11 @@
       i { margin-right: 2px; }
     }
 
-    .node.file.selected, .folder-label.selected { background-color: #fff; border-radius: 4px; }
+    .node.file.selected, .folder-label.selected {
+      background-color: #23b3e2;
+      border-radius: 4px;
+      user-select: none;
+    }
   }
 }
 

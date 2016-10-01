@@ -20,7 +20,9 @@ export default class CodeEditor extends React.Component {
           <FileManager></FileManager>
           <EditorsPane></EditorsPane>
           <div className="right-pane">
+            <div className="section-title">Participants</div>
             <ParticipantsList></ParticipantsList>
+            <div className="section-title">Group Chat</div>
             <GroupChatPane></GroupChatPane>
           </div>
         </div>

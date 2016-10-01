@@ -9,14 +9,13 @@
 
 .chat-container {
   flex: 1;
-  border: 1px solid darkgray;
   overflow: auto;
 }
 
 .chat-input {
   padding: 2px;
   display: flex;
-  border: 1px solid darkgray;
+  border-top: 1px solid lightgray;
 }
 
 .chat-input input:focus {
