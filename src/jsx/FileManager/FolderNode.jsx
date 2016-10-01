@@ -2,10 +2,11 @@ import React, {PropTypes} from 'react';
 import { autobind } from 'core-decorators';
 import classNames from 'classnames';
 
-import {FileContextMenu} from './ContextMenu.jsx';
+import {FolderContextMenu} from './ContextMenu.jsx';
 
-export default class FileNode extends React.Component {
+export default class FolderNode extends React.Component {
   static propTypes = {
+    collapsed: React.PropTypes.bool,
     id: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.number]).isRequired,
     name: PropTypes.string.isRequired,
     onClick: PropTypes.func.isRequired,
@@ -26,14 +27,8 @@ export default class FileNode extends React.Component {
   }
 
   @autobind
-  handleContextMenu(e) {
-    this.setState({showContextMenu: true});
-    e.preventDefault();
-  }
-
-  @autobind
-  handleHideContextMenu() {
-    this.setState({showContextMenu: false});
+  handleContextMenu() {
+    this.setState(showContextMenu: true);
   }
 
   @autobind
@@ -42,15 +37,15 @@ export default class FileNode extends React.Component {
   }
 
   render() {
-    const nodeClasses = classNames("node", "file", this.props.selected ? 'selected' : '');
+    const nodeClasses = classNames("folder-label", this.props.selected ? 'selected' : '');
+    const iconClasses = classNames('fa', this.props.collapsed ? 'fa-folder-o' : 'fa-folder-open-o');
 
     return (
       <div className={nodeClasses} onClick={this.handleClick} onContextMenu={this.handleContextMenu}>
-        <i className="fa fa-file-code-o" /> {this.props.name}
-        <FileContextMenu 
+        <i className={iconClasses} /> {this.props.name}
+        <FolderContextMenu 
           display={this.state.showContextMenu} 
           onSelect={this.handleContextMenuSelect} 
-          onHide={this.handleHideContextMenu}
         />
       </div>
     );

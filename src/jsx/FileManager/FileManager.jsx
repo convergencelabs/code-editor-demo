@@ -38,13 +38,12 @@ export default class FileManager extends React.Component {
 
   renderNode(node, index) {
     const name = node.name;
+
     if(!node.children) {
       return (
         <FileNode 
-          iconClass="fa-file-code-o"
           id={index}
           key={index}
-          nodeClasses="node file"
           name={node.name} 
           onClick={this.handleSelect} 
           selected={this.state.selected === index} 

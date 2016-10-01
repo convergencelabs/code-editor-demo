@@ -3,10 +3,11 @@ import { autobind } from 'core-decorators';
 import classNames from 'classnames';
 
 import Collapser from './Collapser.jsx';
-import FileNode from './FileNode.jsx';
+import FolderNode from './FolderNode.jsx';
 
 export default class TreeView extends React.Component {
   static propTypes = {
+    children: PropTypes.node,
     collapsed: PropTypes.bool,
     defaultCollapsed: PropTypes.bool,
     id: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.number]).isRequired,
@@ -37,16 +38,14 @@ export default class TreeView extends React.Component {
     } = this.props;
 
     let containerClasses = classNames('node-children', collapsed ? 'collapsed' : 'open');
-    let folderClasses = classNames('fa', collapsed ? 'fa-folder-o' : 'fa-folder-open-o');
 
     return (
       <div className="sub-tree">
         <div className="node">
           <Collapser onClick={this.handleCollapserClick} collapsed={collapsed} />
-          <FileNode 
-            iconClass={folderClasses}
+          <FolderNode 
+            collapsed={collapsed}
             id={id}
-            nodeClasses="folder-label"
             name={nodeLabel} 
             selected={this.props.selected} 
             onClick={this.props.onSelect} 
