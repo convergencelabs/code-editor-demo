@@ -8,7 +8,10 @@ export default class Banner extends React.Component {
 
   render() {
     return (
-      <div className="banner">Convergence Code Editor</div>
+      <div className="banner">
+        <img className="logo" src="../img/cl_logo.png"/>
+        <span className="title">Convergence Code Editor</span>
+      </div>
     );
   }
 }
