@@ -23,25 +23,11 @@ $fa-font-path: "../../node_modules/font-awesome/fonts";
   flex-direction: column;
 }
 
-.status-bar {
-
-}
-
-.banner {
-  height: 20px;
-  background: #2F3129;
-  color: white;
-  font-family: Helvetica, Arial, "Lucida Grande", sans-serif;
-  font-size: 14px;
-  border-bottom: 1px solid lightgray;
-  padding: 4px;
-}
-
 .section-title {
   color: lightgray;
   font-family: Helvetica, Arial, "Lucida Grande", sans-serif;
   font-size: 12px;
   text-align: center;
   padding: 2px;
-  background: black;
+  background: #272822;
 }
