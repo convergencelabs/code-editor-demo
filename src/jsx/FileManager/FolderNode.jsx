@@ -10,6 +10,10 @@ export default class FolderNode extends React.Component {
     id: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.number]).isRequired,
     name: PropTypes.string.isRequired,
     onClick: PropTypes.func.isRequired,
+    onDelete: PropTypes.func,
+    onNewFile: PropTypes.func,
+    onNewFolder: PropTypes.func,
+    onRename: PropTypes.func,
     selected: PropTypes.bool,
   };
 
@@ -25,16 +29,37 @@ export default class FolderNode extends React.Component {
   handleClick() {
     this.props.onClick(this.props.id);
   }
-
   @autobind
-  handleContextMenu() {
-    this.setState(showContextMenu: true);
+  handleContextMenu(e) {
+    this.setState({showContextMenu: true});
+    e.preventDefault();
+  }
+  @autobind
+  handleHideContextMenu() {
+    this.setState({showContextMenu: false});
   }
 
   @autobind
-  handleContextMenuSelect() {
-
+  handleRename(e) {
+    this.handleHideContextMenu(e);
+    e.stopPropagation();
   }
+  @autobind
+  handleDelete(e) {
+    this.handleHideContextMenu(e);
+    e.stopPropagation();
+  }
+  @autobind
+  handleNewFile(e) {
+    this.handleHideContextMenu(e);
+    e.stopPropagation();
+  }
+  @autobind
+  handleNewFolder(e) {
+    this.handleHideContextMenu(e);
+    e.stopPropagation();
+  }
+
 
   render() {
     const nodeClasses = classNames("folder-label", this.props.selected ? 'selected' : '');
@@ -45,7 +70,11 @@ export default class FolderNode extends React.Component {
         <i className={iconClasses} /> {this.props.name}
         <FolderContextMenu 
           display={this.state.showContextMenu} 
-          onSelect={this.handleContextMenuSelect} 
+          onHide={this.handleHideContextMenu}
+          onSelectDelete={this.handleDelete} 
+          onSelectNewFile={this.handleNewFile} 
+          onSelectNewFolder={this.handleNewFolder} 
+          onSelectRename={this.handleRename} 
         />
       </div>
     );

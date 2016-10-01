@@ -4,7 +4,7 @@
   width: 300px;
   background-color: #40423a;
   color: white;
-
+  -webkit-user-select: none;
   user-select: none;
 
   .file-actions {

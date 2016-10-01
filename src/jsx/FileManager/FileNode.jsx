@@ -9,6 +9,8 @@ export default class FileNode extends React.Component {
     id: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.number]).isRequired,
     name: PropTypes.string.isRequired,
     onClick: PropTypes.func.isRequired,
+    onDelete: PropTypes.func,
+    onRename: PropTypes.func,
     selected: PropTypes.bool,
   };
 
@@ -37,8 +39,15 @@ export default class FileNode extends React.Component {
   }
 
   @autobind
-  handleContextMenuSelect() {
+  handleRename(e) {
+    this.handleHideContextMenu(e);
+    e.stopPropagation();
+  }
 
+  @autobind
+  handleDelete(e) {
+    this.handleHideContextMenu(e);
+    e.stopPropagation();
   }
 
   render() {
@@ -49,7 +58,8 @@ export default class FileNode extends React.Component {
         <i className="fa fa-file-code-o" /> {this.props.name}
         <FileContextMenu 
           display={this.state.showContextMenu} 
-          onSelect={this.handleContextMenuSelect} 
+          onSelectRename={this.handleRename} 
+          onSelectDelete={this.handleDelete} 
           onHide={this.handleHideContextMenu}
         />
       </div>
