@@ -8,7 +8,11 @@ export default class ParticipantsList extends React.Component {
 
   render() {
     return (
-      <div className="status-bar">Status Bar</div>
+      <div className="status-bar">
+        <div className="status-bar-content">
+          <span className="status-bar-cursor-indicator">[3, 10]</span>
+        </div>
+      </div>
     );
   }
 }

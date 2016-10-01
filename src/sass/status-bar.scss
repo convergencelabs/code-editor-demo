@@ -4,5 +4,11 @@
   color: lightgray;
   font-family: Helvetica, Arial, "Lucida Grande", sans-serif;
   font-size: 12px;
-  vertical-align: middle;
+  padding: 3px 5px;
+
+  .status-bar-content {
+    .status-bar-cursor-indicator {
+      float: right;
+    }
+  }
 }
