@@ -1,6 +1,8 @@
+@import 'variables.scss';
+
 .file-manager {
-  font-family: Monaco, Menlo, "Ubuntu Mono", Consolas, source-code-pro, monospace;
-  font-size: 12px;
+  font-family: $app-font;
+  font-size: 14px;
   width: 300px;
   background-color: #40423a;
   color: white;
@@ -8,7 +10,7 @@
   user-select: none;
 
   .file-actions {
-    padding: 5px; 
+    padding: 5px; font-size: 12px;
 
     button { font-size: 1em; outline: none; border: none; border-radius: 4px; background-color: #efefef; cursor: pointer; }
     button:hover { background-color: #f5f5f5; }

@@ -1,9 +1,11 @@
+@import 'variables.scss';
+
 .participants-list {
   width: 100%;
   height: 300px;
   background: #40423a;
   color: lightgray;
-  font-family: Helvetica, Arial, "Lucida Grande", sans-serif;
+  font-family: $app-font;
   font-size: 12px;
 }
 

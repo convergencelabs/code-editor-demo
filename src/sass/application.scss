@@ -1,9 +1,14 @@
+@import 'variables.scss';
+
+$fa-font-path: "../../node_modules/font-awesome/fonts";
+@import "../../node_modules/font-awesome/scss/font-awesome";
+
 .popover-menu {
   position: absolute; border: 1px solid #666; border-radius: 4px; background-color: #fff; z-index: 5; box-shadow: 1px 1px 5px #bbb; margin: 3px 0 0 25px;
 }
 
 .context-menu {
-  ul { font-family: Helvetica, Arial, "Lucida Grande", sans-serif; font-size: 14px; list-style: none; padding: 0; margin: 0; color: #333; }
+  ul { font-family: $app-font; font-size: 14px; list-style: none; padding: 0; margin: 0; color: #333; }
   li { border-bottom: 1px solid #ddd; padding: 3px 5px; cursor: pointer; background-color: #fafafa; }
   li.selected, li.selected:hover { background-color: #DCF5DE; }
   li:hover { background-color: #eee; }

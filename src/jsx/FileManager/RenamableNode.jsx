@@ -20,7 +20,9 @@ export default class RenamableNode extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if(!this.props.renaming && nextProps.renaming) {
-      this.setState({value: nextProps.name});
+      this.setState({
+        value: nextProps.name
+      });
       setTimeout(() => {
         this._input.select();
         this._input.focus();
@@ -30,16 +32,17 @@ export default class RenamableNode extends React.Component {
 
   handleClickOutside() {
     if (this.props.renaming) {
-      this.props.onCancel();
+      this._input.blur();
     }
   }
 
   @autobind
   handleKeyUp(event) {
     if (event.key === 'Enter') {
-      this.handleBlur(event);
+      this._input.blur();
     } else if(event.key === 'Escape') {
-      this.props.onCancel();
+      this.cancelled = true;
+      this._input.blur();
     }
   }
   @autobind
@@ -48,8 +51,13 @@ export default class RenamableNode extends React.Component {
   }
   @autobind
   handleBlur() {
-    this.props.onComplete(this.state.value);
+    if(!this.cancelled && this.props.name !== this.state.value) {
+      this.props.onComplete(this.state.value);
+    } else {
+      this.props.onCancel();
+    }
   }
+  handleClick(e) { e.stopPropagation(); }
 
   render() {
     var labelStyle = {display: this.props.renaming ? 'none' : 'inline-block'};
@@ -58,7 +66,7 @@ export default class RenamableNode extends React.Component {
     return (
       <span>
         <span style={labelStyle}>{this.props.name}</span>
-        <span style={inputStyle}>
+        <span style={inputStyle} onClick={this.handleClick}>
           <input ref={(c) => this._input = c} type="text" value={this.state.value} 
             onBlur={this.handleBlur} onChange={this.handleChange} onKeyUp={this.handleKeyUp} />
         </span>

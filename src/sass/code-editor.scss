@@ -1,5 +1,4 @@
-$fa-font-path: "../../node_modules/font-awesome/fonts";
-@import "../../node_modules/font-awesome/scss/font-awesome";
+@import 'variables.scss';
 
 .code-editor {
   display: flex;
@@ -25,7 +24,7 @@ $fa-font-path: "../../node_modules/font-awesome/fonts";
 
 .section-title {
   color: lightgray;
-  font-family: Helvetica, Arial, "Lucida Grande", sans-serif;
+  font-family: $app-font;
   font-size: 12px;
   text-align: center;
   padding: 2px;

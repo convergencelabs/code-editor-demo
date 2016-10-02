@@ -1,7 +1,9 @@
+@import 'variables.scss';
+
 .banner {
   background: #2F3129;
   color: white;
-  font-family: Helvetica, Arial, "Lucida Grande", sans-serif;
+  font-family: $app-font;
   font-size: 14px;
   border-bottom: 1px solid lightgray;
   padding: 4px;

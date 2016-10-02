@@ -12,6 +12,7 @@ export default class TreeView extends React.Component {
     defaultCollapsed: PropTypes.bool,
     id: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.number]).isRequired,
     nodeLabel: PropTypes.node.isRequired,
+    onFolderRename: PropTypes.func,
     onSelect: PropTypes.func,
     selected: PropTypes.bool
   };
@@ -49,6 +50,7 @@ export default class TreeView extends React.Component {
             name={nodeLabel} 
             selected={this.props.selected} 
             onClick={this.props.onSelect} 
+            onRename={this.props.onFolderRename}
           />
         </div>
         <div className={containerClasses}>

@@ -62,6 +62,7 @@ export default class FileManager extends React.Component {
         key={index}   
         id={index}
         nodeLabel={name} 
+        onFolderRename={this.handleRename}
         onSelect={this.handleSelect}
         selected={this.state.selected === index} 
       >
