@@ -12,8 +12,10 @@ export default class TreeView extends React.Component {
     defaultCollapsed: PropTypes.bool,
     id: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.number]).isRequired,
     nodeLabel: PropTypes.node.isRequired,
+    onFolderDelete: PropTypes.func,
     onFolderRename: PropTypes.func,
-    onSelect: PropTypes.func,
+    onFolderSelect: PropTypes.func,
+    onNewChild: PropTypes.func,
     selected: PropTypes.bool
   };
 
@@ -35,7 +37,7 @@ export default class TreeView extends React.Component {
       children,
       collapsed = this.state.collapsed,
       id,
-      nodeLabel,
+      nodeLabel
     } = this.props;
 
     let containerClasses = classNames('node-children', collapsed ? 'collapsed' : 'open');
@@ -49,7 +51,9 @@ export default class TreeView extends React.Component {
             id={id}
             name={nodeLabel} 
             selected={this.props.selected} 
-            onClick={this.props.onSelect} 
+            onClick={this.props.onFolderSelect} 
+            onDelete={this.props.onFolderDelete}
+            onNewChild={this.props.onNewChild}
             onRename={this.props.onFolderRename}
           />
         </div>

@@ -1,6 +1,6 @@
 import React from 'react';
-import {render} from 'react-dom';
-import FileManager from './FileManager/FileManager.jsx';
+
+import FileManager from './file-manager/FileManager.jsx';
 import EditorsPane from './EditorsPane.jsx';
 import ParticipantsList from './ParticipantsList.jsx';
 import GroupChatPane from './GroupChatPane.jsx';
@@ -10,23 +10,29 @@ import Banner from './Banner.jsx';
 export default class CodeEditor extends React.Component {
   constructor(props) {
     super(props);
+
+    this.state = {};
+  }
+
+  handleFileSelect(fileId) {
+    this.setState({selectedFile: fileId});
   }
 
   render() {
     return (
       <div className="code-editor">
-        <Banner className="status-bar"></Banner>
+        <Banner className="status-bar" />
         <div className="top-pane">
-          <FileManager></FileManager>
-          <EditorsPane></EditorsPane>
+          <FileManager onFileSelect={this.handleFileSelect} selectedFile={this.state.selectedFile } />
+          <EditorsPane />
           <div className="right-pane">
             <div className="section-title">Participants</div>
-            <ParticipantsList></ParticipantsList>
+            <ParticipantsList />
             <div className="section-title">Group Chat</div>
-            <GroupChatPane></GroupChatPane>
+            <GroupChatPane />
           </div>
         </div>
-        <StatusBar className="status-bar"></StatusBar>
+        <StatusBar className="status-bar" />
       </div>
     );
   }

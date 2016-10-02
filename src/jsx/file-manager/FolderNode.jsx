@@ -12,8 +12,7 @@ export default class FolderNode extends React.Component {
     name: PropTypes.string.isRequired,
     onClick: PropTypes.func.isRequired,
     onDelete: PropTypes.func,
-    onNewFile: PropTypes.func,
-    onNewFolder: PropTypes.func,
+    onNewChild: PropTypes.func,
     onRename: PropTypes.func,
     selected: PropTypes.bool,
   };
@@ -59,16 +58,19 @@ export default class FolderNode extends React.Component {
   handleDelete(e) {
     this.handleHideContextMenu(e);
     e.stopPropagation();
+    this.props.onDelete(this.props.id);
   }
   @autobind
   handleNewFile(e) {
     this.handleHideContextMenu(e);
     e.stopPropagation();
+    this.props.onNewChild(this.props.id, 'file');
   }
   @autobind
   handleNewFolder(e) {
     this.handleHideContextMenu(e);
     e.stopPropagation();
+    this.props.onNewChild(this.props.id, 'folder');
   }
 
 

@@ -37,7 +37,7 @@
       i { margin-right: 6px; display: inline-block; vertical-align: middle; }
     }
     .node.file {
-      i { margin-left: 2px; margin-right: 5px; font-size: 14px; }
+      i { margin-left: 2px; margin-right: 8px; font-size: 14px; }
 
       &.selected { background-color: #fff; border-radius: 4px; }
     }
@@ -49,7 +49,7 @@
     .arrow { 
       position: relative; cursor: pointer; display: inline-block; user-select: none; 
 
-      .caret { display: inline-block; vertical-align: middle; margin-right: 1px; }
+      .caret { display: inline-block; vertical-align: middle; margin-right: 3px; }
     }
     /* rotate the triangle to close it */
     .arrow.collapsed .caret { transform: rotate(-90deg); }
@@ -57,7 +57,7 @@
     .folder-label { 
       padding: 3px 5px; display: inline-block; 
 
-      i { margin-right: 2px; }
+      i { margin-right: 5px; }
     }
 
     .node.file.selected, .folder-label.selected {

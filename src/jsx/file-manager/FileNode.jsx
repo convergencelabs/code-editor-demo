@@ -59,6 +59,7 @@ export default class FileNode extends React.Component {
   handleDelete(e) {
     this.handleHideContextMenu(e);
     e.stopPropagation();
+    this.props.onDelete(this.props.id);
   }
 
   render() {
