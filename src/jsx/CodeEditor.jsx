@@ -1,7 +1,7 @@
 import React from 'react';
 
 import FileManager from './file-manager/FileManager.jsx';
-import EditorsPane from './EditorsPane.jsx';
+import EditorTabs from './editor/EditorTabs.jsx';
 import ParticipantsList from './ParticipantsList.jsx';
 import GroupChatPane from './GroupChatPane.jsx';
 import StatusBar from './StatusBar.jsx';
@@ -24,7 +24,7 @@ export default class CodeEditor extends React.Component {
         <Banner className="status-bar" />
         <div className="top-pane">
           <FileManager onFileSelect={this.handleFileSelect} selectedFile={this.state.selectedFile } />
-          <EditorsPane />
+          <EditorTabs />
           <div className="right-pane">
             <div className="section-title">Participants</div>
             <ParticipantsList />

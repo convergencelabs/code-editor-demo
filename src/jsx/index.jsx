@@ -11,6 +11,7 @@ require("!style!css!sass!../sass/file-manager.scss");
 require("!style!css!sass!../sass/group-chat.scss");
 require("!style!css!sass!../sass/participants-list.scss");
 require("!style!css!sass!../sass/status-bar.scss");
+require("!style!css!sass!../sass/editor-tabs.scss");
 
 render(
   <CodeEditor></CodeEditor>,
