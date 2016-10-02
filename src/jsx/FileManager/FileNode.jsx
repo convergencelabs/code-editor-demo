@@ -30,6 +30,7 @@ export default class FileNode extends React.Component {
   @autobind
   handleRename(newName) {
     this.props.onRename(this.props.id, newName);
+    this.setState({renaming: false});
   }
   @autobind
   handleRenameCancel() {

@@ -35,6 +35,10 @@ export default class FileManager extends React.Component {
   handleSelect(key) {
     this.setState({selected: key});
   }
+  @autobind
+  handleRename(key, name) {
+    console.log('renamed', key, 'to', name);
+  }
 
   renderNode(node, index) {
     const name = node.name;
@@ -46,6 +50,7 @@ export default class FileManager extends React.Component {
           key={index}
           name={node.name} 
           onClick={this.handleSelect} 
+          onRename={this.handleRename}
           selected={this.state.selected === index} 
         />
       );

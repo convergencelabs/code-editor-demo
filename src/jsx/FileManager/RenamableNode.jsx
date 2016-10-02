@@ -47,8 +47,8 @@ export default class RenamableNode extends React.Component {
     this.setState({value: event.target.value});
   }
   @autobind
-  handleBlur(event) {
-
+  handleBlur() {
+    this.props.onComplete(this.state.value);
   }
 
   render() {
