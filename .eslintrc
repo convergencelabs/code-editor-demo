@@ -29,7 +29,7 @@
 
     // JSX
     "react/jsx-boolean-value": "error",
-    "react/jsx-closing-bracket-location": "error",
+    "react/jsx-closing-bracket-location": ["error", { "selfClosing": false }],
     "react/jsx-equals-spacing": "error",
     "react/jsx-first-prop-new-line": "error",
     "react/jsx-handler-names": "error",
@@ -37,7 +37,7 @@
     "react/jsx-indent": [ "error", 2 ],
     "react/jsx-key": "error",
     "react/jsx-max-props-per-line": [ "error", { "maximum": 3 }],
-    "react/jsx-no-bind": "error",
+    "react/jsx-no-bind": ["error", {"ignoreRefs": true}],
     "react/jsx-no-literals": "off",
     "react/jsx-no-target-blank": "error",
     "react/jsx-pascal-case": "error",

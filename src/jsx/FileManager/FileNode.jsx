@@ -3,6 +3,7 @@ import { autobind } from 'core-decorators';
 import classNames from 'classnames';
 
 import {FileContextMenu} from './ContextMenu.jsx';
+import RenamableNode from './RenamableNode.jsx';
 
 export default class FileNode extends React.Component {
   static propTypes = {
@@ -26,6 +27,14 @@ export default class FileNode extends React.Component {
   handleClick() {
     this.props.onClick(this.props.id);
   }
+  @autobind
+  handleRename(newName) {
+    this.props.onRename(this.props.id, newName);
+  }
+  @autobind
+  handleRenameCancel() {
+    this.setState({renaming: false});
+  }
 
   @autobind
   handleContextMenu(e) {
@@ -39,9 +48,10 @@ export default class FileNode extends React.Component {
   }
 
   @autobind
-  handleRename(e) {
+  handleRenameSelect(e) {
     this.handleHideContextMenu(e);
     e.stopPropagation();
+    this.setState({renaming: true});
   }
 
   @autobind
@@ -55,10 +65,12 @@ export default class FileNode extends React.Component {
 
     return (
       <div className={nodeClasses} onClick={this.handleClick} onContextMenu={this.handleContextMenu}>
-        <i className="fa fa-file-code-o" /> {this.props.name}
+        <i className="fa fa-file-code-o" /> 
+        <RenamableNode name={this.props.name} renaming={this.state.renaming} 
+          onCancel={this.handleRenameCancel} onComplete={this.handleRename} />
         <FileContextMenu 
           display={this.state.showContextMenu} 
-          onSelectRename={this.handleRename} 
+          onSelectRename={this.handleRenameSelect} 
           onSelectDelete={this.handleDelete} 
           onHide={this.handleHideContextMenu}
         />
