@@ -1,7 +1,6 @@
 import React from 'react';
 import { autobind } from 'core-decorators';
 
-import ActionButton from './ActionButton.jsx';
 import FileNode from './FileNode.jsx';
 import TreeView from './TreeView.jsx';
 
@@ -33,15 +32,6 @@ export default class FileTree extends React.Component {
   }
 
   @autobind
-  newFile() {
-    
-  }
-  @autobind
-  newFolder() {
-    
-  }
-
-  @autobind
   handleSelect(key) {
     this.setState({selected: key});
   }
@@ -52,14 +42,6 @@ export default class FileTree extends React.Component {
   @autobind
   handleDelete(key) {
     console.log('deleted', key);
-  }
-  @autobind
-  handleNewChild(key, type) {
-    if(type === 'file') {
-      this.newFile();
-    } else if(type === 'folder') {
-      this.newFolder();
-    }
   }
 
   renderNode(node, index) {
@@ -74,8 +56,7 @@ export default class FileTree extends React.Component {
           onClick={this.handleSelect} 
           onDelete={this.handleDelete}
           onRename={this.handleRename}
-          selected={this.state.selected === index} 
-        />
+          selected={this.state.selected === index} />
       );
     } else {
       return (
@@ -87,8 +68,7 @@ export default class FileTree extends React.Component {
           onFolderDelete={this.handleDelete}
           onFolderRename={this.handleRename}
           onFolderSelect={this.handleSelect}
-          onNewChild={this.handleNewChild}
-          selected={this.state.selected === index} 
+          selected={this.state.selected === index}
         >
           {node.children.map((child, childIndex) => {
             return this.renderNode(child, '' + index + childIndex);
