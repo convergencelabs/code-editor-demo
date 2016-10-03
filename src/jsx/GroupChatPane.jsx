@@ -130,8 +130,7 @@ class ChatInput extends React.Component {
   render() {
     return (
       <div className="chat-input">
-        <input
-          type="text"
+        <textarea
           placeholder="Send Message"
           ref={(e) => this._input = e}
           onKeyDown={this._handleKeyDown.bind(this)}

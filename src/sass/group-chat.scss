@@ -17,23 +17,19 @@
 .chat-input {
   padding: 2px;
   display: flex;
-  border-top: 1px solid lightgray;
+  border-top: 1px solid $border-color;
 
-  input {
-    background: white;
+  textarea {
+    padding: 4px;
+    flex: 1;
+    background: #2F3129;
+    border: none;
+    color: lightgray;
   }
 }
 
-.chat-input input:focus {
+.chat-input textarea:focus {
   outline: none;
-}
-
-.chat-input input {
-  padding: 4px;
-  flex: 1;
-  background: #2F3129;
-  border: none;
-  color: lightgray;
 }
 
 .chat-message {
