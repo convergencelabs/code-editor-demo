@@ -124,6 +124,7 @@ class ChatInput extends React.Component {
     if (event.keyCode === 13 && !event.shiftKey && this._input.value !== "") {
       this.props.onSubmit(this._input.value);
       this._input.value = "";
+      event.preventDefault();
     }
   }
 
