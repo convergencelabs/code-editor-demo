@@ -21,6 +21,26 @@ export default class EditorTabs extends React.Component {
     this.setState({selectedFile: fileId});
   }
 
+  _handleTabClose(fileId) {
+    let removedIndex = 0;
+
+    const newFiles = this.state.files.filter((file, index) => {
+      if (file.id === fileId) {
+        removedIndex = index;
+        return false;
+      }
+      return true;
+    });
+
+    let newSelected = null;
+    if (newFiles.length > 0) {
+      const newIndex = Math.min(removedIndex, newFiles.length - 1);
+      newSelected = newFiles[newIndex].id;
+    }
+
+    this.setState({files: newFiles, selectedFile: newSelected});
+  }
+
   render() {
     const tabButtons = this.state.files.map((file) => {
       return (<EditorTabButton
@@ -29,6 +49,7 @@ export default class EditorTabs extends React.Component {
         title={file.filename}
         active={file.id === this.state.selectedFile}
         onClick={this._handleTabClick.bind(this)}
+        onClose={this._handleTabClose.bind(this)}
       />);
     });
 
@@ -69,7 +90,14 @@ class EditorTabButton extends React.Component {
         onClick={() => this.props.onClick(this.props.id)}
       >
         <span>{this.props.title}</span>
-        <i className="close fa fa-times"/>
+        <i
+          className="close fa fa-times"
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            this.props.onClose(this.props.id)
+          }}
+        />
       </div>
     );
   }
