@@ -15,6 +15,11 @@ export default class Editor extends React.Component {
     this._editor.setTheme('ace/theme/monokai');
     this._editor.getSession().setMode('ace/mode/javascript');
     this._editor.getSession().setValue(editorContents);
+
+    this._editor.getSession().selection.on('changeCursor', (e) => {
+      const cursorPosition = this._editor.getCursorPosition();
+      this.props.onCursorChanged(cursorPosition);
+    });
   }
 
   render() {

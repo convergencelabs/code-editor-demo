@@ -30,3 +30,9 @@
   padding: 2px;
   background: $dark-bg-color;
 }
+
+.editors-pane {
+  flex: 1;
+  border-left: 1px solid lightgray;
+  border-right: 1px solid lightgray;
+}

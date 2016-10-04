@@ -1,6 +1,5 @@
 import React from 'react';
-import {render} from 'react-dom';
-import Editor from './Editor.jsx'
+import EditorPane from './EditorPane.jsx'
 
 export default class EditorTabs extends React.Component {
   constructor(props) {
@@ -34,12 +33,14 @@ export default class EditorTabs extends React.Component {
     });
 
     const editors = this.state.files.map((file) => {
-      const className = 'editor-container' + (file.id === this.state.selectedFile ? ' active' : ' inactive');
-
+      const className = "editor-container " + (file.id === this.state.selectedFile ? 'active' : 'inactive');
       return (
-        <div className={className}>
-          <Editor key={file.id} />
-        </div>);
+        <div
+          key={file.id}
+          className={className}>
+          <EditorPane/>
+        </div>
+      );
     });
 
     return (

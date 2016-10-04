@@ -7,10 +7,13 @@ export default class ParticipantsList extends React.Component {
   }
 
   render() {
+    var line = this.props.cursor.row;
+    var col = this.props.cursor.column;
     return (
       <div className="status-bar">
         <div className="status-bar-content">
-          <span className="status-bar-cursor-indicator">[3, 10]</span>
+          <span className="status-bar-cursor-indicator">Line: {line}, Column: {col}</span>
+          <span className="status-bar-file-type">{this.props.fileType}</span>
         </div>
       </div>
     );

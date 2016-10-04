@@ -46,10 +46,10 @@
   background: #272822;
   border-top: 1px solid $border-color;
   flex: 1;
+  display: flex;
 
   .editor-container {
-    height: 100%;
-    width: 100%;
+    flex: 1;
   }
 
   .editor-container.inactive {

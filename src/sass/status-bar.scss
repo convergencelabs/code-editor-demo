@@ -10,7 +10,12 @@
 
   .status-bar-content {
     .status-bar-cursor-indicator {
+      float: left;
+    }
+
+    .status-bar-file-type {
       float: right;
+      margin: 0 5px;
     }
   }
 }
