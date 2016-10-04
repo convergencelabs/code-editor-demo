@@ -1,7 +1,7 @@
 import React from 'react';
 import {render} from 'react-dom';
 
-export default class ParticipantsList extends React.Component {
+export default class StatusBar extends React.Component {
   constructor(props) {
     super(props);
   }

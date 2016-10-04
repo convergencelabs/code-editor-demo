@@ -27,23 +27,25 @@
   }
 
   .file-tree {
-    margin-left: 5px;
-
-    .sub-tree { overflow-y: hidden; padding: 3px 2px; float: left; clear: left; }
+    margin-left: 3px; 
+    
+    .sub-tree { overflow-y: hidden; padding: 0 2px; float: left; clear: left; }
 
     .node { 
-      padding: 3px 5px; float: left; clear: left; cursor: pointer;
+      float: left; clear: left; cursor: pointer;
 
       i { margin-right: 6px; display: inline-block; vertical-align: middle; }
     }
     .node.file {
+      padding: 3px 5px; 
+
       i { margin-left: 2px; margin-right: 8px; font-size: 14px; }
 
       &.selected { background-color: #fff; border-radius: 4px; }
     }
 
     /* style for the children nodes container */
-    .node-children { margin-left: 16px; margin-bottom: 2px; clear: left; overflow-y: auto; }
+    .node-children { margin-left: 11px; margin-bottom: 2px; clear: left; overflow-y: auto; }
     .node-children.collapsed { height: 0px; }
 
     .arrow { 

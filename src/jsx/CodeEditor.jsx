@@ -4,7 +4,6 @@ import FileManager from './file-manager/FileManager.jsx';
 import EditorTabs from './editor/EditorTabs.jsx';
 import ParticipantsList from './ParticipantsList.jsx';
 import GroupChatPane from './GroupChatPane.jsx';
-import StatusBar from './StatusBar.jsx';
 import Banner from './Banner.jsx';
 
 export default class CodeEditor extends React.Component {
@@ -32,7 +31,6 @@ export default class CodeEditor extends React.Component {
             <GroupChatPane />
           </div>
         </div>
-        <StatusBar className="status-bar" />
       </div>
     );
   }
