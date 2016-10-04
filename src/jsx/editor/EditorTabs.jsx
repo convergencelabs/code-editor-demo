@@ -89,7 +89,7 @@ class EditorTabButton extends React.Component {
         className={className}
         onClick={() => this.props.onClick(this.props.id)}
       >
-        <span>{this.props.title}</span>
+        <span className="editor-tab-title">{this.props.title}</span>
         <i
           className="close fa fa-times"
           onClick={(e) => {
