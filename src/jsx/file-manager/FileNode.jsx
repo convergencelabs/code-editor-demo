@@ -28,6 +28,11 @@ export default class FileNode extends React.Component {
     this.props.onClick(this.props.id);
   }
   @autobind
+  handleDoubleClick() {
+    console.log('double clicked on', this.props.name);
+  }
+
+  @autobind
   handleRename(newName) {
     this.props.onRename(this.props.id, newName);
     this.setState({renaming: false});
@@ -66,7 +71,12 @@ export default class FileNode extends React.Component {
     const nodeClasses = classNames("node", "file", this.props.selected ? 'selected' : '');
 
     return (
-      <div className={nodeClasses} onClick={this.handleClick} onContextMenu={this.handleContextMenu}>
+      <div 
+        className={nodeClasses} 
+        onClick={this.handleClick} 
+        onContextMenu={this.handleContextMenu} 
+        onDoubleClick={this.handleDoubleClick}
+      >
         <i className="fa fa-file-code-o" /> 
         <RenamableNode name={this.props.name} renaming={this.state.renaming} 
           onCancel={this.handleRenameCancel} onComplete={this.handleRename} />

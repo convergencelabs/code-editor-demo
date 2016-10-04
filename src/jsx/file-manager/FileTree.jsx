@@ -66,7 +66,7 @@ export default class FileTree extends React.Component {
     } else {
       return (
         <TreeView 
-          defaultCollapsed={node.collapsed || false} 
+          defaultCollapsed={!!node.collapsed} 
           key={index}   
           id={index}
           nodeLabel={name} 
