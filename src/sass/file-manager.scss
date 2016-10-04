@@ -1,6 +1,7 @@
 @import 'variables.scss';
 
 .file-manager {
+  white-space: nowrap;
   font-family: $app-font;
   font-size: 14px;
   flex: 1;
@@ -28,7 +29,6 @@
   }
 
   .file-tree {
-    white-space: nowrap;
     margin-left: 5px;
 
     .sub-tree { overflow-y: hidden; padding: 3px 2px; float: left; clear: left; }

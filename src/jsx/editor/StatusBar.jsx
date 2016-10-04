@@ -1,5 +1,5 @@
 import React from 'react';
-import {render} from 'react-dom';
+import EditorParticipants from './EditorParticipants.jsx';
 
 export default class ParticipantsList extends React.Component {
   constructor(props) {
@@ -12,8 +12,9 @@ export default class ParticipantsList extends React.Component {
     return (
       <div className="status-bar">
         <div className="status-bar-content">
-          <span className="status-bar-cursor-indicator">Line: {line}, Column: {col}</span>
           <span className="status-bar-file-type">{this.props.fileType}</span>
+          <span className="status-bar-cursor-indicator">Line: {line}, Column: {col}</span>
+          <EditorParticipants participants={["user1, user2"]}/>
         </div>
       </div>
     );

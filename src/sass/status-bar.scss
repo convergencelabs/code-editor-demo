@@ -11,11 +11,20 @@
   .status-bar-content {
     .status-bar-cursor-indicator {
       float: left;
+      margin: 0 5px;
     }
 
     .status-bar-file-type {
       float: right;
       margin: 0 5px;
+    }
+
+    .status-bar-participants {
+      float: right;
+      margin-right: 30px;
+      span {
+        margin-left: 5px;
+      }
     }
   }
 }
