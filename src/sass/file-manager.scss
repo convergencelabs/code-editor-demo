@@ -3,11 +3,12 @@
 .file-manager {
   font-family: $app-font;
   font-size: 14px;
-  width: 300px;
+  flex: 1;
   background-color: #40423a;
   color: white;
   -webkit-user-select: none;
   user-select: none;
+  overflow: auto;
 
   .file-actions {
     padding: 5px; font-size: 12px;
@@ -27,7 +28,7 @@
   }
 
   .file-tree {
-    margin-left: 3px; 
+    white-space: nowrap; margin-left: 5px;
 
     .sub-tree { overflow-y: hidden; padding: 0 2px; float: left; clear: left; }
 
