@@ -4,18 +4,18 @@ import { connect } from 'react-redux'
 import CodeEditor from '../CodeEditor.jsx';
 import * as Actions from '../../js/actions'
 
-const App = ({tree, editors, actions}) => (
-  <CodeEditor tree={tree} editors={editors} actions={actions} />
+const App = ({fileManager, editors, actions}) => (
+  <CodeEditor file-manager={fileManager} editors={editors} actions={actions} />
 )
 
 App.propTypes = {
-  tree: PropTypes.array.isRequired,
+  fileManager: PropTypes.array.isRequired,
   editors: PropTypes.object.isRequired,
   actions: PropTypes.object.isRequired
 }
 
 const mapStateToProps = state => ({
-  tree: state.tree,
+  fileManager: state.projectFiles,
   editors: state.editors
 })
 
