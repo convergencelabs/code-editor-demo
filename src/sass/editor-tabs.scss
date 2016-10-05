@@ -16,7 +16,6 @@
 
   .editor-tab-button {
     color: lightgray;
-    background: #2F3129;
     font-size: 13px;
     display: inline-block;
     padding: 5px;
@@ -41,6 +40,11 @@
 }
 
 .editor-tab-buttons .active {
+  border-bottom-color: transparent;
+  background: #2F3129;
+}
+
+.editor-tab-buttons .inactive {
   border-bottom-color: transparent;
 }
 

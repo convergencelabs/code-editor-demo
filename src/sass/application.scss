@@ -48,3 +48,22 @@ $fa-font-path: "../../node_modules/font-awesome/fonts";
     border-bottom-right-radius: 4px;
   }
 }
+
+i.fabutton {
+  background: #252525;
+  padding: 3px;
+  margin: 0 5px;
+  font-size: 12px;
+  width: 12px;
+  height: 12px;
+  text-align: center;
+  cursor: pointer;
+}
+
+i.fabutton.enabled:hover {
+  color: $highlight-color;
+}
+
+i.fabutton.enabled:active {
+  transform: translateY(2px);
+}

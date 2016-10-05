@@ -1,34 +1,44 @@
 import React from 'react';
 import Rcslider from 'rc-slider';
 import moment from 'moment';
+import FAButton from '../util/FAButton.jsx';
 
 const dateFormat = 'M/d/YYYY @ h:mma';
 
-export default class ParticipantsList extends React.Component {
+export default class PlaybackBar extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
+      maxVersion: 125,
       version: 125,
-      timestamp: moment(new Date()).format(dateFormat)
+      timestamp: moment(new Date()).format(dateFormat),
+      hasNext: false,
+      hasPrev: true
     }
   }
 
   _sliderChanged(val) {
-    this.setState({
-      version: val
-    });
+    this._onVersionChanged(val);
+  }
+
+  _onPlay() {
+
   }
 
   _onNext() {
-    this.setState({
-      version: this.state.version + 1
-    });
+    this._onVersionChanged(this.state.version + 1);
   }
 
   _onPrev() {
+    this._onVersionChanged(this.state.version - 1);
+  }
+
+  _onVersionChanged(newVersion) {
     this.setState({
-      version: this.state.version - 1
+      version: newVersion,
+      hasNext: newVersion < this.state.maxVersion,
+      hasPrev: newVersion > 0
     });
   }
 
@@ -38,14 +48,27 @@ export default class ParticipantsList extends React.Component {
         <div className="playback-top">
           <div className="version-meta">
             <span className="version-label">Version: </span>
-            <span className="version-labe">{this.state.version}</span>
-            <span className="time-label">Time: </span>
-            <span className="time">{this.state.timestamp}</span>
+            <span className="version">{this.state.version} ({this.state.timestamp})</span>
           </div>
           <div className="playback-controls">
-            <i onClick={() => this._onPrev()} className="button fa fa-step-backward"/>
-            <i onClick={() => this._onNext()} className="button fa fa-step-forward"/>
-            <i className="button fa fa-play"/>
+            <FAButton
+              title="Step Backward"
+              icon="fa-step-backward"
+              onClick={() => this._onPrev()}
+              enabled={this.state.hasPrev}
+            />
+            <FAButton
+              title="Step Forward"
+              icon="fa-step-forward"
+              onClick={() => this._onNext()}
+              enabled={this.state.hasNext}
+            />
+            <FAButton
+              title="Play"
+              icon="fa-play"
+              onClick={() => this._onPlay()}
+              enabled={this.state.hasNext}
+            />
           </div>
         </div>
         <Rcslider
