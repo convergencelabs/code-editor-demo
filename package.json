@@ -14,7 +14,9 @@
     "core-decorators": "^0.12.3",
     "font-awesome": "^4.6.3",
     "react-onclickoutside": "^4.5.0",
+    "react-redux": "^4.4.5",
     "react-uikit-icons": "^2.0.2",
+    "redux": "^3.6.0",
     "rxjs": "5.0.0-beta.12"
   },
   "devDependencies": {
@@ -45,6 +47,7 @@
     "react-dom": "^15.3.1",
     "react-hot-loader": "^3.0.0-beta.5",
     "react-split-pane": "^0.1.45",
+    "redux-devtools": "^3.3.1",
     "sass-loader": "^4.0.2",
     "style-loader": "^0.13.1",
     "webpack": "^1.13.2",
