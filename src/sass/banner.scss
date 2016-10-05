@@ -6,12 +6,11 @@
   font-family: $app-font;
   font-size: 14px;
   border-bottom: 1px solid $border-color;
-  padding: 4px;
+  padding: 2px;
 
   .logo {
-    margin-left: 5px;
+    margin: 3px 10px 0 5px;
     height: 20px;
-    margin-right: 10px;
   }
 
   .title {
@@ -20,7 +19,7 @@
   }
 
   .tray {
-    padding-top: 4px;
+    padding-top: 6px;
     float: right;
 
     .user-icon {
