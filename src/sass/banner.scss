@@ -18,4 +18,22 @@
     position: relative;
     top: -4px;
   }
+
+  .tray {
+    padding-top: 4px;
+    float: right;
+
+    .user-icon {
+      margin: 0 5px;
+    }
+
+    .logout-icon {
+      margin: 0 10px 0 20px;
+      cursor: pointer;
+    }
+
+    .logout-icon:hover {
+      color: $highlight-color;
+    }
+  }
 }

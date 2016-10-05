@@ -21,7 +21,7 @@ export default class CodeEditor extends React.Component {
   render() {
     return (
       <div className="code-editor">
-        <Banner className="status-bar" />
+        <Banner className="status-bar" username="Test User"/>
         <div className="top-pane">
           <SplitPanel direction="horizontal" defaultSize={200}>
             <FileManager onFileSelect={this.handleFileSelect} selectedFile={this.state.selectedFile } />
