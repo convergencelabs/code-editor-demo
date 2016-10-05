@@ -1,6 +1,11 @@
-import {render} from 'react-dom';
-import CodeEditor from "./CodeEditor.jsx";
 import React from 'react';
+import {render} from 'react-dom';
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
+
+import App from "./containers/App.jsx";
+import reducer from '../js/reducers'
+import data from '../js/data';
 
 require("!style!css!sass!../sass/application.scss");
 require("!style!css!sass!../sass/banner.scss");
@@ -14,7 +19,11 @@ require("!style!css!sass!../sass/status-bar.scss");
 require("!style!css!sass!../sass/editor-tabs.scss");
 require("!style!css!sass!../../node_modules/rc-slider/assets/index.css");
 
+const store = createStore(reducer, data);
+
 render(
-  <CodeEditor></CodeEditor>,
+  <Provider store={store}>
+    <App />
+  </Provider>,
   document.getElementById('code-editor')
 );

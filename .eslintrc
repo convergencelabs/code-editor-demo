@@ -15,7 +15,6 @@
   "rules": {
     "strict": 0,
     // React
-    "react/forbid-prop-types": "error",
     "react/no-multi-comp": [ "error", { "ignoreStateless": true }],
     "react/no-string-refs": "error",
     "react/prefer-es6-class": "error",
