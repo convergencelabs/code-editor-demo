@@ -1,5 +1,4 @@
 import React from 'react';
-
 import Editor from './Editor.jsx';
 import StatusBar from './StatusBar.jsx';
 import PlaybackBar from './PlaybackBar.jsx';
