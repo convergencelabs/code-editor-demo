@@ -41,7 +41,7 @@
     .node.file {
       padding: 3px 5px; 
 
-      i { margin-left: 2px; margin-right: 8px; font-size: 14px; }
+      i { margin-left: 2px; margin-right: 8px; font-size: 14px; color: lightgreen;}
     }
     .new-node { padding: 0 5px 3px 5px; }
 
@@ -60,7 +60,7 @@
     .folder-label { 
       padding: 3px 5px; display: inline-block; 
 
-      i { margin-right: 5px; }
+      i { margin-right: 5px; color: orange}
     }
 
     .node.file.selected, .folder-label.selected { background-color: #23b3e2; border-radius: 4px; }
