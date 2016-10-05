@@ -1,6 +1,59 @@
+@import 'variables.scss';
+
 .editor-pane {
   height: 100%;
   width: 100%;
   display: flex;
   flex-direction: column;
+}
+
+.playback-bar {
+  background: #2F3129;
+  padding: 10px;
+  color: lightgray;
+
+  .playback-top {
+    display: table;
+    width: 100%;
+
+    .version-meta {
+      font-family: $app-font;
+      font-size: 12px;
+
+      display: table-cell;
+      vertical-align: middle;
+      text-align: left;
+      .time-label {
+        margin-left: 10px;
+      }
+    }
+
+    .playback-controls {
+      text-align: right;
+
+      .button {
+        background: #252525;
+        padding: 3px;
+        margin: 0 5px;
+        font-size: 12px;
+        width: 12px;
+        height: 12px;
+        text-align: center;
+        cursor: pointer;
+      }
+
+      .button:hover {
+         color: $highlight-color;
+       }
+
+      .button:active {
+        transform: translateY(2px);
+      }
+    }
+  }
+
+  .rc-slider {
+    flex: 1;
+    display: inline-block;
+  }
 }

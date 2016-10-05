@@ -1,6 +1,7 @@
 @import 'variables.scss';
 
 .file-manager {
+  white-space: nowrap;
   font-family: $app-font;
   font-size: 14px;
   flex: 1;

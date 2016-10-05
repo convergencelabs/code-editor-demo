@@ -2,6 +2,7 @@ import React from 'react';
 
 import Editor from './Editor.jsx';
 import StatusBar from './StatusBar.jsx';
+import PlaybackBar from './PlaybackBar.jsx';
 
 export default class EditorPane extends React.Component {
   constructor(props) {
@@ -21,6 +22,7 @@ export default class EditorPane extends React.Component {
   render() {
     return (
       <div className="editor-pane">
+        <PlaybackBar />
         <Editor
           onCursorChanged={(c) => this._cursorChanged(c)}
         />
