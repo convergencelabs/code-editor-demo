@@ -22,8 +22,7 @@ const files = {
 
 export default class FileManager extends React.Component {
   static propTypes = {
-    onFileSelect: PropTypes.func,
-    selectedFile: PropTypes.string
+    projectFiles: PropTypes.array.isRequired
   }
 
   constructor(props) {
@@ -52,7 +51,7 @@ export default class FileManager extends React.Component {
         </div>
         <FileTree 
           ref={(c) => this._tree = c}
-          data={files} 
+          data={this.props.projectFiles} 
           onFileSelect={this.props.onFileSelect} 
           selectedFile={this.props.selectedFile} />
       </div>

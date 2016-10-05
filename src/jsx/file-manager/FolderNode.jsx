@@ -78,19 +78,23 @@ export default class FolderNode extends React.Component {
     const nodeClasses = classNames("folder-label", this.props.selected ? 'selected' : '');
     const iconClasses = classNames('fa', this.props.collapsed ? 'fa-folder-o' : 'fa-folder-open-o');
 
+    let contextMenu;
+    if(this.state.showContextMenu) {
+      <FolderContextMenu 
+        onHide={this.handleHideContextMenu}
+        onSelectDelete={this.handleDelete} 
+        onSelectNewFile={this.handleNewFile} 
+        onSelectNewFolder={this.handleNewFolder} 
+        onSelectRename={this.handleRenameSelect} 
+      />
+    }
+
     return (
       <div className={nodeClasses} onClick={this.handleClick} onContextMenu={this.handleContextMenu}>
         <i className={iconClasses} />
         <RenamableNode name={this.props.name} renaming={this.state.renaming} 
           onCancel={this.handleRenameCancel} onComplete={this.handleRename} />
-        <FolderContextMenu 
-          display={this.state.showContextMenu} 
-          onHide={this.handleHideContextMenu}
-          onSelectDelete={this.handleDelete} 
-          onSelectNewFile={this.handleNewFile} 
-          onSelectNewFolder={this.handleNewFolder} 
-          onSelectRename={this.handleRenameSelect} 
-        />
+        {contextMenu}
       </div>
     );
   }  

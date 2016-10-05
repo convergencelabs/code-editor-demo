@@ -34,12 +34,14 @@ const data = {
     "active": "2"
   },
   "tree": [{
+    "id": "f1",
     "name": "js",
     "children": [{
       "fileId": "1"
     }, {
       "fileId": "2"
     }, {
+      "id": "f11",
       "name": "controllers",
       "selected": true,
       "children": [{
@@ -49,6 +51,7 @@ const data = {
       }]
     }]
   }, {
+    "id": "f2",
     "name": "sass",
     "children": []
   }]

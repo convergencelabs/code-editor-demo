@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 
 import App from "./containers/App.jsx";
 import reducer from '../js/reducers'
+import data from '../js/data';
 
 require("!style!css!sass!../sass/application.scss");
 require("!style!css!sass!../sass/banner.scss");
@@ -18,7 +19,7 @@ require("!style!css!sass!../sass/status-bar.scss");
 require("!style!css!sass!../sass/editor-tabs.scss");
 require("!style!css!sass!../../node_modules/rc-slider/assets/index.css");
 
-const store = createStore(reducer);
+const store = createStore(reducer, data);
 
 render(
   <Provider store={store}>

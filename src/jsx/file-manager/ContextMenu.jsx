@@ -23,11 +23,9 @@ FileContextMenu.propTypes = {
 
 
 export function FolderContextMenu(props) {
-  const menuStyle = {display: props.display ? 'block' : 'none'};
-
   return (
-    <Popover display={props.display} onHide={props.onHide}>
-      <div className="context-menu" style={menuStyle}>
+    <Popover onHide={props.onHide}>
+      <div className="context-menu">
         <ul>
           <li onClick={props.onSelectRename}>Rename...</li>
           <li onClick={props.onSelectDelete}>Delete folder</li>
@@ -39,7 +37,6 @@ export function FolderContextMenu(props) {
   );
 }
 FolderContextMenu.propTypes = {
-  display: PropTypes.bool.isRequired,
   onHide: PropTypes.func.isRequired,
   onSelectDelete: PropTypes.func.isRequired,
   onSelectNewFile: PropTypes.func.isRequired,
