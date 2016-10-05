@@ -18,6 +18,10 @@ const files = [{
       ]
     }
   ]
+}, {
+  name: 'sass',
+  collapsed: true,
+  children: []
 }];
 
 export default class FileTree extends React.Component {
@@ -29,6 +33,7 @@ export default class FileTree extends React.Component {
     super(props);
 
     this.state = {};
+    this.rootId = 'root';
   }
 
   @autobind
@@ -61,7 +66,7 @@ export default class FileTree extends React.Component {
     } else {
       return (
         <TreeView 
-          defaultCollapsed={false} 
+          defaultCollapsed={!!node.collapsed} 
           key={index}   
           id={index}
           nodeLabel={name} 
@@ -81,9 +86,18 @@ export default class FileTree extends React.Component {
   render() {
     return (
       <div className="file-tree">
-        {files.map((node, i) => {
-          return this.renderNode(node, i);
-        })}
+        <TreeView 
+          defaultCollapsed={false} 
+          key={this.rootId}   
+          id={this.rootId}
+          nodeLabel="Project" 
+          onFolderSelect={this.handleSelect}
+          selected={this.state.selected === this.rootId}
+        >
+          {files.map((node, i) => {
+            return this.renderNode(node, i);
+          })}
+        </TreeView>
       </div>
     );
   }

@@ -1,7 +1,7 @@
 import React from 'react';
 import EditorParticipants from './EditorParticipants.jsx';
 
-export default class ParticipantsList extends React.Component {
+export default class StatusBar extends React.Component {
   constructor(props) {
     super(props);
   }
