@@ -1,10 +1,15 @@
-import React from 'react';
+import React, {PropTypes} from 'react';
 import EditorParticipants from './EditorParticipants.jsx';
 
 export default class StatusBar extends React.Component {
-  constructor(props) {
-    super(props);
-  }
+
+  static propTypes = {
+    multiUser: PropTypes.bool
+  };
+
+  static defaultProps = {
+    historical: true
+  };
 
   render() {
     var line = this.props.cursor.row;
@@ -14,7 +19,11 @@ export default class StatusBar extends React.Component {
         <div className="status-bar-content">
           <span className="status-bar-file-type">{this.props.fileType}</span>
           <span className="status-bar-cursor-indicator">Line: {line}, Column: {col}</span>
-          <EditorParticipants participants={["user1, user2"]}/>
+          {(() => {
+            if (this.props.multiUser) {
+              return <EditorParticipants participants={["user1, user2"]}/>;
+            }
+          })()}
         </div>
       </div>
     );

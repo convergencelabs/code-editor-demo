@@ -1,13 +1,18 @@
-import React from 'react';
+import React, {PropTypes} from 'react';
 import ace from 'brace';
 
 require('brace/mode/javascript');
 require('brace/theme/monokai');
 
 export default class Editor extends React.Component {
-  constructor(props) {
-    super(props);
-  }
+
+  static propTypes = {
+    historical: PropTypes.bool
+  };
+
+  static defaultProps = {
+    historical: false
+  };
 
   componentDidMount() {
     this._editor = ace.edit(this._container);
@@ -19,6 +24,8 @@ export default class Editor extends React.Component {
       const cursorPosition = this._editor.getCursorPosition();
       this.props.onCursorChanged(cursorPosition);
     });
+
+    this._editor.setReadOnly(this.props.historical)
   }
 
   render() {

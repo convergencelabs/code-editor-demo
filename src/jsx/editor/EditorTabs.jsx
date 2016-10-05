@@ -7,9 +7,9 @@ export default class EditorTabs extends React.Component {
 
     this.state = {
       files: [
-        {filename: 'Editor.jsx', id: "some path 1"},
-        {filename: 'GroupChatPane.jsx', id: "some path 2"},
-        {filename: 'ParticipantsList.jsx', id: "some path 3"}
+        {filename: 'Editor.jsx', id: "some path 1", historical: false},
+        {filename: 'GroupChatPane.jsx', id: "some path 2", historical: true},
+        {filename: 'ParticipantsList.jsx', id: "some path 3", historical: false}
       ]
     };
     if (this.state.files.length > 0) {
@@ -59,7 +59,7 @@ export default class EditorTabs extends React.Component {
         <div
           key={file.id}
           className={className}>
-          <EditorPane/>
+          <EditorPane historical={file.historical}/>
         </div>
       );
     });

@@ -1,9 +1,13 @@
-import React from 'react';
+import React, {PropTypes} from 'react';
 import Editor from './Editor.jsx';
 import StatusBar from './StatusBar.jsx';
 import PlaybackBar from './PlaybackBar.jsx';
 
 export default class EditorPane extends React.Component {
+  static propTypes = {
+    historical: PropTypes.bool.isRequired
+  };
+
   constructor(props) {
     super(props);
     this.state = {
@@ -21,13 +25,15 @@ export default class EditorPane extends React.Component {
   render() {
     return (
       <div className="editor-pane">
-        <PlaybackBar />
+        {(() => {if (this.props.historical) return <PlaybackBar />; })()}
         <Editor
           onCursorChanged={(c) => this._cursorChanged(c)}
+          historical={this.props.historical}
         />
         <StatusBar
           fileType="JavaScript"
           cursor={this.state.cursor}
+          multiUser={!this.props.historical}
         />
       </div>
     );

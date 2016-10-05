@@ -83,7 +83,9 @@ export default class FileNode extends React.Component {
         <FileContextMenu 
           display={this.state.showContextMenu} 
           onSelectRename={this.handleRenameSelect} 
-          onSelectDelete={this.handleDelete} 
+          onSelectDelete={this.handleDelete}
+          onSelectHistory={() => {}}
+          onSelectOpen={() => {}}
           onHide={this.handleHideContextMenu}
         />
       </div>

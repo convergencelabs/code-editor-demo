@@ -156,6 +156,7 @@ class ChatInput extends React.Component {
           placeholder="Send Message"
           ref={(e) => this._input = e}
           onKeyDown={this._handleKeyDown.bind(this)}
+          rows="3"
         />
       </div>
     );
