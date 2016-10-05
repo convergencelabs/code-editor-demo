@@ -1,27 +1,26 @@
 import React, { PropTypes } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import Header from '../CodeEditor.jsx';
+import CodeEditor from '../CodeEditor.jsx';
 import * as Actions from '../../js/actions'
 
-const App = ({todos, actions}) => (
-  <div>
-    <Header addTodo={actions.addTodo} />
-    <MainSection todos={todos} actions={actions} />
-  </div>
+const App = ({tree, editors, actions}) => (
+  <CodeEditor tree={tree} editors={editors} actions={actions} />
 )
 
 App.propTypes = {
-  todos: PropTypes.array.isRequired,
+  tree: PropTypes.array.isRequired,
+  editors: PropTypes.object.isRequired,
   actions: PropTypes.object.isRequired
 }
 
 const mapStateToProps = state => ({
-  todos: state.todos
+  tree: state.tree,
+  editors: state.editors
 })
 
 const mapDispatchToProps = dispatch => ({
-    actions: bindActionCreators(Actions, dispatch)
+  actions: bindActionCreators(Actions, dispatch)
 })
 
 export default connect(

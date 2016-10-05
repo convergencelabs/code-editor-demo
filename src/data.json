@@ -26,8 +26,7 @@
         "parentId": "11",
         "content": "var foo = bar;"
       }
-    },
-    "allIds": ["1", "2", "3", "4"]
+    }
   },
   "editors": {
     "byId": {
@@ -35,32 +34,25 @@
       "2": {"fileId": "2", "cursorPosition": {"line": 1, "column": 1}},
       "3": {"fileId": "3", "cursorPosition": {"line": 3, "column": 25}}
     },
-    "allIds": ["2", "3", "1"]
-  },
-  "activeEditor": "2",
-  "folders": {
-    "byId": {
-      "f1": {"id": "f1", "name": "js"},
-      "f2": {"id": "f2", "name": "sass"},
-      "f11": {"id": "11", "name": "controllers"}
-    }
+    "allIds": ["2", "3", "1"],
+    "active": "2"
   },
   "tree": [{
-    "nodeId": "f1",
+    "name": "js",
     "children": [{
-      "nodeId": "1"
+      "fileId": "1"
     }, {
-      "nodeId": "2"
+      "fileId": "2"
     }, {
-      "nodeId": "f11",
+      "name": "controllers",
       "children": [{
-        "nodeId": "3"
+        "fileId": "3"
       }, {
-        "nodeId": "4"
+        "fileId": "4"
       }]
     }]
   }, {
-    "nodeId": "f2",
+    "name": "sass",
     "children": []
   }],
   "treeSelection": "f11"
