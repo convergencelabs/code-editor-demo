@@ -9,9 +9,6 @@ export default class FileNode extends React.Component {
   static propTypes = {
     id: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.number]).isRequired,
     name: PropTypes.string.isRequired,
-    onClick: PropTypes.func.isRequired,
-    onDelete: PropTypes.func,
-    onRename: PropTypes.func,
     selected: PropTypes.bool,
   };
 

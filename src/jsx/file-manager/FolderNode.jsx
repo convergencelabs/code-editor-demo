@@ -10,11 +10,7 @@ export default class FolderNode extends React.Component {
     collapsed: React.PropTypes.bool,
     id: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.number]).isRequired,
     name: PropTypes.string.isRequired,
-    onClick: PropTypes.func.isRequired,
-    onDelete: PropTypes.func,
-    onNewChild: PropTypes.func,
-    onRename: PropTypes.func,
-    selected: PropTypes.bool,
+    selected: React.PropTypes.bool
   };
 
   constructor(props) {

@@ -1,44 +1,29 @@
 import React, {PropTypes} from 'react';
-import { autobind } from 'core-decorators';
 
 import ActionButton from './ActionButton.jsx';
 import FileTree from './FileTree.jsx';
 
-const files = {
-  name: 'js',
-  collapsed: false,
-  children: [
-    { name: 'index.js' }, 
-    { name: 'app.js' }, 
-    { name: 'controllers', 
-      collapsed: false, 
-      children: [
-        { name: 'header.js' }, 
-        { name: 'footer.js' }
-      ]
-    }
-  ]
-};
-
 export default class FileManager extends React.Component {
   static propTypes = {
-    projectFiles: PropTypes.array.isRequired
+    actions: PropTypes.object.isRequired,
+    files: PropTypes.object.isRequired,
+    folders: PropTypes.object.isRequired,
   }
 
   constructor(props) {
     super(props);
   }
 
-  @autobind
-  handleNewFile() {
-    this._tree.newFile();
+  handleNewFile = () => {
+    this.props.actions.addNewNode('file', this.props.folders.selectedId || 'root');
   }
-  @autobind
-  handleNewFolder() {
-    this._tree.newFolder();
+  handleNewFolder = () => {
+    this.props.actions.addNewNode('folder', this.props.folders.selectedId || 'root');
   } 
 
   render() {
+    let {actions, files, folders} = this.props;
+
     return (
       <div className="file-manager">
         <div className="section-title">Project</div>
@@ -49,11 +34,7 @@ export default class FileManager extends React.Component {
             className="add-folder" 
             onClick={this.handleNewFolder} />
         </div>
-        <FileTree 
-          ref={(c) => this._tree = c}
-          data={this.props.projectFiles} 
-          onFileSelect={this.props.onFileSelect} 
-          selectedFile={this.props.selectedFile} />
+        <FileTree actions={actions} files={files} folders={folders} />
       </div>
     );
   }

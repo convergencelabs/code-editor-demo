@@ -33,27 +33,31 @@ const data = {
     "allIds": ["2", "3", "1"],
     "active": "2"
   },
-  "tree": [{
-    "id": "f1",
-    "name": "js",
-    "children": [{
-      "fileId": "1"
-    }, {
-      "fileId": "2"
-    }, {
-      "id": "f11",
-      "name": "controllers",
-      "selected": true,
-      "children": [{
-        "fileId": "3"
-      }, {
-        "fileId": "4"
-      }]
-    }]
-  }, {
-    "id": "f2",
-    "name": "sass",
-    "children": []
-  }]
+  "folders": {
+    "byId": {
+      "root": {
+        "id": "root",
+        "name": "Project",
+        "childIds": ["f1", "f2"]
+      },
+      "f1": {
+        "id": "f1",
+        "name": "js",
+        "childIds": ["1", "2", "f11"]
+      }, 
+      "f11": {
+        "id": "f11",
+        "name": "controllers",
+        "childIds": ["3", "4"],
+        "parentId": "f1"
+      },
+      "f2": {
+        "id": "f2",
+        "name": "sass",
+        "childIds": []
+      }
+    },
+    "selectedId": "f11"
+  }
 };
 export default data;
