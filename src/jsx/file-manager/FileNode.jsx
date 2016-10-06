@@ -7,7 +7,8 @@ import RenamableNode from './RenamableNode.jsx';
 
 export default class FileNode extends React.Component {
   static propTypes = {
-    id: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.number]).isRequired,
+    actions: PropTypes.object.isRequired,
+    id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     selected: PropTypes.bool,
   };
@@ -22,7 +23,7 @@ export default class FileNode extends React.Component {
 
   @autobind
   handleClick() {
-    this.props.onClick(this.props.id);
+    this.props.actions.selectNode(this.props.id);
   }
   @autobind
   handleDoubleClick() {

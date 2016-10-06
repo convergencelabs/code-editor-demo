@@ -7,10 +7,11 @@ import RenamableNode from './RenamableNode.jsx';
 
 export default class FolderNode extends React.Component {
   static propTypes = {
-    collapsed: React.PropTypes.bool,
-    id: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.number]).isRequired,
+    actions: PropTypes.object.isRequired,
+    collapsed: PropTypes.bool,
+    id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
-    selected: React.PropTypes.bool
+    selected: PropTypes.bool
   };
 
   constructor(props) {
@@ -21,9 +22,8 @@ export default class FolderNode extends React.Component {
     };
   }
 
-  @autobind
-  handleClick() {
-    this.props.onClick(this.props.id);
+  handleClick = () => {
+    this.props.actions.selectNode(this.props.id);
   }
   @autobind
   handleRename(newName) {

@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import SplitPanel from 'react-split-pane';
 
-import * as Actions from '../../js/actions'
+import * as actions from '../../js/actions'
 
 import FileManager from '../file-manager/FileManager.jsx';
 import EditorTabs from '../editor/EditorTabs.jsx';
@@ -47,7 +47,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  actions: bindActionCreators(Actions, dispatch)
+  actions: bindActionCreators(actions, dispatch)
 })
 
 export default connect(

@@ -9,6 +9,7 @@ import FolderNode from './FolderNode.jsx';
 
 export default class TreeView extends React.Component {
   static propTypes = {
+    actions: PropTypes.object.isRequired,
     collapsed: PropTypes.bool,
     defaultCollapsed: PropTypes.bool,
     folder: PropTypes.object.isRequired,
@@ -47,10 +48,7 @@ export default class TreeView extends React.Component {
   }
   @autobind
   handleNewChildCancel() {
-    this.setState({
-      newEntity: false,
-      newEntityName: ''
-    });
+    this.props.actions.cancelNewNode(this.props.folder.id);
   }
   @autobind
   handleEntityNamed(name) {
@@ -72,13 +70,16 @@ export default class TreeView extends React.Component {
             files={files}
             folder={folder} 
             folders={folders}
+            key={id}
             selectedId={folders.selectedId} />
         ) 
       } else {
         const file = files.byId[id];
         return (
           <FileNode 
+            actions={actions}
             id={file.id}
+            key={id}
             name={file.name} 
             selected={folders.selectedId === file.id} />
         );
@@ -102,10 +103,10 @@ export default class TreeView extends React.Component {
     if(folder.hasOwnProperty('newNode')) {
       placeholderNode = (
         <NewNodePlaceholder 
-          name={this.state.newEntityName} 
+          name={''} 
           onCancel={this.handleNewChildCancel} 
           onComplete={this.handleEntityNamed} 
-          type={this.folder.newNode} />
+          type={folder.newNode} />
       );
     }
 
@@ -114,6 +115,7 @@ export default class TreeView extends React.Component {
         <div className="node">
           <Collapser onClick={this.handleCollapserClick} collapsed={collapsed} />
           <FolderNode 
+            actions={actions}
             collapsed={collapsed}
             id={folder.id}
             name={folder.name} 
