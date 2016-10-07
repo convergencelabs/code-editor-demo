@@ -7,7 +7,7 @@ import RenamableNode from './RenamableNode.jsx';
 
 export default class FileNode extends React.Component {
   static propTypes = {
-    actions: PropTypes.object.isRequired,
+    actionCreator: PropTypes.object.isRequired,
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     selected: PropTypes.bool,
@@ -23,11 +23,11 @@ export default class FileNode extends React.Component {
 
   @autobind
   handleClick() {
-    this.props.actions.selectNode(this.props.id);
+    this.props.actionCreator.selectNode(this.props.id);
   }
   @autobind
-  handleDoubleClick() {
-    console.log('double clicked on', this.props.name);
+  handleOpen() {
+    this.props.actionCreator.openFile(this.props.id);
   }
 
   @autobind
@@ -68,24 +68,30 @@ export default class FileNode extends React.Component {
   render() {
     const nodeClasses = classNames("node", "file", this.props.selected ? 'selected' : '');
 
+    let contextMenu;
+    if(this.state.showContextMenu) {
+      contextMenu = (
+        <FileContextMenu 
+          onHide={this.handleHideContextMenu}
+          onSelectDelete={this.handleDelete} 
+          onSelectHistory={this.handleHistory}
+          onSelectOpen={this.handleOpen}
+          onSelectRename={this.handleRenameSelect} 
+        />
+      );
+    }
+
     return (
       <div 
         className={nodeClasses} 
         onClick={this.handleClick} 
         onContextMenu={this.handleContextMenu} 
-        onDoubleClick={this.handleDoubleClick}
+        onDoubleClick={this.handleOpen}
       >
         <i className="fa fa-file-code-o" /> 
         <RenamableNode name={this.props.name} renaming={this.state.renaming} 
           onCancel={this.handleRenameCancel} onComplete={this.handleRename} />
-        <FileContextMenu 
-          display={this.state.showContextMenu} 
-          onSelectRename={this.handleRenameSelect} 
-          onSelectDelete={this.handleDelete}
-          onSelectHistory={() => {}}
-          onSelectOpen={() => {}}
-          onHide={this.handleHideContextMenu}
-        />
+        {contextMenu}
       </div>
     );
   }  

@@ -4,9 +4,9 @@ import TreeView from './TreeView.jsx';
 
 export default class FileTree extends React.Component {
   static propTypes = {
-    actions: PropTypes.object.isRequired,
+    actionCreator: PropTypes.object.isRequired,
     files: PropTypes.object.isRequired,
-    folders: PropTypes.object.isRequired,
+    tree: PropTypes.object.isRequired,
   };
 
   constructor(props) {
@@ -17,16 +17,16 @@ export default class FileTree extends React.Component {
 
 
   render() {
-    let {folders, files, actions} = this.props;
+    let {tree, files, actionCreator} = this.props;
     return (
       <div className="file-tree">
         <TreeView 
-          actions={actions}
+          actionCreator={actionCreator}
           defaultCollapsed={false} 
           files={files}
-          folder={folders.byId.root} 
-          folders={folders}
-          selectedId={folders.selectedId} />
+          folder={tree.folders.root} 
+          tree={tree}
+          selectedId={tree.selectedId} />
       </div>
     );
   }

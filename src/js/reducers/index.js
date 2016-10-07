@@ -1,45 +1,47 @@
-import { ADD_NEW_NODE, CANCEL_NEW_NODE, SELECT_NODE } from '../constants/ActionTypes';
+import { 
+  ADD_NEW_NODE, 
+  CANCEL_NEW_NODE, 
+  RENAME_FOLDER, 
+  SELECT_NODE 
+} from '../constants/ActionTypes';
 
-function replaceFolderNode(state, folderId, newFolder) { 
-
+const replaceFolderNode = function(state, folderId, translationFn) {
+  return {
+    ...state,
+    tree: {
+      ...state.trees,
+      folders: {
+        ...state.tree.folders,
+        [folderId]: translationFn(state.tree.folders[folderId])
+      }
+    }
+  };
 }
 
 export default (state = {}, action) => {
   switch (action.type) {
-    case ADD_NEW_NODE:
-      let folderNode = state.folders.byId[action.payload.folderId];
-      let newFolder = {...folderNode, newNode: action.payload.type};
-      
-      return {
-        ...state,
-        folders: {
-          ...state.folders,
-          byId: {
-            ...state.folders.byId,
-            [action.payload.folderId]: newFolder
-          }
-        }
-      }
-    case CANCEL_NEW_NODE:
-      folderNode = state.folders.byId[action.payload.folderId];
-      newFolder = {...folderNode};
-      delete newFolder.newNode;
-
-      return {
-        ...state,
-        folders: {
-          ...state.folders,
-          byId: {
-            ...state.folders.byId,
-            [action.payload.folderId]: newFolder
-          }
-        }
-      }
+    case ADD_NEW_NODE: {
+      return replaceFolderNode(state, action.payload.folderId, (folderNode) => {
+        return {...folderNode, newNode: action.payload.type};
+      });
+    }
+    case CANCEL_NEW_NODE: {
+      return replaceFolderNode(state, action.payload.folderId, (folderNode) => {
+        let newFolder = {...folderNode};
+        delete newFolder.newNode;
+        return newFolder;
+      });
+    }
+    case RENAME_FOLDER: {
+      return replaceFolderNode(state, action.payload.id, (folderNode) => {
+        return {...folderNode, name: action.payload.newName};
+      });
+    }
     case SELECT_NODE:
       return {
         ...state,
-        folders: {
-          ...state.folders,
+        tree: {
+          ...state.tree,
           selectedId: action.payload.id
         }
       } 

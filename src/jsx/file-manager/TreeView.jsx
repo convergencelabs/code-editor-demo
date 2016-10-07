@@ -9,11 +9,12 @@ import FolderNode from './FolderNode.jsx';
 
 export default class TreeView extends React.Component {
   static propTypes = {
-    actions: PropTypes.object.isRequired,
+    actionCreator: PropTypes.object.isRequired,
     collapsed: PropTypes.bool,
     defaultCollapsed: PropTypes.bool,
     folder: PropTypes.object.isRequired,
-    selectedId: PropTypes.string
+    selectedId: PropTypes.string,
+    tree: PropTypes.object.isRequired
   };
 
   constructor(props) {
@@ -48,7 +49,7 @@ export default class TreeView extends React.Component {
   }
   @autobind
   handleNewChildCancel() {
-    this.props.actions.cancelNewNode(this.props.folder.id);
+    this.props.actionCreator.cancelNewNode(this.props.folder.id);
   }
   @autobind
   handleEntityNamed(name) {
@@ -59,29 +60,29 @@ export default class TreeView extends React.Component {
     });
   }
 
-  renderChildren = (childIds, folders, files, actions) => {
+  renderChildren = (childIds, tree, files, actionCreator) => {
     return childIds.map(id => {
-      let folder = folders.byId[id];
+      let folder = tree.folders[id];
       if(folder) {
         return (
           <TreeView 
-            actions={actions}
+            actionCreator={actionCreator}
             defaultCollapsed={this.props.defaultCollapsed} 
             files={files}
             folder={folder} 
-            folders={folders}
+            tree={tree}
             key={id}
-            selectedId={folders.selectedId} />
+            selectedId={tree.selectedId} />
         ) 
       } else {
-        const file = files.byId[id];
+        const file = files[id];
         return (
           <FileNode 
-            actions={actions}
+            actionCreator={actionCreator}
             id={file.id}
             key={id}
             name={file.name} 
-            selected={folders.selectedId === file.id} />
+            selected={tree.selectedId === file.id} />
         );
       }
     });
@@ -89,11 +90,11 @@ export default class TreeView extends React.Component {
 
   render() {
     const {
-      actions,
+      actionCreator,
       collapsed = this.state.collapsed,
       files,
       folder,
-      folders,
+      tree,
       selectedId
     } = this.props;
 
@@ -115,7 +116,7 @@ export default class TreeView extends React.Component {
         <div className="node">
           <Collapser onClick={this.handleCollapserClick} collapsed={collapsed} />
           <FolderNode 
-            actions={actions}
+            actionCreator={actionCreator}
             collapsed={collapsed}
             id={folder.id}
             name={folder.name} 
@@ -124,7 +125,7 @@ export default class TreeView extends React.Component {
         </div>
         <div className={containerClasses}>
           {placeholderNode}
-          {this.renderChildren(folder.childIds, folders, files, actions)}
+          {this.renderChildren(folder.childIds, tree, files, actionCreator)}
         </div>
       </div>
     );

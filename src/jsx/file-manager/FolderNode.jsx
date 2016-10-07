@@ -1,5 +1,4 @@
 import React, {PropTypes} from 'react';
-import { autobind } from 'core-decorators';
 import classNames from 'classnames';
 
 import {FolderContextMenu} from './ContextMenu.jsx';
@@ -7,7 +6,7 @@ import RenamableNode from './RenamableNode.jsx';
 
 export default class FolderNode extends React.Component {
   static propTypes = {
-    actions: PropTypes.object.isRequired,
+    actionCreator: PropTypes.object.isRequired,
     collapsed: PropTypes.bool,
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
@@ -23,50 +22,42 @@ export default class FolderNode extends React.Component {
   }
 
   handleClick = () => {
-    this.props.actions.selectNode(this.props.id);
+    this.props.actionCreator.selectNode(this.props.id);
   }
-  @autobind
-  handleRename(newName) {
-    this.props.onRename(this.props.id, newName);
+  handleRename = (newName) => {
+    this.props.actionCreator.renameFolder(this.props.id, newName);
     this.setState({renaming: false});
   }
-  @autobind
-  handleRenameCancel() {
+  handleRenameCancel = () => {
     this.setState({renaming: false});
   }
-  @autobind
-  handleContextMenu(e) {
+  handleContextMenu = (e) => {
     this.setState({showContextMenu: true});
     e.preventDefault();
   }
-  @autobind
-  handleHideContextMenu() {
+  handleHideContextMenu = () => {
     this.setState({showContextMenu: false});
   }
 
-  @autobind
-  handleRenameSelect(e) {
+  handleRenameSelect = (e) => {
     this.handleHideContextMenu(e);
     e.stopPropagation();
     this.setState({renaming: true});
   }
-  @autobind
-  handleDelete(e) {
+  handleDelete = (e) => {
     this.handleHideContextMenu(e);
     e.stopPropagation();
     this.props.onDelete(this.props.id);
   }
-  @autobind
-  handleNewFile(e) {
+  handleNewFile = (e) => {
     this.handleHideContextMenu(e);
     e.stopPropagation();
-    this.props.onNewChild(this.props.id, 'file');
+    this.props.actionCreator.addNewNode('file', this.props.id);
   }
-  @autobind
-  handleNewFolder(e) {
+  handleNewFolder = (e) => {
     this.handleHideContextMenu(e);
     e.stopPropagation();
-    this.props.onNewChild(this.props.id, 'folder');
+    this.props.actionCreator.addNewNode('file', this.props.id);
   }
 
 
@@ -76,13 +67,15 @@ export default class FolderNode extends React.Component {
 
     let contextMenu;
     if(this.state.showContextMenu) {
-      <FolderContextMenu 
-        onHide={this.handleHideContextMenu}
-        onSelectDelete={this.handleDelete} 
-        onSelectNewFile={this.handleNewFile} 
-        onSelectNewFolder={this.handleNewFolder} 
-        onSelectRename={this.handleRenameSelect} 
-      />
+      contextMenu = (
+        <FolderContextMenu 
+          onHide={this.handleHideContextMenu}
+          onSelectDelete={this.handleDelete} 
+          onSelectNewFile={this.handleNewFile} 
+          onSelectNewFolder={this.handleNewFolder} 
+          onSelectRename={this.handleRenameSelect} 
+        />
+      );
     }
 
     return (

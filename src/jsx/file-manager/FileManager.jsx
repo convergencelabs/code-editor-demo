@@ -5,9 +5,9 @@ import FileTree from './FileTree.jsx';
 
 export default class FileManager extends React.Component {
   static propTypes = {
-    actions: PropTypes.object.isRequired,
+    actionCreator: PropTypes.object.isRequired,
     files: PropTypes.object.isRequired,
-    folders: PropTypes.object.isRequired,
+    tree: PropTypes.object.isRequired,
   }
 
   constructor(props) {
@@ -15,14 +15,14 @@ export default class FileManager extends React.Component {
   }
 
   handleNewFile = () => {
-    this.props.actions.addNewNode('file', this.props.folders.selectedId || 'root');
+    this.props.actionCreator.addNewNode('file', this.props.tree.selectedId || 'root');
   }
   handleNewFolder = () => {
-    this.props.actions.addNewNode('folder', this.props.folders.selectedId || 'root');
+    this.props.actionCreator.addNewNode('folder', this.props.tree.selectedId || 'root');
   } 
 
   render() {
-    let {actions, files, folders} = this.props;
+    let {actionCreator, files, tree} = this.props;
 
     return (
       <div className="file-manager">
@@ -34,7 +34,7 @@ export default class FileManager extends React.Component {
             className="add-folder" 
             onClick={this.handleNewFolder} />
         </div>
-        <FileTree actions={actions} files={files} folders={folders} />
+        <FileTree actionCreator={actionCreator} files={files} tree={tree} />
       </div>
     );
   }
