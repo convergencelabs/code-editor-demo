@@ -1,5 +1,4 @@
 import React, {PropTypes} from 'react';
-import { autobind } from 'core-decorators';
 import classNames from 'classnames';
 
 import {FileContextMenu} from './ContextMenu.jsx';
@@ -21,48 +20,41 @@ export default class FileNode extends React.Component {
     };
   }
 
-  @autobind
-  handleClick() {
+  handleClick = () => {
     this.props.actionCreator.selectNode(this.props.id);
   }
-  @autobind
-  handleOpen() {
+  handleOpen = () => {
     this.props.actionCreator.openFile(this.props.id);
   }
 
-  @autobind
-  handleRename(newName) {
-    this.props.onRename(this.props.id, newName);
+  handleRename = (newName) => {
+    this.props.actionCreator.renameFile(this.props.id, newName);
     this.setState({renaming: false});
   }
-  @autobind
-  handleRenameCancel() {
+  handleRenameCancel = () => {
     this.setState({renaming: false});
   }
 
-  @autobind
-  handleContextMenu(e) {
+  handleContextMenu = (e) => {
     this.setState({showContextMenu: true});
     e.preventDefault();
   }
-
-  @autobind
-  handleHideContextMenu() {
+  handleHideContextMenu = () => {
     this.setState({showContextMenu: false});
   }
-
-  @autobind
-  handleRenameSelect(e) {
+  handleRenameSelect = (e) => {
     this.handleHideContextMenu(e);
     e.stopPropagation();
     this.setState({renaming: true});
   }
 
-  @autobind
-  handleDelete(e) {
+  handleDelete = (e) => {
     this.handleHideContextMenu(e);
     e.stopPropagation();
     this.props.onDelete(this.props.id);
+  }
+  handleHistory = () => {
+
   }
 
   render() {
