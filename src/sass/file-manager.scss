@@ -32,6 +32,17 @@
   .file-tree {
     white-space: nowrap; margin-left: 5px;
 
+    .inline-input {
+      font-family: $app-font;
+      font-size: 14px;
+      background: lightgray;
+      border: 1px solid darkgray;
+
+      &:focus {
+        outline: none;
+      }
+    }
+
     .sub-tree { overflow-y: hidden; padding: 0 2px; float: left; clear: left; }
 
     .node { 
@@ -61,7 +72,7 @@
     .folder-label { 
       padding: 3px 5px; display: inline-block; 
 
-      i { margin-right: 5px; }
+      i { margin-right: 5px; color: darkorange;}
     }
 
     .node.file.selected, .folder-label.selected { background-color: #23b3e2; border-radius: 4px; }

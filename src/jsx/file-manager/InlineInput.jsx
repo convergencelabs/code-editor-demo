@@ -49,8 +49,13 @@ export default class InlineInput extends React.Component {
 
   render() {
     return (
-      <input ref={(c) => this._input = c} type="text" value={this.state.value} 
-        onBlur={this.handleBlur} onChange={this.handleChange} onKeyUp={this.handleKeyUp} />
+      <input
+        className="inline-input"
+        ref={(c) => this._input = c}
+        type="text" value={this.state.value}
+        onBlur={this.handleBlur}
+        onChange={this.handleChange}
+        onKeyDown={this.handleKeyUp} />
     );
   }  
 }

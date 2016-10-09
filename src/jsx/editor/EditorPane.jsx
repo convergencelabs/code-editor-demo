@@ -34,6 +34,7 @@ export default class EditorPane extends React.Component {
           fileType="JavaScript"
           cursor={this.state.cursor}
           multiUser={!this.props.historical}
+          participants={[{username: "test1", color: 'green'}, {username: "test2", color: 'blue'}]}
         />
       </div>
     );
