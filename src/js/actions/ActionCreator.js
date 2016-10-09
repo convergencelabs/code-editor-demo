@@ -19,11 +19,25 @@ export default class ActionCreator {
     this.moveCursor = actions.moveCursor;
   }
 
-  createFile(name, parentId) {
+  createFile(newId, name, parentId) {
+    const files = this.rtModel.valueAt(['files']);
+    files.set(newId, {name: name, content: ''});
+    const parentFolder = this.rtModel.valueAt(['tree', 'folders', parentId, 'childIds']);
+    parentFolder.push(newId);
 
+    this.actions.createFile.apply(this, arguments);
   }
-  deleteFile(id) {
+  deleteFile(id) {  
+    const folders = this.rtModel.valueAt(['tree', 'folders']);
+    const childIds = findChildParent(folders, id).get('childIds');
+    childIds.forEach((childId, index) => { 
+      if(childId.data() === id) {
+        childIds.remove(index);
+      }
+    });
+    this.rtModel.valueAt(['files']).remove(id);
 
+    this.actions.deleteFile.apply(this, arguments);
   }
   renameFile(id, newName) {
     const rtFile = this.rtModel.valueAt(['files', id]);
