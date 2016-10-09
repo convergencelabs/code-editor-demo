@@ -21,7 +21,12 @@
 
     .status-bar-participants {
       float: right;
-      margin-right: 40px;
+      margin-right: 50px;
+
+      span {
+        margin-right: 5px;
+      }
+
       .participant-indicators {
         display: inline-block;
 
