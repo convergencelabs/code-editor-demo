@@ -14,11 +14,15 @@ export default class Popover extends React.Component {
     }
   }
 
+  handleClick = (e) => {
+    e.stopPropagation();
+  }
+
   render() {
     const menuStyle = {display: this.props.display ? 'block' : 'none'};
 
     return (
-      <div className="popover-menu" style={menuStyle}>
+      <div className="popover-menu" style={menuStyle} onClick={this.handleClick}>
         {this.props.children}
       </div>
     );

@@ -13,7 +13,7 @@ export default class ActionCreator {
   mapActions(actions) {
     // add proxies in front of these actions in order to interact with the RealtimeModel
     // once all the actions are mapped we won't need this anymore
-    const {renameFile, renameFolder, ...passThroughActions} = actions;
+    const {createFile, renameFile, renameFolder, ...passThroughActions} = actions;
     Object.assign(this, passThroughActions);
   };
 
@@ -27,5 +27,9 @@ export default class ActionCreator {
     let rtFile = this.rtModel.valueAt(['tree', 'folders', id]);
     rtFile.set('name', newName);
     this.actions.renameFolder(id, newName);
+  }
+
+  createFile(name, parentId) {
+
   }
 }

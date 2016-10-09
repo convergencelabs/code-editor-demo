@@ -44,17 +44,15 @@ export default class FileNode extends React.Component {
   }
   handleRenameSelect = (e) => {
     this.handleHideContextMenu(e);
-    e.stopPropagation();
     this.setState({renaming: true});
   }
 
   handleDelete = (e) => {
     this.handleHideContextMenu(e);
-    e.stopPropagation();
     this.props.onDelete(this.props.id);
   }
-  handleHistory = () => {
-
+  handleHistory = (e) => {
+    console.log('oh yeah');
   }
 
   render() {

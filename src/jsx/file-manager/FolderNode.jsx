@@ -57,7 +57,7 @@ export default class FolderNode extends React.Component {
   handleNewFolder = (e) => {
     this.handleHideContextMenu(e);
     e.stopPropagation();
-    this.props.actionCreator.addNewNode('file', this.props.id);
+    this.props.actionCreator.addNewNode('folder', this.props.id);
   }
 
 

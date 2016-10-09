@@ -1,5 +1,4 @@
 import React, {PropTypes} from 'react';
-import { autobind } from 'core-decorators';
 import classNames from 'classnames';
 
 import Collapser from './Collapser.jsx';
@@ -25,39 +24,26 @@ export default class TreeView extends React.Component {
     };
   }
 
-  @autobind
-  handleCollapserClick() {
+  handleCollapserClick = () => {
     this.setState({collapsed: !this.state.collapsed});
   }
-
-  @autobind
-  newFile() {
-    this.setState({newEntity: true, type: 'file', newEntityName: ''});
-  }
-  @autobind
-  newFolder() {
-    this.setState({newEntity: true, type: 'folder', newEntityName: ''});
-  }
-
-  @autobind
-  handleNewChild(key, type) {
+  handleNewChild = (key, type) => {
     if(type === 'file') {
-      this.newFile();
+      this.setState({newEntity: true, type: 'file', newEntityName: ''});
     } else if(type === 'folder') {
-      this.newFolder();
+      this.setState({newEntity: true, type: 'folder', newEntityName: ''});
     }
   }
-  @autobind
-  handleNewChildCancel() {
+  handleNewChildCancel = () => {
     this.props.actionCreator.cancelNewNode(this.props.folder.id);
   }
-  @autobind
-  handleEntityNamed(name) {
-    console.log(this.state.type, 'created', 'name=' + name);
-    this.setState({
-      newEntity: false,
-      newEntityName: ''
-    });
+  handleEntityNamed = (name) => {
+    if(this.state.type === 'file') {
+      this.props.actionCreator.createFile(name, this.folder.id);
+    } else if(this.state.type === 'folder') {
+      this.props.actionCreator.createFolder(name, this.folder.id);
+    }
+    this.setState({newEntity: false});
   }
 
   renderChildren = (childIds, tree, files, actionCreator) => {
