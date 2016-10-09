@@ -15,7 +15,7 @@ export default class ActionCreator {
     // once all the actions are mapped we won't need this anymore
     const {renameFile, renameFolder, ...passThroughActions} = actions;
     Object.assign(this, passThroughActions);
-  };
+  }
 
   renameFile(id, newName) {
     let rtFile = this.rtModel.valueAt(['files', id]);

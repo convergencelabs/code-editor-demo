@@ -22,7 +22,7 @@ export const addNewNode = (type, folderId) => (
 );
 export const cancelNewNode = folderId => (
   {type: types.CANCEL_NEW_NODE, payload: {folderId}}
-)
+);
 
 export const selectNode = id => ({type: types.SELECT_NODE, payload: {id}});
 
