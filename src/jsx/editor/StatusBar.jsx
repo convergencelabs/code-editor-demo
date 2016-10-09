@@ -4,7 +4,8 @@ import EditorParticipants from './EditorParticipants.jsx';
 export default class StatusBar extends React.Component {
 
   static propTypes = {
-    multiUser: PropTypes.bool
+    multiUser: PropTypes.bool,
+    participants: PropTypes.array
   };
 
   static defaultProps = {
@@ -21,7 +22,7 @@ export default class StatusBar extends React.Component {
           <span className="status-bar-cursor-indicator">Line: {line}, Column: {col}</span>
           {(() => {
             if (this.props.multiUser) {
-              return <EditorParticipants participants={["user1, user2"]}/>;
+              return <EditorParticipants participants={this.props.participants}/>;
             }
           })()}
         </div>
