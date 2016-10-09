@@ -2,7 +2,7 @@ import {
   ADD_NEW_NODE, CANCEL_NEW_NODE, 
   CREATE_FILE, DELETE_FILE, RENAME_FILE,
   CREATE_FOLDER, DELETE_FOLDER, RENAME_FOLDER, 
-  SELECT_NODE 
+  SELECT_NODE, SELECT_TAB
 } from '../constants/ActionTypes';
 
 const replaceFolderNode = function(state, folderId, translationFn) {
@@ -152,6 +152,14 @@ export default (state = {}, action) => {
         tree: {
           ...state.tree,
           selectedId: action.payload.id
+        }
+      };
+    case SELECT_TAB: 
+      return {
+        ...state,
+        editors: {
+          ...state.editors,
+          activeFile: action.payload.id
         }
       };
     default:

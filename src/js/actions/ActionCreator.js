@@ -16,7 +16,7 @@ export default class ActionCreator {
     this.addNewNode = actions.addNewNode;
     this.cancelNewNode = actions.cancelNewNode;
     this.selectNode = actions.selectNode;
-    this.moveCursor = actions.moveCursor;
+    this.selectTab = actions.selectTab;
   }
 
   createFile(newId, name, parentId) {

@@ -19,12 +19,12 @@ const data = {
     }
   },
   "editors": {
-    "openFiles": {
+    "tabs": {
       "acb74ec3-2854-4565-86fb-9a9ecb4b949f": {},
       "1f7b0255-8348-4c4d-925c-3e5c52ce63e9": {},
       "c50e5e1e-ad88-4cd7-8748-f8eb977a0525": {}
     },
-    "order": ["1f7b0255-8348-4c4d-925c-3e5c52ce63e9", "c50e5e1e-ad88-4cd7-8748-f8eb977a0525", "acb74ec3-2854-4565-86fb-9a9ecb4b949f"],
+    "tabOrder": ["1f7b0255-8348-4c4d-925c-3e5c52ce63e9", "c50e5e1e-ad88-4cd7-8748-f8eb977a0525", "acb74ec3-2854-4565-86fb-9a9ecb4b949f"],
   },
   "tree": {
     "folders": {

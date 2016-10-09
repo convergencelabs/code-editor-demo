@@ -1,65 +1,48 @@
-import React from 'react';
+import React, {PropTypes} from 'react';
+import classNames from 'classnames';
 import EditorPane from './EditorPane.jsx'
 
 export default class EditorTabs extends React.Component {
+  static propTypes = {
+    actionCreator: PropTypes.object.isRequired,
+    editors: PropTypes.object.isRequired,
+    files: PropTypes.object.isRequired,
+  };
+
   constructor(props) {
     super(props);
-
-    this.state = {
-      files: [
-        {filename: 'Editor.jsx', id: "some path 1", historical: false},
-        {filename: 'GroupChatPane.jsx', id: "some path 2", historical: true},
-        {filename: 'ParticipantsList.jsx', id: "some path 3", historical: false}
-      ]
-    };
-    if (this.state.files.length > 0) {
-      this.state.selectedFile = this.state.files[0].id;
-    }
   }
 
-  _handleTabClick(fileId) {
-    this.setState({selectedFile: fileId});
+  handleTabClick = (fileId) => {
+    this.props.actionCreator.selectTab(fileId);
+    this.props.actionCreator.selectNode(fileId);
   }
 
-  _handleTabClose(fileId) {
-    let removedIndex = 0;
-
-    const newFiles = this.state.files.filter((file, index) => {
-      if (file.id === fileId) {
-        removedIndex = index;
-        return false;
-      }
-      return true;
-    });
-
-    let newSelected = null;
-    if (newFiles.length > 0) {
-      const newIndex = Math.min(removedIndex, newFiles.length - 1);
-      newSelected = newFiles[newIndex].id;
-    }
-
-    this.setState({files: newFiles, selectedFile: newSelected});
+  handleTabClose = (fileId) => {
+    this.props.actionCreator.closeTab(fileId);
   }
 
   render() {
-    const tabButtons = this.state.files.map((file) => {
+    const tabButtons = this.props.editors.tabOrder.map((fileId) => {
+      const file = this.props.files[fileId];
+
       return (<EditorTabButton
         key={file.id}
         id={file.id}
-        title={file.filename}
-        active={file.id === this.state.selectedFile}
-        onClick={this._handleTabClick.bind(this)}
-        onClose={this._handleTabClose.bind(this)}
+        title={file.name}
+        active={file.id === this.props.editors.activeFile}
+        onClick={this.handleTabClick}
+        onClose={this.handleTabClose}
       />);
     });
 
-    const editors = this.state.files.map((file) => {
-      const className = "editor-container " + (file.id === this.state.selectedFile ? 'active' : 'inactive');
+    const editors = this.props.editors.tabOrder.map((fileId) => {
+      const file = this.props.files[fileId];
+
+      const className = classNames('editor-container', (file.id === this.props.editors.activeFile ? 'active' : 'inactive'));
       return (
-        <div
-          key={file.id}
-          className={className}>
-          <EditorPane historical={file.historical}/>
+        <div key={file.id} className={className}>
+          <EditorPane file={file} />
         </div>
       );
     });
@@ -77,30 +60,39 @@ export default class EditorTabs extends React.Component {
   }
 }
 
-class EditorTabButton extends React.Component {
-  constructor(props) {
-    super(props);
+function EditorTabButton(props) {
+  const className = 'editor-tab-button' + (props.active ? ' active' : '');
+
+  function handleClick() {
+    props.onClick(props.id);
   }
 
-  render() {
-    const className = 'editor-tab-button' + (this.props.active ? ' active' : '');
-    return (
-      <div
-        className={className}
-        onClick={() => this.props.onClick(this.props.id)}
-      >
-        <span className="editor-tab-title">{this.props.title}</span>
-        <i
-          className="close fa fa-times"
-          onClick={(e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            this.props.onClose(this.props.id)
-          }}
-        />
-      </div>
-    );
-  }
+  return (
+    <div className={className} onClick={handleClick}>
+      <span className="editor-tab-title">{props.title}</span>
+      <EditorCloseButton fileId={props.id} onClick={props.onClose} />
+    </div>
+  );
 }
+EditorTabButton.propTypes = {
+  active: PropTypes.bool.isRequired,
+  id: PropTypes.string.isRequired,
+  onClick: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired,
+  title: PropTypes.string.isRequired,
+};
 
+function EditorCloseButton(props) {
+  function handleClick(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    props.onClick(props.fileId);
+  }
+
+  return <i className="close fa fa-times" onClick={handleClick} />;
+}
+EditorCloseButton.propTypes = {
+  fileId: PropTypes.string.isRequired,
+  onClick: PropTypes.func.isRequired,
+};
 

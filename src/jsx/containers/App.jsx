@@ -22,7 +22,7 @@ function App({actions, editors, files, rtModel, tree}) {
         <SplitPanel direction="horizontal" defaultSize={200}>
           <FileManager tree={tree} files={files} actionCreator={actionCreator} />
           <SplitPanel direction="horizontal" defaultSize={200} primary="second">
-            <EditorTabs editors={editors} />
+            <EditorTabs editors={editors} files={files} actionCreator={actionCreator} />
             <div className="right-pane">
               <div className="section-title">Participants</div>
               <ParticipantsList />
