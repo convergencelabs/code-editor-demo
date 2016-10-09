@@ -39,24 +39,16 @@ export default class FolderNode extends React.Component {
     this.setState({showContextMenu: false});
   }
 
-  handleRenameSelect = (e) => {
-    this.handleHideContextMenu(e);
-    e.stopPropagation();
+  handleRenameSelect = () => {
     this.setState({renaming: true});
   }
-  handleDelete = (e) => {
-    this.handleHideContextMenu(e);
-    e.stopPropagation();
-    this.props.onDelete(this.props.id);
+  handleDelete = () => {
+    this.props.actionCreator.deleteFolder(this.props.id);
   }
-  handleNewFile = (e) => {
-    this.handleHideContextMenu(e);
-    e.stopPropagation();
+  handleNewFile = () => {
     this.props.actionCreator.addNewNode('file', this.props.id);
   }
-  handleNewFolder = (e) => {
-    this.handleHideContextMenu(e);
-    e.stopPropagation();
+  handleNewFolder = () => {
     this.props.actionCreator.addNewNode('folder', this.props.id);
   }
 

@@ -1,14 +1,14 @@
 import * as types from '../constants/ActionTypes';
 
-export const createFile = (name, folderId) => (
-  {type: types.CREATE_FILE, payload: {name, folderId}}
+export const createFile = (id, name, folderId) => (
+  {type: types.CREATE_FILE, payload: {id, name, folderId}}
 );
 export const deleteFile = id => ({type: types.DELETE_FILE, payload: {id}});
 export const renameFile = (id, newName) => ({type: types.RENAME_FILE, payload: {id, newName}});
 export const openFile = id => ({type: types.OPEN_FILE, payload: {id}});
 
-export const createFolder = (name, parentId) => (
-  {type: types.CREATE_FOLDER, payload: {name, parentId}}
+export const createFolder = (id, name, parentId) => (
+  {type: types.CREATE_FOLDER, payload: {id, name, parentId}}
 );
 export const deleteFolder = id => (
   {type: types.DELETE_FOLDER, payload: {id}}

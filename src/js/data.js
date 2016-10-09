@@ -38,8 +38,7 @@ const data = {
       }, 
       "f11": {
         "name": "controllers",
-        "childIds": ["c50e5e1e-ad88-4cd7-8748-f8eb977a0525", "131dde3f-5874-4687-abd1-a5c5e4c7885c"],
-        "parentId": "f1"
+        "childIds": ["c50e5e1e-ad88-4cd7-8748-f8eb977a0525", "131dde3f-5874-4687-abd1-a5c5e4c7885c"]
       },
       "f2": {
         "name": "sass",

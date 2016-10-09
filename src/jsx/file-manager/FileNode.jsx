@@ -20,45 +20,36 @@ export default class FileNode extends React.Component {
     };
   }
 
-  // fixme why are these all arrow functions?
-
   handleClick = () => {
     this.props.actionCreator.selectNode(this.props.id);
   };
-
   handleOpen = () => {
     this.props.actionCreator.openFile(this.props.id);
+  };
+  handleDelete = () => {
+    this.props.actionCreator.deleteFile(this.props.id);
+  };
+  handleHistory = () => {
+
   };
 
   handleRename = (newName) => {
     this.props.actionCreator.renameFile(this.props.id, newName);
     this.setState({renaming: false});
   };
-
   handleRenameCancel = () => {
     this.setState({renaming: false});
+  };
+  handleRenameSelect = () => {
+    this.setState({renaming: true});
   };
 
   handleContextMenu = (e) => {
     this.setState({showContextMenu: true});
     e.preventDefault();
   };
-
   handleHideContextMenu = () => {
     this.setState({showContextMenu: false});
-  };
-
-  handleRenameSelect = (e) => {
-    this.handleHideContextMenu(e);
-    this.setState({renaming: true});
-  };
-
-  handleDelete = (e) => {
-    this.handleHideContextMenu(e);
-    this.props.onDelete(this.props.id);
-  }
-  handleHistory = () => {
-
   };
 
   render() {

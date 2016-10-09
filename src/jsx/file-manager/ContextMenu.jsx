@@ -7,7 +7,7 @@ import Popover from '../util/Popover.jsx';
 export function FileContextMenu(props) { 
   return (
     <Popover display onHide={props.onHide}>
-      <div className="context-menu">
+      <div className="context-menu" onClick={props.onHide}>
         <ul>
           <li onClick={props.onSelectOpen}>Open</li>
           <li onClick={props.onSelectHistory}>View History</li>
@@ -30,7 +30,7 @@ FileContextMenu.propTypes = {
 export function FolderContextMenu(props) {
   return (
     <Popover display onHide={props.onHide}>
-      <div className="context-menu">
+      <div className="context-menu" onClick={props.onHide}>
         <ul>
           <li onClick={props.onSelectRename}>Rename...</li>
           <li onClick={props.onSelectDelete}>Delete folder</li>

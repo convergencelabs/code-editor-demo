@@ -1,5 +1,5 @@
 /** 
- * A generic class for handling actions.  Some are passed on to redux, some
+ * A generic class for handling actions.  Some are passed on to Redux, some
  * trigger a change in the RealtimeModel, and some both.
  */
 export default class ActionCreator {
@@ -10,26 +10,63 @@ export default class ActionCreator {
     this.mapActions(actions);
   }
 
+  // pass through those actions that don't interact with the RealtimeModel
   mapActions(actions) {
-    // add proxies in front of these actions in order to interact with the RealtimeModel
-    // once all the actions are mapped we won't need this anymore
-    const {createFile, renameFile, renameFolder, ...passThroughActions} = actions;
-    Object.assign(this, passThroughActions);
-  }
-
-  renameFile(id, newName) {
-    let rtFile = this.rtModel.valueAt(['files', id]);
-    rtFile.set('name', newName);
-    this.actions.renameFile(id, newName);
-  }
-
-  renameFolder(id, newName) {
-    let rtFile = this.rtModel.valueAt(['tree', 'folders', id]);
-    rtFile.set('name', newName);
-    this.actions.renameFolder(id, newName);
+    this.openFile = actions.openFile;
+    this.addNewNode = actions.addNewNode;
+    this.cancelNewNode = actions.cancelNewNode;
+    this.selectNode = actions.selectNode;
+    this.moveCursor = actions.moveCursor;
   }
 
   createFile(name, parentId) {
 
+  }
+  deleteFile(id) {
+
+  }
+  renameFile(id, newName) {
+    const rtFile = this.rtModel.valueAt(['files', id]);
+    rtFile.set('name', newName);
+
+    this.actions.renameFile.apply(this, arguments);
+  }
+
+  createFolder(newId, name, parentId) {
+    const folders = this.rtModel.valueAt(['tree', 'folders']);
+    folders.set(newId, {name: name, childIds: []});
+    folders.valueAt([parentId, 'childIds']).push(newId);
+
+    this.actions.createFolder.apply(this, arguments);
+  }
+  deleteFolder(id) {
+    const folders = this.rtModel.valueAt(['tree', 'folders']);
+    const childIds = findChildParent(folders, id).get('childIds');
+    childIds.forEach((childId, index) => { 
+      if(childId.data() === id) {
+        childIds.remove(index);
+      }
+    });
+    folders.remove(id);
+
+    this.actions.deleteFolder.apply(this, arguments);
+  }
+  renameFolder(id, newName) {
+    const rtFolder = this.rtModel.valueAt(['tree', 'folders', id]);
+    rtFolder.set('name', newName);
+
+    this.actions.renameFolder.apply(this, arguments);
+  }
+
+}
+
+function findChildParent(folders, childId) {
+  let folderIds = folders.keys();
+  for(let i = 0; i < folderIds.length; i++) {
+    let folder = folders.get(folderIds[i]);
+    let found = folder.get('childIds').data().some(id => {return id === childId});
+    if(found) {
+      return folder;
+    }
   }
 }

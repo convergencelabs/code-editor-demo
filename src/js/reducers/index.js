@@ -1,10 +1,9 @@
 import { 
   ADD_NEW_NODE, CANCEL_NEW_NODE, 
   CREATE_FILE, RENAME_FILE,
-  CREATE_FOLDER, RENAME_FOLDER, 
+  CREATE_FOLDER, DELETE_FOLDER, RENAME_FOLDER, 
   SELECT_NODE 
 } from '../constants/ActionTypes';
-import {generateUUID} from './utils';
 
 const replaceFolderNode = function(state, folderId, translationFn) {
   return {
@@ -29,6 +28,16 @@ const replaceFile = function(state, fileId, translationFn) {
   };
 }
 
+const getFolderOfNodeCopy = function(state, nodeId) {
+  for(let folderId in state.tree.folders) {
+    const folder = state.tree.folders[folderId];
+    let found = folder.childIds.some(id => { return id === nodeId; });
+    if(found) {
+      return {...folder};
+    }
+  }
+}
+
 export default (state = {}, action) => {
   switch (action.type) {
     case ADD_NEW_NODE: 
@@ -41,18 +50,51 @@ export default (state = {}, action) => {
         delete newFolder.newNode;
         return newFolder;
       });
+    case CREATE_FOLDER: {
+      const newFolder = {
+        id: action.payload.id,
+        name: action.payload.name, 
+        childIds: []
+      };
+      const parentFolder = state.tree.folders[action.payload.parentId];
+      return {
+        ...state, 
+        tree: {
+          ...state.tree,
+          folders: {
+            ...state.tree.folders,
+            [parentFolder.id]: {
+              ...parentFolder,
+              childIds: [...parentFolder.childIds, newFolder.id]
+            },
+            [newFolder.id]: newFolder
+          }
+        }
+      };
+    }
+    case DELETE_FOLDER: {
+      const parentFolder = getFolderOfNodeCopy(state, action.payload.id);
+      const childIndex = parentFolder.childIds.findIndex(id => { 
+        return id === action.payload.id;
+      });
+      parentFolder.childIds.splice(childIndex, 1);
+      const newFolders = {...state.tree.folders};
+      delete newFolders[parentFolder.id];
+      return {
+        ...state, 
+        tree: {
+          ...state.tree,
+          folders: {
+            ...newFolders,
+            [parentFolder.id]: parentFolder,
+          }
+        }
+      };
+    }
     case RENAME_FOLDER:
       return replaceFolderNode(state, action.payload.id, (folderNode) => {
         return {...folderNode, name: action.payload.newName};
       });
-    case CREATE_FOLDER: {
-      return {
-        ...state, 
-        tree: {
-          ...state.tree
-        }
-      }
-    }
     case CREATE_FILE: {
       
     }
