@@ -17,22 +17,38 @@ require("!style!css!sass!../sass/status-bar.scss");
 require("!style!css!sass!../sass/editor-tabs.scss");
 require("!style!css!sass!../../node_modules/rc-slider/assets/index.css");
 
-var domainUrl = 'https://localhost/realtime/domain/test/Examples';
+const domainUrl = 'https://localhost/realtime/domain/test/Examples';
+
+const hardCodedProjectId = 'main';
+
+let modelsMetadata = {};
+let domain = null;
+let chatRoom = null;
+let modelService = null;
 
 ConvergenceDomain.debugFlags.protocol.messages = true;
-ConvergenceDomain.connect(domainUrl, 'test1', 'password').then(domain => { 
-  var modelService = domain.modelService();
-  modelService.open('code-editor', 'main', () => {
+
+ConvergenceDomain.connect(domainUrl, 'test1', 'password').then(d => {
+  domain = d;
+  chatRoom = domain.chat().room(hardCodedProjectId);
+  chatRoom.join();
+  modelService = domain.models();
+  modelService.open('code-editor', hardCodedProjectId, () => {
     return data;
   }).then(model => {
-    const modelsMetadata = {
+
+    modelsMetadata = {
       modelService,
       username: 'test1',
       collectionId: 'code-editor'
     };
 
     render(
-      <App rtModel={model} modelsMetadata={modelsMetadata} />,
+      <App
+        rtModel={model}
+        modelsMetadata={modelsMetadata}
+        chatRoom={chatRoom}
+        username={domain.session().username()} />,
       document.getElementById('code-editor')
     );
   });
