@@ -69,12 +69,15 @@ export default class EditorsStore extends BaseStore {
         break;
       case UserActions.CLOSE_TAB:
         this.removeEditor(payload.id).then(() => {
-          if(this.editors.length > 0) {
-            this.activeFileId = this.editors[0].modelId;
-          }
           this.emitChange();
         });
         break;
+      case UserActions.DELETE_FILE:
+        this.deleteModel(payload.id).then(() => {
+          this.removeEditor(payload.id);
+        }).then(() => {
+          this.emitChange();
+        });
     }
   }
 
@@ -86,16 +89,27 @@ export default class EditorsStore extends BaseStore {
   openModel(modelId) {
     return this.modelService.open(this.collectionId, modelId);
   }
+  deleteModel(modelId) {
+    return this.modelService.remove(this.collectionId, modelId);
+  }
   createEditor(id, model) {
     const editor = new EditorData(id, this.getFileName(id), model, false);
     this.editors.push(editor);
     this.activeFileId = id;
   }
+  getEditorIndex(id) {
+    return this.editors.findIndex((editor) => { return editor.modelId === id; });
+  }
   removeEditor(id) {
-    const index = this.editors.findIndex((editor) => { return editor.modelId === id; });
+    const index = this.getEditorIndex(id);
     if(index >= 0) {
       this.editors[index].model.close();
       this.editors.splice(index, 1);
+      if(this.editors.length > 0) {
+        this.activeFileId = this.editors[0].modelId;
+      } else {
+        delete this.activeFileId;
+      }
       return Promise.resolve(index);
     } else {
       return Promise.reject();
