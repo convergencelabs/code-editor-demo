@@ -56,8 +56,11 @@ export default class TreeStore extends BaseStore {
       case UserActions.CANCEL_NEW_NODE:
         this.newNode = {};
         break;
+      case UserActions.SELECT_TAB:
+        this.selectedNode = payload.id;
+        break;
     }
-    this.emitChange(action);
+    this.emitChange();
   }
 
   createFile(newId, name, parentId) {

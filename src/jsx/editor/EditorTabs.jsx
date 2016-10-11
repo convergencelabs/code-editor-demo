@@ -1,12 +1,12 @@
 import React, {PropTypes} from 'react';
 import classNames from 'classnames';
 
-import * as actions from '../../js/actions';
+import {closeTab, selectTab} from '../../js/actions/editorActionCreator';
 import EditorPane from './EditorPane.jsx';
 
 export default class EditorTabs extends React.Component {
   static propTypes = {
-    activeFile: PropTypes.string,
+    activeFileId: PropTypes.string,
     editors: PropTypes.array.isRequired,
   };
 
@@ -15,12 +15,11 @@ export default class EditorTabs extends React.Component {
   }
 
   handleTabClick = (fileId) => {
-    actions.selectTab(fileId);
-    actions.selectNode(fileId);
+    selectTab(fileId);
   }
 
   handleTabClose = (fileId) => {
-    actions.closeTab(fileId);
+    closeTab(fileId);
   }
 
   render() {
@@ -29,14 +28,14 @@ export default class EditorTabs extends React.Component {
         key={editor.modelId}
         id={editor.modelId}
         title={editor.title}
-        active={editor.modelId === this.props.activeFile}
+        active={editor.modelId === this.props.activeFileId}
         onClick={this.handleTabClick}
         onClose={this.handleTabClose}
       />);
     });
 
     const editors = this.props.editors.map(editor => {
-      const className = classNames('editor-container', (editor.modelId === this.props.activeFile ? 'active' : 'inactive'));
+      const className = classNames('editor-container', (editor.modelId === this.props.activeFileId ? 'active' : 'inactive'));
       return (
         <div key={editor.modelId} className={className}>
           <EditorPane fileModel={editor.model} />

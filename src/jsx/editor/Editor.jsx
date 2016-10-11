@@ -15,17 +15,12 @@ export default class Editor extends React.Component {
       this.initEditor();
     }
   }
-  componentWillReceiveProps(nextProps) {
-    if(!this._editor && nextProps.fileModel) {
-      this.initEditor();
-    }
-  }
 
   initEditor() {
     this._editor = ace.edit(this._container);
     this._editor.setTheme("ace/theme/monokai");
     this._editor.getSession().setMode('ace/mode/javascript');
-    this._editor.getSession().setValue(this.props.fileModel.get('content').data());
+    this._editor.getSession().setValue(this.props.fileModel.root().get('content').data());
 
     this._editor.getSession().selection.on('changeCursor', () => {
       const cursorPosition = this._editor.getCursorPosition();
@@ -36,6 +31,9 @@ export default class Editor extends React.Component {
   }
 
   render() {
+    if(!this._editor && this.props.fileModel) {
+      this.initEditor();
+    }
     return (
       this.props.fileModel ? 
         <div className="editor" ref={(div) => { this._container = div; }} /> :

@@ -15,17 +15,15 @@ export default class EditorsStore extends BaseStore {
   }
 
   initState() {
-    this.editors = this.getEditors().editors;
+    this.models = {};
     this.rtModel.valueAt(['editors', this.username, 'tabs']).forEach(editor => {
       const modelId = editor.get('modelId').data();
-      if(!this.activeFile) {
-        this.activeFile = modelId;
+      if(!this.activeFileId) {
+        this.activeFileId = modelId;
       }
       this.openModel(modelId).then(rtModel => {
-        const editor = this.editors.find(editor => { 
-          return editor.modelId === rtModel.modelId();
-        });
-        editor.setModel(rtModel);
+        this.models[rtModel.modelId()] = rtModel;
+        this.emitChange();
       });
     });
   }
@@ -39,12 +37,12 @@ export default class EditorsStore extends BaseStore {
     let editors = [];
     this.rtModel.valueAt(['editors', this.username, 'tabs']).forEach(editor => {
       const modelId = editor.get('modelId').data();
-      editors.push(new EditorData(modelId, this.getFileName(modelId)));
+      editors.push(new EditorData(modelId, this.getFileName(modelId), this.models[modelId]));
     });
-    return {
-      editors,
-      activeFile: this.activeFile
-    };
+    return editors;
+  }
+  getActive() {
+    return this.activeFileId;
   }
 
   getFileName(fileId) {
@@ -52,12 +50,20 @@ export default class EditorsStore extends BaseStore {
   }
 
   actionHandler(action) {
+    const payload = action.payload;
     switch (action.type) {
+      case UserActions.SELECT_TAB:
+        this.activeFileId = payload.id;
+        break;
+      case UserActions.SELECT_NODE:
+        if(this.models.hasOwnProperty(payload.id)) {
+          this.activeFileId = payload.id;
+        }
+        break;
       case UserActions.OPEN_FILE:
-        
         break;
     }
-    this.emitChange(action);
+    this.emitChange();
   }
 
 }
