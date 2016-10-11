@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react';
 import ace from 'brace';
 
-import {AceMultiCursorManager} from 'ace-collab-ext';
+//import {AceMultiCursorManager} from 'ace-collab-ext';
 
 require('brace/mode/javascript');
 require('brace/theme/monokai');

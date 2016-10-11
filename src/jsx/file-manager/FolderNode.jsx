@@ -2,6 +2,7 @@ import React, {PropTypes} from 'react';
 import classNames from 'classnames';
 
 import {addNewNode, deleteFolder, renameFolder, selectNode} from '../../js/actions/actionCreator';
+import RemoteFolderActionCreator from '../../js/actions/RemoteFolderActionCreator';
 import {FolderContextMenu} from './ContextMenu.jsx';
 import RenamableNode from './RenamableNode.jsx';
 
@@ -9,12 +10,15 @@ export default class FolderNode extends React.Component {
   static propTypes = {
     collapsed: PropTypes.bool,
     id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
+    model: PropTypes.object.isRequired,
     selected: PropTypes.bool
   };
 
   constructor(props) {
     super(props);
+
+    this.remoteActionCreator = new RemoteFolderActionCreator(props.id, props.model);
+    this.remoteActionCreator.listenFor(['changed']);
 
     this.state = {
       showContextMenu: false
@@ -69,11 +73,12 @@ export default class FolderNode extends React.Component {
         />
       );
     }
+    const folderName = this.props.model.get('name').data();
 
     return (
       <div className={nodeClasses} onClick={this.handleClick} onContextMenu={this.handleContextMenu}>
         <i className={iconClasses} />
-        <RenamableNode name={this.props.name} renaming={this.state.renaming} 
+        <RenamableNode name={folderName} renaming={this.state.renaming} 
           onCancel={this.handleRenameCancel} onComplete={this.handleRename} />
         {contextMenu}
       </div>
