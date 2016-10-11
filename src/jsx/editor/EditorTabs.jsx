@@ -38,7 +38,7 @@ export default class EditorTabs extends React.Component {
       const className = classNames('editor-container', (editor.modelId === this.props.activeFileId ? 'active' : 'inactive'));
       return (
         <div key={editor.modelId} className={className}>
-          <EditorPane fileModel={editor.model} />
+          <EditorPane fileModel={editor.model} historical={editor.historical} />
         </div>
       );
     });

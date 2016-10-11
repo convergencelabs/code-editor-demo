@@ -7,6 +7,7 @@ require('brace/theme/monokai');
 export default class Editor extends React.Component {
   static propTypes = {
     fileModel: PropTypes.object,
+    historical: PropTypes.bool.isRequired,
     onCursorMove: PropTypes.func.isRequired
   };
 
@@ -27,7 +28,7 @@ export default class Editor extends React.Component {
       this.props.onCursorMove(cursorPosition);
     });
 
-    this._editor.setReadOnly(false);
+    this._editor.setReadOnly(this.props.historical);
   }
 
   render() {

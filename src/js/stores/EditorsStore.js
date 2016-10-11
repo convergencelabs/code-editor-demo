@@ -37,7 +37,8 @@ export default class EditorsStore extends BaseStore {
     let editors = [];
     this.rtModel.valueAt(['editors', this.username, 'tabs']).forEach(editor => {
       const modelId = editor.get('modelId').data();
-      editors.push(new EditorData(modelId, this.getFileName(modelId), this.models[modelId]));
+      // fixme a bit of a hack with the last parameter hard coded to false.
+      editors.push(new EditorData(modelId, this.getFileName(modelId), this.models[modelId], false));
     });
     return editors;
   }
