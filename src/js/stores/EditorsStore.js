@@ -1,4 +1,4 @@
-import {ActionTypes} from '../constants/ActionTypes';
+import {UserActions} from '../constants/ActionTypes';
 import {BaseStore} from './BaseStore';
 import EditorData from '../editorData';
 
@@ -53,7 +53,7 @@ export default class EditorsStore extends BaseStore {
 
   actionHandler(action) {
     switch (action.type) {
-      case ActionTypes.OPEN_FILE:
+      case UserActions.OPEN_FILE:
         
         break;
     }

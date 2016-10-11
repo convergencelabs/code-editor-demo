@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react';
 import classNames from 'classnames';
 
-import * as actions from '../../js/actions';
+import {addNewNode, deleteFolder, renameFolder, selectNode} from '../../js/actions/actionCreator';
 import {FolderContextMenu} from './ContextMenu.jsx';
 import RenamableNode from './RenamableNode.jsx';
 
@@ -22,10 +22,10 @@ export default class FolderNode extends React.Component {
   }
 
   handleClick = () => {
-    actions.selectNode(this.props.id);
+    selectNode(this.props.id);
   }
   handleRename = (newName) => {
-    actions.renameFolder(this.props.id, newName);
+    renameFolder(this.props.id, newName);
     this.setState({renaming: false});
   }
   handleRenameCancel = () => {
@@ -43,13 +43,13 @@ export default class FolderNode extends React.Component {
     this.setState({renaming: true});
   }
   handleDelete = () => {
-    actions.deleteFolder(this.props.id);
+    deleteFolder(this.props.id);
   }
   handleNewFile = () => {
-    actions.addNewNode('file', this.props.id);
+    addNewNode('file', this.props.id);
   }
   handleNewFolder = () => {
-    actions.addNewNode('folder', this.props.id);
+    addNewNode('folder', this.props.id);
   }
 
 

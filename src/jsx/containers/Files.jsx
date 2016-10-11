@@ -27,11 +27,14 @@ export default class Files extends React.Component {
     this.setState(this.getStateFromStore());
   }
   getStateFromStore = () => {
-    return this.store.getTree();
+    return {
+      treeNodes: this.store.getNodes(),
+      treeState: this.store.getTreeState()
+    };
   }
 
   render() {
-    return <FileManager treeNodes={this.state.nodes} selected={this.state.selected} />;
+    return <FileManager {...this.state} />;
   }
 }
 

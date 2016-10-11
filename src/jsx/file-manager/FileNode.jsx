@@ -1,14 +1,14 @@
 import React, {PropTypes} from 'react';
 import classNames from 'classnames';
 
-import * as actions from '../../js/actions';
+import {openFile, selectNode} from '../../js/actions/actionCreator';
 import {FileContextMenu} from './ContextMenu.jsx';
 import RenamableNode from './RenamableNode.jsx';
 
 export default class FileNode extends React.Component {
   static propTypes = {
     id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
+    model: PropTypes.object.isRequired,
     selected: PropTypes.bool,
   };
 
@@ -21,20 +21,20 @@ export default class FileNode extends React.Component {
   }
 
   handleClick = () => {
-    actions.selectNode(this.props.id);
+    selectNode(this.props.id);
   };
   handleOpen = () => {
-    actions.openFile(this.props.id);
+    openFile(this.props.id);
   };
   handleDelete = () => {
-    actions.deleteFile(this.props.id);
+    this.actionCreator.deleteFile(this.props.id);
   };
   handleHistory = () => {
 
   };
 
   handleRename = (newName) => {
-    actions.renameFile(this.props.id, newName);
+    this.actionCreator.renameFile(this.props.id, newName);
     this.setState({renaming: false});
   };
   handleRenameCancel = () => {
@@ -67,6 +67,7 @@ export default class FileNode extends React.Component {
         />
       );
     }
+    const nodeName = this.props.model.get('name').data();
 
     return (
       <div 
@@ -76,7 +77,7 @@ export default class FileNode extends React.Component {
         onDoubleClick={this.handleOpen}
       >
         <i className="fa fa-file-code-o" /> 
-        <RenamableNode name={this.props.name} renaming={this.state.renaming} 
+        <RenamableNode name={nodeName} renaming={this.state.renaming} 
           onCancel={this.handleRenameCancel} onComplete={this.handleRename} />
         {contextMenu}
       </div>
