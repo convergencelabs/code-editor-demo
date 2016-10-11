@@ -31,6 +31,7 @@ export default class EditorsStore extends BaseStore {
   }
 
   openModel(modelId) {
+    // fixme this was a hack, because the current thing assumes some files exist.
     return this.modelService.open(this.collectionId, modelId, () => {return {content: ""};});
   }
 
