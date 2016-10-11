@@ -33,23 +33,30 @@ ConvergenceDomain.connect(domainUrl, 'test1', 'password').then(d => {
   chatRoom = domain.chat().room(hardCodedProjectId);
   chatRoom.join();
   modelService = domain.models();
-  modelService.open('code-editor', hardCodedProjectId, () => {
+
+  return modelService.open('code-editor', hardCodedProjectId, () => {
     return data;
-  }).then(model => {
-
-    modelsMetadata = {
-      modelService,
-      username: 'test1',
-      collectionId: 'code-editor'
-    };
-
-    render(
-      <App
-        rtModel={model}
-        modelsMetadata={modelsMetadata}
-        chatRoom={chatRoom}
-        username={domain.session().username()} />,
-      document.getElementById('code-editor')
-    );
   });
+}).then(model => {
+  modelsMetadata = {
+    modelService,
+    username: 'test1',
+    collectionId: 'code-editor'
+  };
+
+  const activity = domain.activities().activity(hardCodedProjectId);
+
+  activity.join();
+
+  render(
+    <App
+      rtModel={model}
+      modelsMetadata={modelsMetadata}
+      chatRoom={chatRoom}
+      domain={domain}
+      activity={activity} />,
+    document.getElementById('code-editor')
+  );
+}).catch((e) => {
+  console.log(e);
 });
