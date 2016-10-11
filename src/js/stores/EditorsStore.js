@@ -62,6 +62,8 @@ export default class EditorsStore extends BaseStore {
         break;
       case UserActions.OPEN_FILE:
         break;
+      case UserActions.CREATE_FILE:
+        break;
     }
     this.emitChange();
   }
