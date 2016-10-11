@@ -3,12 +3,13 @@ import ChatContainer from './ChatContainer.jsx';
 import ChatInput from './ChatInput.jsx';
 import ChatMessage from './ChatMessage.jsx';
 import {autobind} from 'core-decorators';
+import colorAssigner from '../../js/color-util.js';
 
 export default class GroupChatPane extends React.Component {
 
   static propTypes = {
     chatRoom: React.PropTypes.object.isRequired,
-    username: React.PropTypes.string.isRequired
+    domain: React.PropTypes.object.isRequired
   };
 
   constructor(props) {
@@ -32,7 +33,7 @@ export default class GroupChatPane extends React.Component {
     messages.push(
       <ChatMessage
         username={event.username}
-        color={"blue"}
+        color={colorAssigner.getColorAsHex(event.sessionId)}
         message={event.message}
         timestamp={new Date(event.timestamp)}
         key={this.state.messages.length}
@@ -47,8 +48,8 @@ export default class GroupChatPane extends React.Component {
     const messages = this.state.messages.slice(0);
     messages.push(
       <ChatMessage
-        username={this.props.username}
-        color="#66D9EF"
+        username={this.props.domain.session().username()}
+        color={colorAssigner.getColorAsHex(this.props.domain.session().sessionId())}
         message={message}
         timestamp={new Date()}
         local
