@@ -43,8 +43,13 @@ export default class EditorTabs extends React.Component {
       );
     });
 
+    const placeholderStyle = {display: this.props.editors.length === 0 ? 'flex' : 'none'};
+
     return (
       <div className="editor-tabs-container">
+        <div className="placeholder" style={placeholderStyle}>
+          ← Create or open a file in the tree to get started.
+        </div>
         <div className="editor-tab-buttons">
           {tabButtons}
         </div>

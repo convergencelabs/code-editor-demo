@@ -15,7 +15,8 @@ export default class EditorsStore extends BaseStore {
   }
 
   initState() {
-    this.models = {};
+    this.editors = [];
+    /*
     this.rtModel.valueAt(['editors', this.username, 'tabs']).forEach(editor => {
       const modelId = editor.get('modelId').data();
       if(!this.activeFileId) {
@@ -25,22 +26,11 @@ export default class EditorsStore extends BaseStore {
         this.models[rtModel.modelId()] = rtModel;
         this.emitChange();
       });
-    });
-  }
-
-  openModel(modelId) {
-    // fixme this was a hack, because the current thing assumes some files exist.
-    return this.modelService.open(this.collectionId, modelId, () => {return {content: ""};});
+    });*/
   }
 
   getEditors() {
-    let editors = [];
-    this.rtModel.valueAt(['editors', this.username, 'tabs']).forEach(editor => {
-      const modelId = editor.get('modelId').data();
-      // fixme a bit of a hack with the last parameter hard coded to false.
-      editors.push(new EditorData(modelId, this.getFileName(modelId), this.models[modelId], false));
-    });
-    return editors;
+    return this.editors;
   }
   getActive() {
     return this.activeFileId;
@@ -55,18 +45,60 @@ export default class EditorsStore extends BaseStore {
     switch (action.type) {
       case UserActions.SELECT_TAB:
         this.activeFileId = payload.id;
+        this.emitChange();
         break;
       case UserActions.SELECT_NODE:
-        if(this.models.hasOwnProperty(payload.id)) {
+        if(this.editors.some((editor) => { return editor.modelId === payload.id; })) {
           this.activeFileId = payload.id;
+          this.emitChange();
         }
         break;
       case UserActions.OPEN_FILE:
+        this.openModel(payload.id).then(model => {
+          this.createEditor(payload.id, model);
+          this.emitChange();
+        });
         break;
       case UserActions.CREATE_FILE:
+        this.createModel(payload.id).then(() => {
+          return this.openModel(payload.id);
+        }).then(model => {
+          this.createEditor(payload.id, model);
+          this.emitChange();
+        });
+        break;
+      case UserActions.CLOSE_TAB:
+        this.removeEditor(payload.id).then(() => {
+          if(this.editors.length > 0) {
+            this.activeFileId = this.editors[0].modelId;
+          }
+          this.emitChange();
+        });
         break;
     }
-    this.emitChange();
   }
 
+  createModel(id) {
+    return this.modelService.create(this.collectionId, id, {
+      content: ''
+    });
+  }
+  openModel(modelId) {
+    return this.modelService.open(this.collectionId, modelId);
+  }
+  createEditor(id, model) {
+    const editor = new EditorData(id, this.getFileName(id), model, false);
+    this.editors.push(editor);
+    this.activeFileId = id;
+  }
+  removeEditor(id) {
+    const index = this.editors.findIndex((editor) => { return editor.modelId === id; });
+    if(index >= 0) {
+      this.editors[index].model.close();
+      this.editors.splice(index, 1);
+      return Promise.resolve(index);
+    } else {
+      return Promise.reject();
+    }
+  }
 }
