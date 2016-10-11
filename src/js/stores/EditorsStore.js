@@ -31,7 +31,7 @@ export default class EditorsStore extends BaseStore {
   }
 
   openModel(modelId) {
-    return this.modelService.open(this.collectionId, modelId);
+    return this.modelService.open(this.collectionId, modelId, () => {return {content: ""};});
   }
 
   getEditors() {

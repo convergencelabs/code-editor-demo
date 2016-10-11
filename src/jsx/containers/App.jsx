@@ -5,7 +5,7 @@ import Files from './Files.jsx';
 import Editors from './Editors.jsx';
 
 import ParticipantsList from '../ParticipantsList.jsx';
-import GroupChatPane from '../GroupChatPane.jsx';
+import GroupChatPane from '../chat/GroupChatPane.jsx';
 import Banner from '../Banner.jsx';
 
 export default function App({modelsMetadata, rtModel}) {

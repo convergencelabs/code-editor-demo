@@ -20,16 +20,18 @@ export default class Editors extends React.Component {
   componentDidMount() {
     this.store.addChangeListener(this.onChange);
   }
+
   componentWillUnmount() {
     this.store.removeChangeListener(this.onChange);
   }
 
   onChange = () => {
     this.setState(this.getStateFromStore());
-  }
+  };
+
   getStateFromStore = () => {
     return this.store.getEditors();
-  }
+  };
 
   render() {
     return (
