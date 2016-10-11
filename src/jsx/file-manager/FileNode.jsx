@@ -1,12 +1,12 @@
 import React, {PropTypes} from 'react';
 import classNames from 'classnames';
 
+import * as actions from '../../js/actions';
 import {FileContextMenu} from './ContextMenu.jsx';
 import RenamableNode from './RenamableNode.jsx';
 
 export default class FileNode extends React.Component {
   static propTypes = {
-    actionCreator: PropTypes.object.isRequired,
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     selected: PropTypes.bool,
@@ -21,20 +21,20 @@ export default class FileNode extends React.Component {
   }
 
   handleClick = () => {
-    this.props.actionCreator.selectNode(this.props.id);
+    actions.selectNode(this.props.id);
   };
   handleOpen = () => {
-    this.props.actionCreator.openFile(this.props.id);
+    actions.openFile(this.props.id);
   };
   handleDelete = () => {
-    this.props.actionCreator.deleteFile(this.props.id);
+    actions.deleteFile(this.props.id);
   };
   handleHistory = () => {
 
   };
 
   handleRename = (newName) => {
-    this.props.actionCreator.renameFile(this.props.id, newName);
+    actions.renameFile(this.props.id, newName);
     this.setState({renaming: false});
   };
   handleRenameCancel = () => {

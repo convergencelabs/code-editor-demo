@@ -5,3 +5,20 @@ export function generateUUID() {
     return v.toString(16);
   });
 }
+
+export function appendIdsToObjects(objectsById) { 
+  for(let id in objectsById) {
+    objectsById[id].id = id;
+  }
+}
+
+export function findChildParent(folders, childId) {
+  let folderIds = folders.keys();
+  for(let i = 0; i < folderIds.length; i++) {
+    let folder = folders.get(folderIds[i]);
+    let found = folder.get('childIds').data().some(id => { return id === childId; });
+    if(found) {
+      return folder;
+    }
+  }
+}

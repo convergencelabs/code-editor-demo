@@ -5,7 +5,7 @@ import PlaybackBar from './PlaybackBar.jsx';
 
 export default class EditorPane extends React.Component {
   static propTypes = {
-    file: PropTypes.object.isRequired
+    fileModel: PropTypes.object
   };
 
   constructor(props) {
@@ -15,7 +15,7 @@ export default class EditorPane extends React.Component {
         row: 0,
         column: 0
       }
-    }
+    };
   }
 
   handleCursorMove = (cursor) => {
@@ -25,18 +25,18 @@ export default class EditorPane extends React.Component {
   /* todo deduce fileType from file suffix */
   render() {
     let playbackPanel;
-    if (this.props.file.historical) {
+    if (this.props.historical) {
       playbackPanel = <PlaybackBar />;
     }
 
     return (
       <div className="editor-pane">
         {playbackPanel}
-        <Editor onCursorMove={this.handleCursorMove} file={this.props.file} />
+        <Editor onCursorMove={this.handleCursorMove} fileModel={this.props.fileModel} />
         <StatusBar
           fileType="JavaScript"
           cursor={this.state.cursor}
-          multiUser={!this.props.file.multiUser}
+          multiUser
           participants={[{username: "test1", color: 'green'}, {username: "test2", color: 'blue'}]}
         />
       </div>

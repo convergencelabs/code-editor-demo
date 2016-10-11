@@ -1,28 +1,22 @@
-import React, { PropTypes } from 'react'
-import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
+import React, { PropTypes } from 'react';
 import SplitPanel from 'react-split-pane';
 
-import * as actions from '../../js/actions'
-import ActionCreator from '../../js/actions/ActionCreator';
+import Files from './Files.jsx';
+import Editors from './Editors.jsx';
 
-import FileManager from '../file-manager/FileManager.jsx';
-import EditorTabs from '../editor/EditorTabs.jsx';
 import ParticipantsList from '../ParticipantsList.jsx';
 import GroupChatPane from '../GroupChatPane.jsx';
 import Banner from '../Banner.jsx';
 
-function App({actions, editors, files, rtModel, tree}) {
-  const actionCreator = new ActionCreator(rtModel, actions);
-
+export default function App({modelsMetadata, rtModel}) {
   return (
     <div className="code-editor">
       <Banner className="status-bar" username="Test User" />
       <div className="top-pane">
         <SplitPanel direction="horizontal" defaultSize={200}>
-          <FileManager tree={tree} files={files} actionCreator={actionCreator} />
+          <Files rtModel={rtModel} />
           <SplitPanel direction="horizontal" defaultSize={200} primary="second">
-            <EditorTabs editors={editors} files={files} actionCreator={actionCreator} />
+            <Editors rtModel={rtModel} modelsMetadata={modelsMetadata} />
             <div className="right-pane">
               <div className="section-title">Participants</div>
               <ParticipantsList />
@@ -37,24 +31,6 @@ function App({actions, editors, files, rtModel, tree}) {
 }
 
 App.propTypes = {
-  actions: PropTypes.object.isRequired,
-  editors: PropTypes.object.isRequired,
-  files: PropTypes.object.isRequired,
+  modelsMetadata: PropTypes.object.isRequired,
   rtModel: PropTypes.object.isRequired,
-  tree: PropTypes.object.isRequired,
 };
-
-const mapStateToProps = state => ({
-  files: state.files,
-  editors: state.editors,
-  tree: state.tree
-})
-
-const mapDispatchToProps = dispatch => ({
-  actions: bindActionCreators(actions, dispatch)
-})
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(App)

@@ -1,12 +1,12 @@
 import React, {PropTypes} from 'react';
 import classNames from 'classnames';
 
+import * as actions from '../../js/actions';
 import {FolderContextMenu} from './ContextMenu.jsx';
 import RenamableNode from './RenamableNode.jsx';
 
 export default class FolderNode extends React.Component {
   static propTypes = {
-    actionCreator: PropTypes.object.isRequired,
     collapsed: PropTypes.bool,
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
@@ -22,10 +22,10 @@ export default class FolderNode extends React.Component {
   }
 
   handleClick = () => {
-    this.props.actionCreator.selectNode(this.props.id);
+    actions.selectNode(this.props.id);
   }
   handleRename = (newName) => {
-    this.props.actionCreator.renameFolder(this.props.id, newName);
+    actions.renameFolder(this.props.id, newName);
     this.setState({renaming: false});
   }
   handleRenameCancel = () => {
@@ -43,13 +43,13 @@ export default class FolderNode extends React.Component {
     this.setState({renaming: true});
   }
   handleDelete = () => {
-    this.props.actionCreator.deleteFolder(this.props.id);
+    actions.deleteFolder(this.props.id);
   }
   handleNewFile = () => {
-    this.props.actionCreator.addNewNode('file', this.props.id);
+    actions.addNewNode('file', this.props.id);
   }
   handleNewFolder = () => {
-    this.props.actionCreator.addNewNode('folder', this.props.id);
+    actions.addNewNode('folder', this.props.id);
   }
 
 

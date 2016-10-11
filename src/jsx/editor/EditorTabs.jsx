@@ -1,12 +1,13 @@
 import React, {PropTypes} from 'react';
 import classNames from 'classnames';
-import EditorPane from './EditorPane.jsx'
+
+import * as actions from '../../js/actions';
+import EditorPane from './EditorPane.jsx';
 
 export default class EditorTabs extends React.Component {
   static propTypes = {
-    actionCreator: PropTypes.object.isRequired,
-    editors: PropTypes.object.isRequired,
-    files: PropTypes.object.isRequired,
+    activeFile: PropTypes.string,
+    editors: PropTypes.array.isRequired,
   };
 
   constructor(props) {
@@ -14,35 +15,31 @@ export default class EditorTabs extends React.Component {
   }
 
   handleTabClick = (fileId) => {
-    this.props.actionCreator.selectTab(fileId);
-    this.props.actionCreator.selectNode(fileId);
+    actions.selectTab(fileId);
+    actions.selectNode(fileId);
   }
 
   handleTabClose = (fileId) => {
-    this.props.actionCreator.closeTab(fileId);
+    actions.closeTab(fileId);
   }
 
   render() {
-    const tabButtons = this.props.editors.tabOrder.map((fileId) => {
-      const file = this.props.files[fileId];
-
+    const tabButtons = this.props.editors.map(editor => {
       return (<EditorTabButton
-        key={file.id}
-        id={file.id}
-        title={file.name}
-        active={file.id === this.props.editors.activeFile}
+        key={editor.modelId}
+        id={editor.modelId}
+        title={editor.title}
+        active={editor.modelId === this.props.activeFile}
         onClick={this.handleTabClick}
         onClose={this.handleTabClose}
       />);
     });
 
-    const editors = this.props.editors.tabOrder.map((fileId) => {
-      const file = this.props.files[fileId];
-
-      const className = classNames('editor-container', (file.id === this.props.editors.activeFile ? 'active' : 'inactive'));
+    const editors = this.props.editors.map(editor => {
+      const className = classNames('editor-container', (editor.modelId === this.props.activeFile ? 'active' : 'inactive'));
       return (
-        <div key={file.id} className={className}>
-          <EditorPane file={file} />
+        <div key={editor.modelId} className={className}>
+          <EditorPane fileModel={editor.model} />
         </div>
       );
     });

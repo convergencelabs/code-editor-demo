@@ -2,6 +2,7 @@ import React, {PropTypes} from 'react';
 import classNames from 'classnames';
 
 import {generateUUID} from '../../js/utils';
+import * as actions from '../../js/actions';
 
 import Collapser from './Collapser.jsx';
 import InlineInput from './InlineInput.jsx';
@@ -10,12 +11,12 @@ import FolderNode from './FolderNode.jsx';
 
 export default class TreeView extends React.Component {
   static propTypes = {
-    actionCreator: PropTypes.object.isRequired,
     collapsed: PropTypes.bool,
     defaultCollapsed: PropTypes.bool,
     folder: PropTypes.object.isRequired,
-    selectedId: PropTypes.string,
-    tree: PropTypes.object.isRequired
+    folderId: PropTypes.string.isRequired,
+    selected: PropTypes.string,
+    treeNodes: PropTypes.object.isRequired,
   };
 
   constructor(props) {
@@ -31,66 +32,65 @@ export default class TreeView extends React.Component {
   }
 
   handleNewChildCancel = () => {
-    this.props.actionCreator.cancelNewNode(this.props.folder.id);
+    actions.cancelNewNode(this.props.folderId);
   }
   handleEntityNamed = (name) => {
     const newId = generateUUID();
     if(this.props.folder.newNode === 'file') {
-      this.props.actionCreator.createFile(newId, name, this.props.folder.id);
+      actions.createFile(newId, name, this.props.folder.id);
     } else if(this.props.folder.newNode === 'folder') {
-      this.props.actionCreator.createFolder(newId, name, this.props.folder.id);
+      actions.createFolder(newId, name, this.props.folder.id);
     }
-    this.props.actionCreator.cancelNewNode(this.props.folder.id);
+    actions.cancelNewNode(this.props.folder.id);
   }
 
-  renderChildren = (childIds, tree, files, actionCreator) => {
-    return childIds.map(id => {
-      let folder = tree.folders[id];
-      if(folder) {
-        return (
+  renderChildren = (children, nodes) => {
+    var childNodes = [];
+    children.forEach(child => {
+      const id = child.data();
+      let node = nodes.get(id);
+      if(node.hasKey('children')) {
+        childNodes.push(
           <TreeView 
-            actionCreator={actionCreator}
             defaultCollapsed={this.props.defaultCollapsed} 
-            files={files}
-            folder={folder} 
-            tree={tree}
+            folder={node} 
+            folderId={id}
+            treeNodes={this.props.treeNodes}
             key={id}
-            selectedId={tree.selectedId} />
-        ) 
+            selectedId={this.props.selected} />
+        );
       } else {
-        const file = files[id];
-        return (
+        childNodes.push(
           <FileNode 
-            actionCreator={actionCreator}
-            id={file.id}
+            id={id}
             key={id}
-            name={file.name} 
-            selected={tree.selectedId === file.id} />
+            name={node.get('name').data()} 
+            selected={this.props.selected === id} />
         );
       }
     });
+    return childNodes;
   }
 
   render() {
     const {
-      actionCreator,
       collapsed = this.state.collapsed,
-      files,
       folder,
-      tree,
-      selectedId
+      folderId,
+      treeNodes,
+      selected
     } = this.props;
 
     let containerClasses = classNames('node-children', collapsed ? 'collapsed' : 'open');
 
     let placeholderNode;
-    if(folder.hasOwnProperty('newNode')) {
+    if(folder.hasKey('newNode')) {
       placeholderNode = (
         <NewNodePlaceholder 
           name={''} 
           onCancel={this.handleNewChildCancel} 
           onComplete={this.handleEntityNamed} 
-          type={folder.newNode} />
+          type={folder.get('newNode').data()} />
       );
     }
 
@@ -99,16 +99,15 @@ export default class TreeView extends React.Component {
         <div className="node">
           <Collapser onClick={this.handleCollapserClick} collapsed={collapsed} />
           <FolderNode 
-            actionCreator={actionCreator}
             collapsed={collapsed}
-            id={folder.id}
-            name={folder.name} 
-            selected={selectedId === folder.id}
+            id={folderId}
+            name={folder.get('name').data()} 
+            selected={selected === folderId}
           />
         </div>
         <div className={containerClasses}>
           {placeholderNode}
-          {this.renderChildren(folder.childIds, tree, files, actionCreator)}
+          {this.renderChildren(folder.get('children'), treeNodes)}
         </div>
       </div>
     );

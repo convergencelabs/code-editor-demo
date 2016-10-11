@@ -1,29 +1,27 @@
 import React, {PropTypes} from 'react';
 
+import * as actions from '../../js/actions';
 import ActionButton from './ActionButton.jsx';
 import FileTree from './FileTree.jsx';
 
 export default class FileManager extends React.Component {
   static propTypes = {
-    actionCreator: PropTypes.object.isRequired,
-    files: PropTypes.object.isRequired,
-    tree: PropTypes.object.isRequired,
-  }
+    selected: PropTypes.string,
+    treeNodes: PropTypes.object.isRequired,
+  };
 
   constructor(props) {
     super(props);
   }
 
   handleNewFile = () => {
-    this.props.actionCreator.addNewNode('file', this.props.tree.selectedId || 'root');
+    actions.addNewNode('file', this.props.selected);
   }
   handleNewFolder = () => {
-    this.props.actionCreator.addNewNode('folder', this.props.tree.selectedId || 'root');
-  } 
+    actions.addNewNode('folder', this.props.selected);
+  }
 
   render() {
-    let {actionCreator, files, tree} = this.props;
-
     return (
       <div className="file-manager">
         <div className="section-title">Project</div>
@@ -34,10 +32,9 @@ export default class FileManager extends React.Component {
             className="add-folder" 
             onClick={this.handleNewFolder} />
         </div>
-        <FileTree actionCreator={actionCreator} files={files} tree={tree} />
+        <FileTree {...this.props} />
       </div>
     );
   }
 }
-
 
