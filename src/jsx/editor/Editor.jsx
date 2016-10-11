@@ -1,6 +1,8 @@
 import React, {PropTypes} from 'react';
 import ace from 'brace';
 
+import {AceMultiCursorManager} from 'ace-collab-ext';
+
 require('brace/mode/javascript');
 require('brace/theme/monokai');
 
@@ -11,11 +13,9 @@ export default class Editor extends React.Component {
     onCursorMove: PropTypes.func.isRequired
   };
 
-  componentDidMount() {
-    if(this.props.fileModel) {
-      this.initEditor();
-    }
-  }
+   componentDidMount() {
+     this.initEditor();
+   }
 
   initEditor() {
     this._editor = ace.edit(this._container);
@@ -32,11 +32,8 @@ export default class Editor extends React.Component {
   }
 
   render() {
-    if(!this._editor && this.props.fileModel) {
-      this.initEditor();
-    }
     return (
-      this.props.fileModel ? 
+      this.props.fileModel !== undefined ?
         <div className="editor" ref={(div) => { this._container = div; }} /> :
         <div>loading...</div>
     );

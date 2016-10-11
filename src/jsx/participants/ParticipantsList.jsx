@@ -41,8 +41,8 @@ export default class ParticipantsList extends React.Component {
   }
 
   @autobind
-  handleSessionLeft() {
-    const newParticipants = this.state.participants.filter((element) => element.sessionId !== element.sessionId);
+  handleSessionLeft(e) {
+    const newParticipants = this.state.participants.filter((element) => {return element.sessionId() !== e.sessionId;});
     this.setState({participants: newParticipants});
   }
 
