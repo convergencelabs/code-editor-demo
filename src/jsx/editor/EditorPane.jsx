@@ -15,8 +15,22 @@ export default class EditorPane extends React.Component {
       cursor: {
         row: 0,
         column: 0
-      }
+      },
+      participants: props.fileModel.connectedSessions()
     };
+
+    this.props.fileModel.on("session_opened", (e) => {
+      const newParticipants = this.state.participants.concat({
+        sessionId: e.sessionId,
+        username: e.username
+      });
+      this.setState({participants: newParticipants});
+    });
+
+    this.props.fileModel.on("session_closed", (e) => {
+      const newParticipants = this.state.participants.filter((p) => {return p.sessionId !== e.sessionId;});
+      this.setState({participants: newParticipants});
+    });
   }
 
   handleCursorMove = (cursor) => {
@@ -41,7 +55,7 @@ export default class EditorPane extends React.Component {
           fileType="JavaScript"
           cursor={this.state.cursor}
           multiUser={!this.props.historical}
-          participants={[{username: "test1", color: 'green'}, {username: "test2", color: 'blue'}]}
+          participants={this.state.participants}
         />
       </div>
     );

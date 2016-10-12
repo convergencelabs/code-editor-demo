@@ -1,19 +1,26 @@
 import React from 'react';
+import colorAssigner from '../../js/color-util';
 
-export default class EditorParticipants extends React.Component {
-  render() {
-    var participants = this.props.participants.map((participant) => {
-      return <div key={participant.username} title={participant.username} className="participant-indicator" style={{background: participant.color}}></div>;
-    });
+const EditorParticipants = function (props) {
+  var participants = props.participants.map((participant) => {
+    return (<div
+      key={participant.sessionId}
+      title={participant.username}
+      className="participant-indicator"
+      style={{background: colorAssigner.getColorAsHex(participant.sessionId)}} />);
+  });
 
-    return (
-      <div className="status-bar-participants">
-        <span>{this.props.participants.length}</span>
-        <i className="fa fa-users"/>
-        <div className="participant-indicators">{participants}</div>
-      </div>
-    );
-  }
-}
+  return (
+    <div className="status-bar-participants">
+      <span>{props.participants.length}</span>
+      <i className="fa fa-users" />
+      <div className="participant-indicators">{participants}</div>
+    </div>
+  );
+};
 
+EditorParticipants.propTypes = {
+  participants: React.PropTypes.array
+};
 
+export default EditorParticipants;
