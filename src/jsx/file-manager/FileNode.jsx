@@ -2,6 +2,7 @@ import React, {PropTypes} from 'react';
 import classNames from 'classnames';
 
 import {openFile, deleteFile, renameFile, selectNode} from '../../js/actions/actionCreator';
+import RemoteFileActionCreator from '../../js/actions/RemoteFileActionCreator';
 import {FileContextMenu} from './ContextMenu.jsx';
 import RenamableNode from './RenamableNode.jsx';
 
@@ -15,9 +16,16 @@ export default class FileNode extends React.Component {
   constructor(props) {
     super(props);
 
+    this.remoteActionCreator = new RemoteFileActionCreator(props.id, props.model);
+    this.remoteActionCreator.listenFor(['changed']);
+
     this.state = {
       showContextMenu: false
     };
+  }
+
+  componentWillUnmount() {
+    this.remoteActionCreator.cleanUp();
   }
 
   handleClick = () => {

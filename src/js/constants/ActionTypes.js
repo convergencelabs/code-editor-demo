@@ -12,3 +12,8 @@ export const UserActions = {
   SELECT_NODE: 'SELECT_NODE',
   SELECT_TAB: 'SELECT_TAB',
 };
+
+export const RemoteActions = {
+  FILE_CHANGED: 'FILE_CHANGED',
+  FOLDER_CHANGED: 'FOLDER_CHANGED'
+};

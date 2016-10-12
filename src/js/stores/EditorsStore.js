@@ -16,17 +16,6 @@ export default class EditorsStore extends BaseStore {
 
   initState() {
     this.editors = [];
-    /*
-    this.rtModel.valueAt(['editors', this.username, 'tabs']).forEach(editor => {
-      const modelId = editor.get('modelId').data();
-      if(!this.activeFileId) {
-        this.activeFileId = modelId;
-      }
-      this.openModel(modelId).then(rtModel => {
-        this.models[rtModel.modelId()] = rtModel;
-        this.emitChange();
-      });
-    });*/
   }
 
   getEditors() {
@@ -36,24 +25,28 @@ export default class EditorsStore extends BaseStore {
     return this.activeFileId;
   }
 
-  getFileName(fileId) {
-    return this.rtModel.valueAt(['tree', 'nodes', fileId]).get('name').data();
-  }
-
   actionHandler(action) {
     const payload = action.payload;
     switch (action.type) {
       case UserActions.SELECT_TAB:
-        this.activeFileId = payload.id;
+        this.activateTab(payload.id);
         this.emitChange();
         break;
       case UserActions.SELECT_NODE:
-        if(this.editors.some((editor) => { return editor.modelId === payload.id; })) {
-          this.activeFileId = payload.id;
+        if(this.isFileOpen(payload.id)) {
+          this.activateTab(payload.id);
           this.emitChange();
         }
         break;
+      case UserActions.CLOSE_TAB:
+        this.removeEditor(payload.id).then(() => {
+          this.emitChange();
+        });
+        break;
       case UserActions.OPEN_FILE:
+        if(this.isFileOpen(payload.id)) {
+          return;
+        }
         this.openModel(payload.id).then(model => {
           this.createEditor(payload.id, model);
           this.emitChange();
@@ -67,20 +60,24 @@ export default class EditorsStore extends BaseStore {
           this.emitChange();
         });
         break;
-      case UserActions.CLOSE_TAB:
-        this.removeEditor(payload.id).then(() => {
-          this.emitChange();
-        });
-        break;
       case UserActions.DELETE_FILE:
         this.deleteModel(payload.id).then(() => {
           this.removeEditor(payload.id);
         }).then(() => {
           this.emitChange();
         });
+        break;
+      case UserActions.RENAME_FILE:
+        if(this.setTabTitle(payload.id, payload.newName)) {
+          this.emitChange();
+        }
+        break;
     }
   }
 
+  activateTab(id) {
+    this.activeFileId = id;
+  }
   createModel(id) {
     return this.modelService.create(this.collectionId, id, {
       content: ''
@@ -100,6 +97,9 @@ export default class EditorsStore extends BaseStore {
   getEditorIndex(id) {
     return this.editors.findIndex((editor) => { return editor.modelId === id; });
   }
+  isFileOpen(id) {
+    return this.editors.some(editor => { return editor.modelId === id; });
+  }
   removeEditor(id) {
     const index = this.getEditorIndex(id);
     if(index >= 0) {
@@ -115,4 +115,15 @@ export default class EditorsStore extends BaseStore {
       return Promise.reject();
     }
   }
+  getFileName(fileId) {
+    return this.rtModel.valueAt(['tree', 'nodes', fileId]).get('name').data();
+  }
+  setTabTitle(id, title) {
+    const index = this.getEditorIndex(id);
+    if(index >= 0) {
+      this.editors[index].title = title;
+    }
+    return index >= 0;
+  }
+
 }

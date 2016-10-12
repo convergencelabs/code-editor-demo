@@ -101,7 +101,7 @@ export default class TreeView extends React.Component {
           <FolderNode 
             collapsed={collapsed}
             id={folderId}
-            name={folder.get('name').data()} 
+            model={folder} 
             selected={treeState.selectedId === folderId}
           />
         </div>

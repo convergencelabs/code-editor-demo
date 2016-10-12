@@ -1,10 +1,9 @@
 import React, {PropTypes} from 'react';
 import ace from 'brace';
-
 const AceRange = ace.acequire('ace/range').Range;
-
 import {AceMultiCursorManager} from 'ace-collab-ext';
 import colorAssigner from '../../js/color-util.js';
+
 
 require('brace/mode/javascript');
 require('brace/theme/monokai');
