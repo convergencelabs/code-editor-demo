@@ -12,15 +12,20 @@ export function appendIdsToObjects(objectsById) {
   }
 }
 
-export function findChildParent(folders, childId) {
+export function findChildParentId(folders, childId) {
   let folderIds = folders.keys();
   for(let i = 0; i < folderIds.length; i++) {
     let folder = folders.get(folderIds[i]);
     if(folder.hasKey('children')) {
       let found = folder.get('children').data().some(id => { return id === childId; });
       if(found) {
-        return folder;
+        return folderIds[i];
       }
     }
   }
+}
+
+export function isNodeFolder(nodes, nodeId) {
+  const rtNode = nodes.get(nodeId);
+  return rtNode.hasKey('children');
 }

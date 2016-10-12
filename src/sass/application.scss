@@ -3,6 +3,12 @@
 $fa-font-path: "../../node_modules/font-awesome/fonts";
 @import "../../node_modules/font-awesome/scss/font-awesome";
 
+/* https://www.fontsquirrel.com/license/camingocode */
+@font-face {
+  font-family: 'CamingoCode';
+  src: url('../assets/fonts/CamingoCode-Regular.ttf');
+}
+
 .popover-menu {
   position: absolute;
   border: 1px solid #666;

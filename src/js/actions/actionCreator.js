@@ -63,3 +63,10 @@ export const renameFile = (id, newName) => {
     payload: {id, newName}
   });
 };
+
+export const deleteNode = (id) => {
+  appDispatcher.dispatch({
+    type: UserActions.DELETE_NODE,
+    payload: {id}
+  });
+};
