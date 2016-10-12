@@ -102,6 +102,7 @@ export default class TreeView extends React.Component {
             collapsed={collapsed}
             id={folderId}
             model={folder} 
+            onCollapse={this.handleCollapserClick}
             selected={treeState.selectedId === folderId}
           />
         </div>

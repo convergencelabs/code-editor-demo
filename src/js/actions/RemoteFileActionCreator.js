@@ -13,7 +13,7 @@ export default class RemoteFileActionCreator {
     actions.forEach(action => {
       this.listeningOn.push(action);
       switch(action) {
-        case 'fileChanged':
+        case 'changed':
           this.fileModel.on('model_changed', this.fileChanged);
           break;
       }
@@ -30,7 +30,7 @@ export default class RemoteFileActionCreator {
   cleanUp() {
     this.listeningOn.forEach(action => {
       switch(action) {
-        case 'fileChanged':
+        case 'changed':
           this.fileModel.off('model_changed', this.fileChanged);
           break;
       }

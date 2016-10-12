@@ -11,7 +11,8 @@ export default class FolderNode extends React.Component {
     collapsed: PropTypes.bool,
     id: PropTypes.string.isRequired,
     model: PropTypes.object.isRequired,
-    selected: PropTypes.bool
+    onCollapse: PropTypes.func.isRequired,
+    selected: PropTypes.bool,
   };
 
   constructor(props) {
@@ -76,7 +77,12 @@ export default class FolderNode extends React.Component {
     const folderName = this.props.model.get('name').data();
 
     return (
-      <div className={nodeClasses} onClick={this.handleClick} onContextMenu={this.handleContextMenu}>
+      <div 
+        className={nodeClasses} 
+        onClick={this.handleClick} 
+        onDoubleClick={this.props.onCollapse}
+        onContextMenu={this.handleContextMenu}
+      >
         <i className={iconClasses} />
         <RenamableNode name={folderName} renaming={this.state.renaming} 
           onCancel={this.handleRenameCancel} onComplete={this.handleRename} />
