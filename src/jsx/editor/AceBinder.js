@@ -2,22 +2,32 @@ import ace from 'brace';
 const AceRange = ace.acequire('ace/range').Range;
 import {AceMultiCursorManager} from 'ace-collab-ext';
 import {AceMultiSelectionManager} from 'ace-collab-ext';
+import {AceRadarView} from 'ace-collab-ext';
+import {AceViewportUtil} from 'ace-collab-ext';
 import colorAssigner from '../../js/color-util.js';
 
 const cursorKey = "cursor";
 const selectionKey = "selection";
+const viewKey = "view";
 
 export default class AceBinder {
 
-  constructor(editor, model) {
+  constructor(editor, model, radarViewElement) {
     this._editor = editor;
+    this._radarViewElement = radarViewElement;
+    this._model = model;
+
     this._session = editor.getSession();
     this._document = this._session.getDocument();
 
-    this._model = model;
+    this._cursorManager = null;
+    this._cursorReference = null;
 
     this._selectionManager = null;
     this._selectionReference = null;
+
+    this._radarView = null;
+    this._viewReference = null;
 
     this._suppressEvents = false;
   }
@@ -26,6 +36,7 @@ export default class AceBinder {
     this._bindModel();
     this._bindCursor();
     this._bindSelection();
+    this._bindRadarView();
   }
 
   /////////////////////////////////////////////////////////////////////////////
@@ -183,5 +194,54 @@ export default class AceBinder {
     const rangeAnchor = this._document.indexToPosition(start);
     const rangeLead = this._document.indexToPosition(end);
     return new AceRange(rangeAnchor.row, rangeAnchor.column, rangeLead.row, rangeLead.column);
+  }
+
+  /////////////////////////////////////////////////////////////////////////////
+  // Selection Binding
+  /////////////////////////////////////////////////////////////////////////////
+  _bindRadarView() {
+    this._radarView = new AceRadarView(this._radarViewElement, this._editor);
+    this._viewReference = this._model.rangeReference(viewKey);
+
+    this._setLocalView();
+    this._viewReference.publish();
+
+    const references = this._model.references({key: viewKey});
+    references.forEach((reference) => {
+      if (!reference.isLocal()) {
+        this._addView(reference);
+      }
+    });
+
+    this._session.on('changeScrollTop', () => this._setLocalView());
+
+    this._model.on("reference", (e) => {
+      if (e.reference.key() === viewKey) {
+        this._addView(e.reference);
+      }
+    });
+  }
+
+  _setLocalView() {
+    setTimeout(() => {
+      const viewportIndices = AceViewportUtil.getVisibleIndexRange(this._editor);
+      console.log(viewportIndices);
+      this._viewReference.set({start: viewportIndices.start, end: viewportIndices.end});
+    });
+  }
+
+  _addView(reference) {
+    const color = colorAssigner.getColorAsHex(reference.sessionId());
+    const remoteView = reference.value();
+    this._radarView.addView(reference.sessionId(), reference.username(), color, 0, 0, 0);
+
+    // fixme need to implement this on the ace collab side
+    reference.on("cleared", () => this._radarView.clearView(reference.sessionId()));
+    reference.on("disposed", () => this._radarView.removeView(reference.sessionId()));
+    reference.on("set", () => {
+      const v = reference.value();
+      const rows = AceViewportUtil.indicesToRows(this._editor, v.start, v.end);
+      this._radarView.setViewRows(reference.sessionId(), rows.start, rows.end);
+    });
   }
 }
