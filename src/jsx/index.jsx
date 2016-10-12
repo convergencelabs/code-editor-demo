@@ -16,6 +16,7 @@ require("!style!css!sass!../sass/participants-list.scss");
 require("!style!css!sass!../sass/status-bar.scss");
 require("!style!css!sass!../sass/editor-tabs.scss");
 require("!style!css!sass!../../node_modules/rc-slider/assets/index.css");
+require("!style!css!sass!../../node_modules/ace-collab-ext/ace-collab.css");
 
 const domainUrl = 'https://localhost/realtime/domain/test/Examples';
 

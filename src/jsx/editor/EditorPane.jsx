@@ -35,7 +35,7 @@ export default class EditorPane extends React.Component {
         {playbackPanel}
         <Editor
           onCursorMove={this.handleCursorMove}
-          fileModel={this.props.fileModel}
+          model={this.props.fileModel}
           historical={this.props.historical} />
         <StatusBar
           fileType="JavaScript"
