@@ -124,10 +124,8 @@ function bindAceToCursor(editor, rtString, referenceKey) {
     const remoteCursorIndex = reference.value();
     cursorManager.addCursor(reference.sessionId(), reference.username(), color, remoteCursorIndex);
 
-    reference.on("cleared", e => cursorManager.clearCursor(e.sessionId));
-    reference.on("disposed", e =>  cursorManager.removeCursor(e.sessionId));
-    reference.on("set", () => {
-      cursorManager.setCursor(reference.sessionId(), reference.value());
-    });
+    reference.on("cleared", () => cursorManager.clearCursor(reference.sessionId()));
+    reference.on("disposed", () =>  cursorManager.removeCursor(reference.sessionId()));
+    reference.on("set", () => cursorManager.setCursor(reference.sessionId(), reference.value()));
   }
 }
