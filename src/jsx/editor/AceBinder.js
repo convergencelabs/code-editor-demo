@@ -34,9 +34,9 @@ export default class AceBinder {
 
   bind() {
     this._bindModel();
+    this._bindRadarView();
     this._bindCursor();
     this._bindSelection();
-    this._bindRadarView();
   }
 
   /////////////////////////////////////////////////////////////////////////////
@@ -124,7 +124,12 @@ export default class AceBinder {
 
     reference.on("cleared", () => this._cursorManager.clearCursor(reference.sessionId()));
     reference.on("disposed", () => this._cursorManager.removeCursor(reference.sessionId()));
-    reference.on("set", () => this._cursorManager.setCursor(reference.sessionId(), reference.value()));
+    reference.on("set", () => {
+      const cursorIndex = reference.value();
+      const cursorRow = this._document.indexToPosition(cursorIndex).row;
+      this._cursorManager.setCursor(reference.sessionId(), cursorIndex);
+      this._radarView.setCursorRow(reference.sessionId(), cursorRow);
+    });
   }
 
   /////////////////////////////////////////////////////////////////////////////
@@ -220,12 +225,15 @@ export default class AceBinder {
         this._addView(e.reference);
       }
     });
+
+    setTimeout(() => {
+      this._setLocalView();
+    }, 0);
   }
 
   _setLocalView() {
     setTimeout(() => {
       const viewportIndices = AceViewportUtil.getVisibleIndexRange(this._editor);
-      console.log(viewportIndices);
       this._viewReference.set({start: viewportIndices.start, end: viewportIndices.end});
     });
   }
@@ -233,6 +241,8 @@ export default class AceBinder {
   _addView(reference) {
     const color = colorAssigner.getColorAsHex(reference.sessionId());
     const remoteView = reference.value();
+    // fixme, need the value for the reference
+    // fixme need the cursor
     this._radarView.addView(reference.sessionId(), reference.username(), color, 0, 0, 0);
 
     // fixme need to implement this on the ace collab side
