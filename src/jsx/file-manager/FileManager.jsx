@@ -19,10 +19,15 @@ export default class FileManager extends React.Component {
   }
 
   handleNewFile = () => {
-    addNewNode('file', this.props.treeState.selectedId);
+    if(this.props.treeState.selectedId) {
+      addNewNode('file', this.props.treeState.selectedId);
+    }
+    
   }
   handleNewFolder = () => {
-    addNewNode('folder', this.props.treeState.selectedId);
+    if(this.props.treeState.selectedId) {
+      addNewNode('folder', this.props.treeState.selectedId);
+    }
   }
   handleDeleteNode = () => {
     const id = this.props.treeState.selectedId;
@@ -34,8 +39,8 @@ export default class FileManager extends React.Component {
   }
   render() {
     const folder = this.props.treeNodes.get(this.rootId);
-    const deleteBtnStyle = {display: this.props.treeState.selectedId !== 
-    'root' ? 'inline' : 'none'};
+    const selectedId = this.props.treeState.selectedId;
+    const deleteBtnStyle = {display: !selectedId || selectedId === 'root' ? 'none' : 'inline'};
 
     return (
       <div className="file-manager">
@@ -57,7 +62,7 @@ export default class FileManager extends React.Component {
             title="Delete selected"
             type="button" 
           >
-            <i className="fa fa-lg fa-times" />
+            <i className="fa fa-lg fa-trash-o" />
           </button>
         </div>
         <div className="file-tree">
