@@ -11,26 +11,32 @@ export default class EditorPane extends React.Component {
 
   constructor(props) {
     super(props);
+
+    let participants = [];
+    if (!this.props.historical) {
+      participants = props.fileModel.connectedSessions();
+
+      this.props.fileModel.on("session_opened", (e) => {
+        const newParticipants = this.state.participants.concat({
+          sessionId: e.sessionId,
+          username: e.username
+        });
+        this.setState({participants: newParticipants});
+      });
+
+      this.props.fileModel.on("session_closed", (e) => {
+        const newParticipants = this.state.participants.filter((p) => {return p.sessionId !== e.sessionId;});
+        this.setState({participants: newParticipants});
+      });
+    }
+
     this.state = {
       cursor: {
         row: 0,
         column: 0
       },
-      participants: props.fileModel.connectedSessions()
+      participants: participants
     };
-
-    this.props.fileModel.on("session_opened", (e) => {
-      const newParticipants = this.state.participants.concat({
-        sessionId: e.sessionId,
-        username: e.username
-      });
-      this.setState({participants: newParticipants});
-    });
-
-    this.props.fileModel.on("session_closed", (e) => {
-      const newParticipants = this.state.participants.filter((p) => {return p.sessionId !== e.sessionId;});
-      this.setState({participants: newParticipants});
-    });
   }
 
   handleCursorMove = (cursor) => {

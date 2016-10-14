@@ -13,6 +13,14 @@ export const openFile = (id) => {
     payload: {id}
   });    
 };
+
+export const openHistory = (id) => {
+  appDispatcher.dispatch({
+    type: UserActions.OPEN_HISTORY,
+    payload: {id}
+  });
+};
+
 export const addNewNode = (type, folderId) => {
   appDispatcher.dispatch({
     type: UserActions.ADD_NEW_NODE, 

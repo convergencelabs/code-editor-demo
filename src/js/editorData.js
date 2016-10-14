@@ -1,6 +1,7 @@
 export default class EditorData {
-  constructor(id, title, model, historical) {
-    this.modelId = id;
+  constructor(editorId, modelId, title, model, historical) {
+    this.editorId = editorId;
+    this.modelId = modelId;
     this.title = title;
     this.model = model;
     this.historical = historical;

@@ -29,12 +29,13 @@ export default class Editor extends React.Component {
       this.props.onCursorMove(cursorPosition);
     });
 
-    this._editor.setReadOnly(this.props.historical);
-    const aceBinder = new AceBinder(this._editor, contentModel, this._radarViewElement);
-    aceBinder.bind();
+    if (this.props.historical) {
+      this._editor.setReadOnly(true);
+    } else {
+      const aceBinder = new AceBinder(this._editor, contentModel, this._radarViewElement);
+      aceBinder.bind();
+    }
   }
-
-
 
   render() {
     return (

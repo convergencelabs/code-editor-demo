@@ -3,6 +3,7 @@ import {BaseStore} from './BaseStore';
 import EditorData from '../editorData';
 
 export default class EditorsStore extends BaseStore {
+
   constructor(modelsMetadata, rtModel) {
     super();
 
@@ -10,6 +11,7 @@ export default class EditorsStore extends BaseStore {
     this.collectionId = modelsMetadata.collectionId;
     this.username = modelsMetadata.username;
     this.rtModel = rtModel;
+    this.editorId = 0;
 
     this.initState();
   }
@@ -44,13 +46,20 @@ export default class EditorsStore extends BaseStore {
         });
         break;
       case UserActions.OPEN_FILE:
-        if(this.isFileOpen(payload.id)) {
-          return;
+        if(!this.isFileOpen(payload.id)) {
+          this.openModel(payload.id).then(model => {
+            this.createEditor(payload.id, model, false);
+            this.emitChange();
+          });
         }
-        this.openModel(payload.id).then(model => {
-          this.createEditor(payload.id, model);
-          this.emitChange();
-        });
+        break;
+      case UserActions.OPEN_HISTORY:
+        if(!this.isFileHistoryOpen(payload.id)) {
+          this.openHistoricalModel(payload.id).then(model => {
+            this.createEditor(payload.id, model, true);
+            this.emitChange();
+          });
+        }
         break;
       case UserActions.CREATE_FILE:
         this.createModel(payload.id).then(() => {
@@ -86,19 +95,25 @@ export default class EditorsStore extends BaseStore {
   openModel(modelId) {
     return this.modelService.open(this.collectionId, modelId);
   }
+  openHistoricalModel(modelId) {
+    return this.modelService.history(this.collectionId, modelId);
+  }
   deleteModel(modelId) {
     return this.modelService.remove(this.collectionId, modelId);
   }
-  createEditor(id, model) {
-    const editor = new EditorData(id, this.getFileName(id), model, false);
+  createEditor(id, model, historical) {
+    const editor = new EditorData(this.editorId++, id, this.getFileName(id), model, historical);
     this.editors.push(editor);
-    this.activeFileId = id;
+    this.activeEditor = editor;
   }
   getEditorIndex(id) {
     return this.editors.findIndex((editor) => { return editor.modelId === id; });
   }
   isFileOpen(id) {
-    return this.editors.some(editor => { return editor.modelId === id; });
+    return this.editors.some(editor => { return editor.modelId === id && editor.historical === false; });
+  }
+  isFileHistoryOpen(id) {
+    return this.editors.some(editor => { return editor.modelId === id && editor.historical === true; });
   }
   removeEditor(id) {
     const index = this.getEditorIndex(id);
@@ -126,4 +141,7 @@ export default class EditorsStore extends BaseStore {
     return index >= 0;
   }
 
+  getHistoryId(id) {
+    return `history:${id}`;
+  }
 }

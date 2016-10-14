@@ -128,7 +128,9 @@ export default class AceBinder {
       const cursorIndex = reference.value();
       const cursorRow = this._document.indexToPosition(cursorIndex).row;
       this._cursorManager.setCursor(reference.sessionId(), cursorIndex);
-      this._radarView.setCursorRow(reference.sessionId(), cursorRow);
+      if (this._radarView.hasView(reference.sessionId())) {
+        this._radarView.setCursorRow(reference.sessionId(), cursorRow);
+      }
     });
   }
 
@@ -208,9 +210,6 @@ export default class AceBinder {
     this._radarView = new AceRadarView(this._radarViewElement, this._editor);
     this._viewReference = this._model.rangeReference(viewKey);
 
-    this._setLocalView();
-    this._viewReference.publish();
-
     const references = this._model.references({key: viewKey});
     references.forEach((reference) => {
       if (!reference.isLocal()) {
@@ -218,7 +217,9 @@ export default class AceBinder {
       }
     });
 
-    this._session.on('changeScrollTop', () => this._setLocalView());
+    this._session.on('changeScrollTop', () => {
+      setTimeout(() => this._setLocalView(), 0);
+    });
 
     this._model.on("reference", (e) => {
       if (e.reference.key() === viewKey) {
@@ -228,22 +229,28 @@ export default class AceBinder {
 
     setTimeout(() => {
       this._setLocalView();
+      this._viewReference.publish();
     }, 0);
   }
 
   _setLocalView() {
-    setTimeout(() => {
       const viewportIndices = AceViewportUtil.getVisibleIndexRange(this._editor);
       this._viewReference.set({start: viewportIndices.start, end: viewportIndices.end});
-    });
   }
 
   _addView(reference) {
     const color = colorAssigner.getColorAsHex(reference.sessionId());
-    const remoteView = reference.value();
-    // fixme, need the value for the reference
+
     // fixme need the cursor
-    this._radarView.addView(reference.sessionId(), reference.username(), color, 0, 0, 0);
+    let cursorRow = null;
+    let viewRows = null;
+
+    if (reference.isSet()) {
+      const remoteViewIndices = reference.value();
+      viewRows = AceViewportUtil.indicesToRows(this._editor, remoteViewIndices.start, remoteViewIndices.end);
+    }
+
+    this._radarView.addView(reference.sessionId(), reference.username(), color, viewRows, cursorRow);
 
     // fixme need to implement this on the ace collab side
     reference.on("cleared", () => this._radarView.clearView(reference.sessionId()));
@@ -251,7 +258,7 @@ export default class AceBinder {
     reference.on("set", () => {
       const v = reference.value();
       const rows = AceViewportUtil.indicesToRows(this._editor, v.start, v.end);
-      this._radarView.setViewRows(reference.sessionId(), rows.start, rows.end);
+      this._radarView.setViewRows(reference.sessionId(), rows);
     });
   }
 }

@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react';
 import classNames from 'classnames';
 
-import {openFile, deleteFile, renameFile, selectNode} from '../../js/actions/actionCreator';
+import {openFile, deleteFile, renameFile, selectNode, openHistory} from '../../js/actions/actionCreator';
 import RemoteFileActionCreator from '../../js/actions/RemoteFileActionCreator';
 import {FileContextMenu} from './ContextMenu.jsx';
 import RenamableNode from './RenamableNode.jsx';
@@ -38,7 +38,7 @@ export default class FileNode extends React.Component {
     deleteFile(this.props.id);
   };
   handleHistory = () => {
-
+    openHistory(this.props.id);
   };
 
   handleRename = (newName) => {
