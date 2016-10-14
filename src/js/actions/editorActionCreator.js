@@ -1,15 +1,15 @@
 import {UserActions} from '../constants/ActionTypes';
 import appDispatcher from '../appDispatcher';
 
-export const selectTab = id => {
+export const selectTab = (modelId, historical) => {
   appDispatcher.dispatch({
     type: UserActions.SELECT_TAB, 
-    payload: {id}
+    payload: {id: modelId, historical: historical}
   });
 };
-export const closeTab = id => {
+export const closeTab = editor => {
   appDispatcher.dispatch({
     type: UserActions.CLOSE_TAB, 
-    payload: {id}
+    payload: {editor}
   });
 };

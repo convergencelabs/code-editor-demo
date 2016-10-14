@@ -32,13 +32,13 @@ export default class Editors extends React.Component {
   getStateFromStore = () => {
     return {
       editors: this.store.getEditors(),
-      activeFileId: this.store.getActive()
+      activeEditor: this.store.getActiveEditor()
     };
   };
 
   render() {
     return (
-      <EditorTabs editors={this.state.editors} activeFileId={this.state.activeFileId} />
+      <EditorTabs editors={this.state.editors} activeEditor={this.state.activeEditor} />
     );
   }
 }

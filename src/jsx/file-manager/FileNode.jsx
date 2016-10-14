@@ -29,7 +29,7 @@ export default class FileNode extends React.Component {
   }
 
   handleClick = () => {
-    selectNode(this.props.id);
+    selectNode(this.props.id, false);
   };
   handleOpen = () => {
     openFile(this.props.id);
