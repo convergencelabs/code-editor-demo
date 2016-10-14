@@ -6,16 +6,20 @@ import FAButton from '../util/FAButton.jsx';
 const dateFormat = 'M/d/YYYY @ h:mma';
 
 export default class PlaybackBar extends React.Component {
+  static propTypes = {
+    model: React.PropTypes.object.isRequired
+  };
+
   constructor(props) {
     super(props);
 
     this.state = {
-      maxVersion: 125,
-      version: 125,
-      timestamp: moment(new Date()).format(dateFormat),
+      maxVersion: this.props.model.maxVersion(),
+      version: this.props.model.maxVersion(),
+      timestamp: moment(this.props.model.modifiedTime()).format(dateFormat),
       hasNext: false,
       hasPrev: true
-    }
+    };
   }
 
   _sliderChanged(val) {
@@ -28,10 +32,12 @@ export default class PlaybackBar extends React.Component {
 
   _onNext() {
     this._onVersionChanged(this.state.version + 1);
+    this.props.model.forward();
   }
 
   _onPrev() {
     this._onVersionChanged(this.state.version - 1);
+    this.props.model.backward();
   }
 
   _onVersionChanged(newVersion) {
@@ -73,7 +79,7 @@ export default class PlaybackBar extends React.Component {
         </div>
         <Rcslider
           min={0}
-          max={125}
+          max={this.state.maxVersion}
           step={1}
           tipFormatter={null}
           value={this.state.version}

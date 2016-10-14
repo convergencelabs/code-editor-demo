@@ -12,7 +12,7 @@ const viewKey = "view";
 
 export default class AceBinder {
 
-  constructor(editor, model, radarViewElement) {
+  constructor(editor, model, collaboartive, radarViewElement) {
     this._editor = editor;
     this._radarViewElement = radarViewElement;
     this._model = model;
@@ -30,13 +30,17 @@ export default class AceBinder {
     this._viewReference = null;
 
     this._suppressEvents = false;
+
+    this._collaborative = collaboartive || false;
   }
 
   bind() {
     this._bindModel();
-    this._bindRadarView();
-    this._bindCursor();
-    this._bindSelection();
+     if (this._collaboartive) {
+       this._bindRadarView();
+       this._bindCursor();
+       this._bindSelection();
+     }
   }
 
   /////////////////////////////////////////////////////////////////////////////

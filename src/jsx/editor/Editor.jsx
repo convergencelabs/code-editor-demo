@@ -29,20 +29,22 @@ export default class Editor extends React.Component {
       this.props.onCursorMove(cursorPosition);
     });
 
-    if (this.props.historical) {
-      this._editor.setReadOnly(true);
-    } else {
-      const aceBinder = new AceBinder(this._editor, contentModel, this._radarViewElement);
-      aceBinder.bind();
-    }
+    this._editor.setReadOnly(!this.props.historical);
+
+    const aceBinder = new AceBinder(this._editor, contentModel, this._radarViewElement);
+    aceBinder.bind();
   }
 
   render() {
     return (
       this.props.model !== undefined ?
         <div className="editor-container">
-          <div className="editor" ref={(div) => {this._container = div;}} />
-          <div className="radar-view" ref={(div) => {this._radarViewElement = div;}} />
+          <div className="editor" ref={(div) => {
+            this._container = div;
+          }}/>
+          <div className="radar-view" ref={(div) => {
+            this._radarViewElement = div;
+          }}/>
         </div> :
         <div>loading...</div>
     );

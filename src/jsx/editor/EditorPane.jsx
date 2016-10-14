@@ -47,7 +47,7 @@ export default class EditorPane extends React.Component {
   render() {
     let playbackPanel;
     if (this.props.historical) {
-      playbackPanel = <PlaybackBar />;
+      playbackPanel = <PlaybackBar model={this.props.fileModel} />;
     }
 
     return (

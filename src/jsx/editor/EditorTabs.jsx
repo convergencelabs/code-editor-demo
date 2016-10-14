@@ -78,6 +78,7 @@ function EditorTabButton(props) {
 }
 EditorTabButton.propTypes = {
   editor: PropTypes.object.isRequired,
+  active: PropTypes.bool.isRequired,
   onClick: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
 };
