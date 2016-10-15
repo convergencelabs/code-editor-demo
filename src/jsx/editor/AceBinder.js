@@ -167,10 +167,14 @@ export default class AceBinder {
 
   _setLocalSelection() {
     if (!this._editor.selection.isEmpty()) {
-      // fixme we need the client to support multi range references.
-      var start = this._document.positionToIndex(this._editor.selection.anchor);
-      var end = this._document.positionToIndex(this._editor.selection.lead);
-      this._selectionReference.set({start: start, end: end});
+      const aceRanges = this._editor.selection.getAllRanges();
+      const indexRanges = aceRanges.map((aceRagne) => {
+        var start = this._document.positionToIndex(aceRagne.start);
+        var end = this._document.positionToIndex(aceRagne.end);
+        return {start: start, end: end};
+      });
+
+      this._selectionReference.set(indexRanges);
     } else if (this._selectionReference.isSet()) {
       this._selectionReference.clear();
     }
@@ -179,12 +183,15 @@ export default class AceBinder {
   _addSelection(reference) {
     // fixme we need the client to handle multi ranges
     const color = colorAssigner.getColorAsHex(reference.sessionId());
-    const remoteSelection = this._toAceRange(reference.value());
+    const remoteSelection = reference.values().map(range => this._toAceRange(range));
     this._selectionManager.addSelection(reference.sessionId(), reference.username(), color, remoteSelection);
 
     reference.on("cleared", () => this._selectionManager.clearSelection(reference.sessionId()));
     reference.on("disposed", () => this._selectionManager.removeSelection(reference.sessionId()));
-    reference.on("set", () => this._selectionManager.setSelection(reference.sessionId(), this._toAceRange(reference.value())));
+    reference.on("set", () => {
+      this._selectionManager.setSelection(
+        reference.sessionId(), reference.values().map(range => this._toAceRange(range)));
+    });
   }
 
   // todo consider moving this into the ace range utils.
