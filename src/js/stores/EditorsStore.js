@@ -11,7 +11,6 @@ export default class EditorsStore extends BaseStore {
     this.collectionId = modelsMetadata.collectionId;
     this.username = modelsMetadata.username;
     this.rtModel = rtModel;
-    this.editorId = 0;
 
     this.initState();
   }
@@ -66,7 +65,7 @@ export default class EditorsStore extends BaseStore {
         this.createModel(payload.id).then(() => {
           return this.openModel(payload.id);
         }).then(model => {
-          this.createEditor(payload.id, model);
+          this.createEditor(payload.id, model, false);
           this.emitChange();
         });
         break;
@@ -109,7 +108,7 @@ export default class EditorsStore extends BaseStore {
   }
 
   createEditor(id, model, historical) {
-    const editor = new EditorData(this.editorId++, id, this.getFileName(id), model, historical);
+    const editor = new EditorData(id, this.getFileName(id), model, historical);
     this.editors.push(editor);
     this.activeEditor = editor;
   }

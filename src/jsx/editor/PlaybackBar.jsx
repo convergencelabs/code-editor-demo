@@ -24,7 +24,7 @@ export default class PlaybackBar extends React.Component {
 
   _sliderChanged(val) {
     this._onVersionChanged(val);
-    this.props.model.goto(val);
+    this.props.model.playTo(val);
   }
 
   _onPlay() {
