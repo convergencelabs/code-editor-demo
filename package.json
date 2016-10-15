@@ -44,6 +44,7 @@
     "gulp-uglify": "^2.0.0",
     "gulp-webpack": "^1.5.0",
     "jquery": "3.1.0",
+    "merge2": "^1.0.2",
     "moment": "^2.15.1",
     "rc-slider": "^5.1.1",
     "react": "^15.3.1",

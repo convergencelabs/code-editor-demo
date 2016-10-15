@@ -7,9 +7,14 @@ const del = require('del');
 const cleanCSS = require('gulp-clean-css');
 const sass = require('gulp-sass');
 const concat = require('gulp-concat');
+const merge = require('merge2');
+const mkdirp = require('mkdirp');
+const spawn = require('child_process').spawn;
 
 const sassGlob = 'src/sass/**/*.scss';
-const assetsGlob = 'src/assets/**/*.*';
+const dockerTag = 'nexus.convergencelabs.tech:18443/code-editor';
+const dockerPushTag = 'nexus.convergencelabs.tech:18444/code-editor';
+
 
 gulp.task('default', ['webpack', 'sass', 'copy-assets'], function() {
   return gulp.src('src/index.html')
@@ -32,14 +37,14 @@ gulp.task('minify', ['webpack'], function() {
 });
 
 gulp.task('sass', function() {
-  return gulp.src(sassGlob)
+  return gulp.src([sassGlob, '/node_modules/ace-collab-ext/ace-collab.css'])
     .pipe(sass().on('error', sass.logError))
     .pipe(concat('code-editor.css'))
     .pipe(gulp.dest('build/'));
 });
 
-gulp.task('minify-css', ['css'], function() {
-  return gulp.src('./lib/ace-collab.css')
+gulp.task('minify-css', ['sass'], function() {
+  return gulp.src('./build/code-editor.css')
     .pipe(sourcemaps.init())
     .pipe(cleanCSS())
     .pipe(rename({extname: '.min.css'}))
@@ -48,6 +53,53 @@ gulp.task('minify-css', ['css'], function() {
 });
 
 gulp.task('clean', function () {
-  return del(['build']);
+  return del(['build', 'docker-build']);
+});
+
+gulp.task('docker-copy', ['minify'], function () {
+  mkdirp('docker-build');
+
+  return merge([
+    gulp.src(['dist/**/*']).pipe(gulp.dest('docker-build/build')),
+    gulp.src(['docker/**/*']).pipe(gulp.dest('docker-build'))
+  ]);
+});
+
+gulp.task('docker-build', ['docker-copy'], function(cb) {
+  var docker = spawn('docker', ['build', '-t', dockerTag, 'docker-build']);
+
+  docker.stdout.on('data', function (data) {
+    console.log("" + data);
+  });
+  docker.stderr.on('data', function (data) {
+    console.error("" + data);
+  });
+
+  docker.on('exit', function (code) {
+    if (code != 0) {
+      cb(new Error('Failed to build docker container.  Exit Code: ' + code))
+    } else {
+      cb();
+    }
+  });
+});
+
+gulp.task('docker', ['docker-build'], function(cb) {
+  var docker = spawn('docker', ['push', dockerPushTag]);
+
+  docker.stdout.on('data', function (data) {
+    console.log("" + data);
+  });
+  docker.stderr.on('data', function (data) {
+    console.error("" + data);
+  });
+
+  docker.on('exit', function (code) {
+    if (code != 0) {
+      cb(new Error('Failed to build docker container.  Exit Code: ' + code));
+    } else {
+      cb();
+    }
+  });
 });
 

@@ -3,3 +3,4 @@ connection.js
 .idea
 *.log
 build
+dist
