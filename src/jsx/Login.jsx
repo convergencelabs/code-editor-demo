@@ -62,7 +62,7 @@ export default class Login extends React.Component {
             <input type="password" value={this.state.password} onInput={this.handlePassword}/>
           </div>
           <div className="login-buttons">
-            <button disabled={!this.validate()} onClick={this.handleLogin}>Login</button>
+            <button className="app-button" disabled={!this.validate()} onClick={this.handleLogin}>Login</button>
           </div>
           <div className="login-message">{this.state.message}</div>
         </div>

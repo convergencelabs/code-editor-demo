@@ -1,25 +1,14 @@
 @import 'variables.scss';
 
-.login-dialog {
-
-  input, label {
-    clear: left;
-  }
-
+.projects-dialog {
   border: 1px solid lightgrey;
   padding: 10px;
   background: #40423a;
   color: white;
   font-family: $app-font;
 
-  .login-title {
+  .title {
     font-size: 18px;
-
-    img {
-      height: 30px;
-      vertical-align: middle;
-      margin-right: 20px;
-    }
 
     span {
       font-weight: bold;
@@ -48,16 +37,5 @@
         outline: none;
       }
     }
-  }
-
-  .login-buttons {
-    text-align: right;
-    padding: 3px 0;
-    margin-top: 15px;
-  }
-
-  .login-message {
-    color: red;
-    font-size: 14px;
   }
 }

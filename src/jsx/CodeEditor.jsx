@@ -2,7 +2,7 @@ import React from 'react';
 import {autobind} from 'core-decorators';
 import Home from './Home.jsx';
 import Login from './Login.jsx';
-import ProjectSelector from './ProjectSelector.jsx';
+import ProjectsDialog from './project/ProjectsDialog.jsx';
 
 export default class CodeEditor extends React.Component {
   static propTypes = {
@@ -56,7 +56,7 @@ export default class CodeEditor extends React.Component {
         domainUrl={this.props.domainUrl}
         onLogin={this.handleLogin} />);
     } else if (this.state.projectData === null) {
-      component = (<ProjectSelector
+      component = (<ProjectsDialog
         collectionId={'projects'} onOpen={this.handleOpenProject}
         modelService={this.state.domain.models()} />);
     } else {

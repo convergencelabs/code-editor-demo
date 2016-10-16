@@ -79,3 +79,34 @@ i.fabutton.enabled:active {
 
   transform: translate(-50%, -50%);
 }
+
+button.app-button:enabled {
+  color: #fff;
+  background-color: #6496c8;
+  text-shadow: -1px 1px #417cb8;
+  border: none;
+  padding: 5px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #346392;
+    text-shadow: -1px 1px #27496d;
+  }
+
+  &:active {
+    background-color: #27496d;
+    text-shadow: -1px 1px #193047;
+  }
+
+  &:focus {
+    outline: none;
+  }
+}
+
+button.app-button:disabled {
+  color: darkgrey;
+  background-color: #dcdde2;
+  border: none;
+  padding: 5px;
+  cursor: default;
+}
