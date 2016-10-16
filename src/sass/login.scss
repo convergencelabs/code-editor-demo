@@ -1,0 +1,94 @@
+@import 'variables.scss';
+
+.login-dialog {
+
+  input, label {
+    clear: left;
+  }
+
+  border: 1px solid lightgrey;
+  padding: 10px;
+  background: #40423a;
+  color: white;
+  font-family: $app-font;
+
+  .login-title {
+    font-size: 18px;
+
+    img {
+      height: 30px;
+      vertical-align: middle;
+      margin-right: 20px;
+    }
+
+    span {
+      font-weight: bold;
+      position: relative;
+      top: 2px;
+    }
+
+    margin-bottom: 10px;
+  }
+
+  .login-contents {
+    label {
+      font-size: 14px;
+      margin-top: 15px;
+    }
+
+    label, input {
+      display: block;
+    }
+
+    input {
+      margin-top: 5px;
+      width: 300px;
+      padding: 3px;
+      &:focus {
+        outline: none;
+      }
+    }
+  }
+
+  .login-buttons {
+    text-align: right;
+    padding: 3px 0;
+    margin-top: 15px;
+
+    button:enabled {
+      color: #fff;
+      background-color: #6496c8;
+      text-shadow: -1px 1px #417cb8;
+      border: none;
+      padding: 5px;
+      cursor: pointer;
+
+      &:hover {
+        background-color: #346392;
+        text-shadow: -1px 1px #27496d;
+      }
+
+      &:active {
+        background-color: #27496d;
+        text-shadow: -1px 1px #193047;
+      }
+
+      &:focus {
+        outline: none;
+      }
+    }
+    
+    button:disabled {
+      color: darkgrey;
+      background-color: #dcdde2;
+      border: none;
+      padding: 5px;
+      cursor: default;
+    }
+  }
+
+  .login-message {
+    color: red;
+    font-size: 14px;
+  }
+}

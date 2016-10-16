@@ -4,12 +4,12 @@ import EditorData from '../editorData';
 
 export default class EditorsStore extends BaseStore {
 
-  constructor(modelsMetadata, rtModel) {
+  constructor(rtModel) {
     super();
 
-    this.modelService = modelsMetadata.modelService;
-    this.collectionId = modelsMetadata.collectionId;
-    this.username = modelsMetadata.username;
+    this.modelService = rtModel.session().domain().models();
+    this.collectionId = rtModel.collectionId();
+    this.username = rtModel.session().username();
     this.rtModel = rtModel;
 
     this.initState();

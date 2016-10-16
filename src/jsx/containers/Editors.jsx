@@ -5,15 +5,13 @@ import EditorTabs from '../editor/EditorTabs.jsx';
 
 export default class Editors extends React.Component {
   static propTypes = {
-    modelsMetadata: PropTypes.object.isRequired,
     rtModel: PropTypes.object.isRequired,
   };
 
   constructor(props) {
     super(props);
 
-    this.store = new EditorsStore(props.modelsMetadata, props.rtModel);
-
+    this.store = new EditorsStore(props.rtModel);
     this.state = this.getStateFromStore();
   }
 

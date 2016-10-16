@@ -8,13 +8,14 @@ const Banner = function(props) {
       <div className="tray">
         <i className="user-icon fa fa-user" />
         <span className="username">{props.username}</span>
-        <i className="logout-icon fa fa-power-off" />
+        <i className="logout-icon fa fa-power-off" onClick={props.onLogout} />
       </div>
     </div>
   );
 };
 
 Banner.propTypes = {
+  onLogout: PropTypes.func.isRequired,
   username: PropTypes.string
 };
 

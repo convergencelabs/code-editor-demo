@@ -1,22 +1,22 @@
 import React, { PropTypes } from 'react';
 import SplitPanel from 'react-split-pane';
 
-import Files from './Files.jsx';
-import Editors from './Editors.jsx';
+import Files from './containers/Files.jsx';
+import Editors from './containers/Editors.jsx';
 
-import ParticipantsList from '../participants/ParticipantsList.jsx';
-import GroupChatPane from '../chat/GroupChatPane.jsx';
-import Banner from '../Banner.jsx';
+import ParticipantsList from './participants/ParticipantsList.jsx';
+import GroupChatPane from './chat/GroupChatPane.jsx';
+import Banner from './Banner.jsx';
 
-export default function App({modelsMetadata, rtModel, chatRoom, domain, activity}) {
+export default function Home({rtModel, chatRoom, domain, activity, onLogout}) {
   return (
     <div className="code-editor">
-      <Banner className="status-bar" username={domain.session().username()} />
+      <Banner className="status-bar" username={domain.session().username()} onLogout={onLogout} />
       <div className="top-pane">
         <SplitPanel direction="horizontal" defaultSize={200}>
           <Files rtModel={rtModel} />
           <SplitPanel direction="horizontal" defaultSize={200} primary="second">
-            <Editors rtModel={rtModel} modelsMetadata={modelsMetadata} />
+            <Editors rtModel={rtModel} />
             <div className="right-pane">
               <div className="section-title">Participants</div>
               <ParticipantsList activity={activity} />
@@ -30,10 +30,10 @@ export default function App({modelsMetadata, rtModel, chatRoom, domain, activity
   );
 }
 
-App.propTypes = {
+Home.propTypes = {
   activity: PropTypes.object.isRequired,
   chatRoom: PropTypes.object.isRequired,
   domain: PropTypes.object.isRequired,
-  modelsMetadata: PropTypes.object.isRequired,
+  onLogout: PropTypes.func.isRequired,
   rtModel: PropTypes.object.isRequired
 };
