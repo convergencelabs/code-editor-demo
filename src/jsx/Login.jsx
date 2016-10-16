@@ -33,13 +33,21 @@ export default class Login extends React.Component {
   @autobind
   handleUsername(e) {
     this.setState({username: e.target.value});
-    this.validate();
+
   }
 
   @autobind
   handlePassword(e) {
     this.setState({password: e.target.value});
-    this.validate();
+  }
+
+  @autobind
+  handleKeyDown(e) {
+    if (e.keyCode === 13 && this.validate()) {
+      e.stopPropagation();
+      e.preventDefault();
+      this.handleLogin();
+    }
   }
 
   @autobind
@@ -57,9 +65,17 @@ export default class Login extends React.Component {
           </div>
           <div className="login-contents">
             <label>Username</label>
-            <input type="text" value={this.state.username} onInput={this.handleUsername}/>
+            <input
+              type="text"
+              value={this.state.username}
+              onInput={this.handleUsername}
+              onKeyDown={this.handleKeyDown} />
             <label>Password</label>
-            <input type="password" value={this.state.password} onInput={this.handlePassword}/>
+            <input
+              type="password"
+              value={this.state.password}
+              onInput={this.handlePassword}
+              onKeyDown={this.handleKeyDown} />
           </div>
           <div className="login-buttons">
             <button className="app-button" disabled={!this.validate()} onClick={this.handleLogin}>Login</button>

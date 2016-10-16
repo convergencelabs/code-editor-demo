@@ -7,8 +7,20 @@
   color: white;
   font-family: $app-font;
 
+  min-width: 250px;
+  min-height: 250px;
+
+  display: flex;
+  flex-direction: column;
+
   .title {
     font-size: 18px;
+
+    img {
+      height: 30px;
+      vertical-align: middle;
+      margin-right: 20px;
+    }
 
     span {
       font-weight: bold;
@@ -16,26 +28,40 @@
       top: 2px;
     }
 
+    i {
+      float: right;
+      font-size: 14px;
+      cursor: pointer;
+
+      &:hover {
+        color: $highlight-color;
+      }
+    }
+
     margin-bottom: 10px;
   }
 
-  .login-contents {
-    label {
-      font-size: 14px;
-      margin-top: 15px;
+  .projects-list {
+    flex: 1;
+    border: 1px solid lightgrey;
+    margin-bottom: 10px;
+    font-size: 14px;
+
+    div {
+      padding: 4px;
+      cursor: default;
+      user-select: none;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
     }
 
-    label, input {
-      display: block;
+    div.selected {
+      background: cornflowerblue;
     }
+  }
 
-    input {
-      margin-top: 5px;
-      width: 300px;
-      padding: 3px;
-      &:focus {
-        outline: none;
-      }
-    }
+  .buttons {
+    text-align: right;
   }
 }

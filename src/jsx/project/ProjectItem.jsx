@@ -22,7 +22,10 @@ export default class ProjectItem extends React.Component {
   render() {
     const className = this.props.selected ? "selected" : null;
     return (
-      <li className={className} onClick={this.handleClick} onDoubleClick={this.handleDoubleClick} >{this.props.project.id}</li>
+      <div
+        className={className}
+        onClick={this.handleClick}
+        onDoubleClick={this.handleDoubleClick} >{this.props.project.id}</div>
     );
   }
 }

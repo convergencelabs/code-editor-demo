@@ -8,7 +8,8 @@ export default class ProjectsDialog extends React.Component {
   static propTypes = {
     collectionId: PropTypes.string.isRequired,
     modelService: PropTypes.object.isRequired,
-    onOpen: PropTypes.func.isRequired
+    onLogout: PropTypes.func.isRequired,
+    onOpen: PropTypes.func.isRequired,
   };
 
   constructor(props) {
@@ -51,26 +52,41 @@ export default class ProjectsDialog extends React.Component {
   handleSelectProject(projectId) {
     this.setState({selected: projectId});
   }
-  
-  @autobind
-  onOpenClicked() {
 
+  @autobind
+  handleOpen() {
+    this.handleOpenProject(this.state.selected);
+  }
+
+  @autobind
+  handleDelete() {
+    console.log("delete clicked");
+  }
+
+  handleNew() {
+    console.log("new clicked");
   }
 
   render() {
     return (
       <CenteredPanel>
         <div className="projects-dialog">
-          <div className="title">Projects</div>
+          <div className="title">
+            <img src="../assets/img/cl_logo.png" />
+            <span>Projects</span>
+            <i className="fa fa-power-off" onClick={this.props.onLogout} />
+          </div>
           <ProjectsList
             projects={this.state.projects}
             onOpen={this.handleOpenProject}
             onSelect={this.handleSelectProject}
           />
           <div className="buttons">
-            <button disabled={this.state.selected === null} className="app-button">Open</button>
-            <button className="app-button">New</button>
-            <button disabled={this.state.selected === null} className="app-button">Delete</button>
+            <button disabled={this.state.selected === null} className="app-button" onClick={this.handleOpen}>Open
+            </button>
+            <button className="app-button" onClick={this.handleNew}>New</button>
+            <button disabled={this.state.selected === null} className="app-button" onClick={this.handleDelete}>Delete
+            </button>
           </div>
         </div>
       </CenteredPanel>

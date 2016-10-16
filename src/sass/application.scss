@@ -80,6 +80,10 @@ i.fabutton.enabled:active {
   transform: translate(-50%, -50%);
 }
 
+button.app-button {
+  margin: 2px 5px;
+}
+
 button.app-button:enabled {
   color: #fff;
   background-color: #6496c8;

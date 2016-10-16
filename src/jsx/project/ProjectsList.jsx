@@ -43,7 +43,7 @@ export default class ProjectsList extends React.Component {
 
     return (
       <div className="projects-list">
-        <ul>{projects}</ul>
+        {projects}
       </div>
     );
   }

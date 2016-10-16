@@ -52,13 +52,18 @@ export default class CodeEditor extends React.Component {
   render() {
     let component = null;
     if (this.state.domain === null) {
-      component = (<Login
-        domainUrl={this.props.domainUrl}
-        onLogin={this.handleLogin} />);
+      component =
+        (<Login
+          domainUrl={this.props.domainUrl}
+          onLogin={this.handleLogin}
+        />);
     } else if (this.state.projectData === null) {
-      component = (<ProjectsDialog
-        collectionId={'projects'} onOpen={this.handleOpenProject}
-        modelService={this.state.domain.models()} />);
+      component =
+        (<ProjectsDialog
+          collectionId={'projects'} onOpen={this.handleOpenProject}
+          modelService={this.state.domain.models()}
+          onLogout={this.handleLogout}
+        />);
     } else {
       component =
         (<Home
