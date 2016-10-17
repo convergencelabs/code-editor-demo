@@ -15,7 +15,6 @@ const sassGlob = 'src/sass/**/*.scss';
 const dockerTag = 'nexus.convergencelabs.tech:18443/code-editor';
 const dockerPushTag = 'nexus.convergencelabs.tech:18444/code-editor';
 
-
 gulp.task('default', ['webpack', 'sass', 'copy-assets'], function() {
   return gulp.src('src/index.html')
     .pipe(gulp.dest('build'));
@@ -53,7 +52,7 @@ gulp.task('minify-css', ['sass'], function() {
 });
 
 gulp.task('clean', function () {
-  return del(['build', 'docker-build']);
+  return del(['build', 'dist', 'docker-build']);
 });
 
 gulp.task('docker-copy', ['minify'], function () {

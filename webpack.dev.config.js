@@ -5,7 +5,10 @@ var BUILD_DIR = path.resolve(__dirname, 'build');
 var SRC_DIR = path.resolve(__dirname, 'src');
 
 var config = {
+  devtool: 'eval',
   entry: [
+    'webpack-dev-server/client?http://0.0.0.0:3000',
+    'webpack/hot/only-dev-server',
     SRC_DIR + '/jsx/index.jsx'
   ],
   output: {
@@ -14,7 +17,7 @@ var config = {
     publicPath: '/'
   },
   plugins: [
-    new webpack.optimize.UglifyJsPlugin()
+    new webpack.HotModuleReplacementPlugin()
   ],
   externals: [{
     "ace": "ace"

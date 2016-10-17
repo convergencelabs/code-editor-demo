@@ -4,7 +4,8 @@
   "description": "A realtime collaborative code editor using Ace and Convergence",
   "scripts": {
     "start": "node server.js",
-    "build": "webpack"
+    "build": "gulp webpack",
+    "clean": "gulp clean"
   },
   "dependencies": {
     "ace-builds": "ajaxorg/ace-builds",
