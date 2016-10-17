@@ -6,6 +6,7 @@ import ProjectItem from './ProjectItem.jsx';
 export default class ProjectsList extends React.Component {
 
   static propTypes = {
+    loaded: PropTypes.bool.isRequired,
     onOpen: PropTypes.func.isRequired,
     onSelect: PropTypes.func.isRequired,
     projects: PropTypes.array.isRequired
@@ -31,20 +32,22 @@ export default class ProjectsList extends React.Component {
   }
 
   render() {
-    var projects = this.props.projects.map((project) => {
-      return (<ProjectItem
-        key={project.id}
-        project={project}
-        selected={this.state.selectedId === project.id}
-        onClick={this.handleProjectClick}
-        onDoubleClick={this.handleProjectDoubleClick}
-      />);
-    });
+    let contents = null;
 
-    return (
-      <div className="projects-list">
-        {projects}
-      </div>
-    );
+    if (this.props.loaded) {
+      contents = this.props.projects.map((project) => {
+        return (<ProjectItem
+          key={project.id}
+          project={project}
+          selected={this.state.selectedId === project.id}
+          onClick={this.handleProjectClick}
+          onDoubleClick={this.handleProjectDoubleClick}
+        />);
+      });
+    } else {
+      contents = <div>Loading</div>;
+    }
+
+    return (<div className="projects-list">{contents}</div>);
   }
 }

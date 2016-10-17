@@ -16,14 +16,26 @@ export default class ProjectsDialog extends React.Component {
     super(props);
 
     this.state = {
-      loaded: true,
+      loaded: false,
       opening: false,
-      projects: [
-        {name: "Project 1", id: "Project 1"},
-        {name: "Project 2", id: "Project 2"}
-      ],
+      projects: [],
       selected: null
     };
+
+    props.modelService
+      .query()
+      .collection("projects")
+      .execute().subscribe((result) => {
+        // fixme we need some projections here so I can get back specific data.
+        const projects = result.map((model) => {
+          return {
+            name: model.modelId,
+            id: model.modelId
+          };
+        });
+
+        this.setState({projects: projects, loaded: true});
+      });
   }
 
   @autobind
@@ -80,6 +92,7 @@ export default class ProjectsDialog extends React.Component {
             projects={this.state.projects}
             onOpen={this.handleOpenProject}
             onSelect={this.handleSelectProject}
+            loaded={this.state.loaded}
           />
           <div className="buttons">
             <button disabled={this.state.selected === null} className="app-button" onClick={this.handleOpen}>Open

@@ -8,7 +8,7 @@ export default class EditorsStore extends BaseStore {
     super();
 
     this.modelService = rtModel.session().domain().models();
-    this.collectionId = rtModel.collectionId();
+    this.collectionId = "files";
     this.username = rtModel.session().username();
     this.rtModel = rtModel;
 
