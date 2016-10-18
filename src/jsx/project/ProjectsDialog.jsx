@@ -84,7 +84,7 @@ export default class ProjectsDialog extends React.Component {
       <CenteredPanel>
         <div className="projects-dialog">
           <div className="title">
-            <img src="../assets/img/cl_logo.png" />
+            <img src="assets/img/cl_logo.png" />
             <span>Projects</span>
             <i className="fa fa-power-off" onClick={this.props.onLogout} />
           </div>

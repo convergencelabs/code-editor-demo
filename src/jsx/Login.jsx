@@ -60,7 +60,7 @@ export default class Login extends React.Component {
       <CenteredPanel>
         <div className="login-dialog">
           <div className="login-title">
-            <img src="../assets/img/cl_logo.png" />
+            <img src="assets/img/cl_logo.png" />
             <span >Code Editor Login</span>
           </div>
           <div className="login-contents">

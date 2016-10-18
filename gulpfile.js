@@ -20,19 +20,25 @@ gulp.task('default', ['webpack', 'sass', 'copy-assets'], function() {
     .pipe(gulp.dest('build'));
 });
 
+gulp.task('build', ['webpack', 'copy-index', 'copy-assets'], function() {
+  return gulp.src('src/index.html')
+    .pipe(gulp.dest('build'));
+});
+
+gulp.task('copy-index', function() {
+  return gulp.src('src/index.html')
+    .pipe(gulp.dest('build'));
+});
+
+gulp.task('copy-assets', function() {
+  return gulp.src('src/assets/**/*')
+    .pipe(gulp.dest('build/assets'));
+});
+
 gulp.task('webpack', function() {
   return gulp.src('src/js/index.js')
     .pipe(webpack(require('./webpack.config.js')))
     .pipe(gulp.dest('build'));
-});
-
-gulp.task('minify', ['webpack'], function() {
-  return gulp.src('lib/bundle.js')
-    .pipe(sourcemaps.init())
-    .pipe(uglify())
-    .pipe(rename({extname: '.min.js'}))
-    .pipe(sourcemaps.write('.'))
-    .pipe(gulp.dest("lib"));
 });
 
 gulp.task('sass', function() {

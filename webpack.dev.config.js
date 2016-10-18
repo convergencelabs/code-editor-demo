@@ -9,7 +9,8 @@ var config = {
   entry: [
     'webpack-dev-server/client?http://0.0.0.0:3000',
     'webpack/hot/only-dev-server',
-    SRC_DIR + '/jsx/index.jsx'
+    SRC_DIR + '/jsx/index.jsx',
+    SRC_DIR + '/sass/code-editor.scss'
   ],
   output: {
     path: BUILD_DIR,
@@ -18,6 +19,7 @@ var config = {
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin()
+
   ],
   externals: [{
     "ace": "ace"

@@ -1,5 +1,120 @@
 @import 'variables.scss';
 
+$fa-font-path: "../../node_modules/font-awesome/fonts";
+@import "../../node_modules/font-awesome/scss/font-awesome";
+
+body {
+  background: #2F3129;
+}
+
+/* https://www.fontsquirrel.com/license/camingocode */
+@font-face {
+  font-family: 'CamingoCode';
+  src: url('../assets/fonts/CamingoCode-Regular.ttf');
+}
+
+.popover-menu {
+  position: absolute;
+  border: 1px solid #000;
+  background-color: #40423a;
+  z-index: 5;
+  box-shadow: 1px 1px 3px #222;
+  margin: 2px 0 0 22px;
+}
+
+.context-menu {
+  ul {
+    font-family: $app-font;
+    font-size: 13px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    color: #FFEDF4;
+  }
+
+  li {
+    border-bottom: 1px solid #000;
+    padding: 4px 10px;
+    cursor: pointer;
+    background-color: #40423a;
+  }
+
+  li.selected, li.selected:hover {
+    background-color: #DCF5DE;
+  }
+
+  li:hover {
+    background-color: #555;
+    color: $highlight-color;
+  }
+
+  li:last-child {
+    border-bottom: none;
+  }
+}
+
+i.fabutton {
+  background: #252525;
+  padding: 3px;
+  margin: 0 5px;
+  font-size: 12px;
+  width: 12px;
+  height: 12px;
+  text-align: center;
+  cursor: pointer;
+}
+
+i.fabutton.enabled:hover {
+  color: $highlight-color;
+}
+
+i.fabutton.enabled:active {
+  transform: translateY(2px);
+}
+
+.centered-panel {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+
+  transform: translate(-50%, -50%);
+}
+
+button.app-button {
+  margin: 2px 5px;
+}
+
+button.app-button:enabled {
+  color: #fff;
+  background-color: #6496c8;
+  text-shadow: -1px 1px #417cb8;
+  border: none;
+  padding: 5px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #346392;
+    text-shadow: -1px 1px #27496d;
+  }
+
+  &:active {
+    background-color: #27496d;
+    text-shadow: -1px 1px #193047;
+  }
+
+  &:focus {
+    outline: none;
+  }
+}
+
+button.app-button:disabled {
+  color: darkgrey;
+  background-color: #dcdde2;
+  border: none;
+  padding: 5px;
+  cursor: default;
+}
+
 .code-editor {
   display: flex;
   flex-direction: column;
@@ -86,3 +201,17 @@
 .Pane {
   display: flex;
 }
+
+@import "banner.scss";
+@import "editor.scss";
+@import "editor-pane.scss";
+@import "editor-tabs.scss";
+@import "file-manager.scss";
+@import "group-chat.scss";
+@import "login.scss";
+@import "participants-list.scss";
+@import "projects.scss";
+@import "status-bar.scss";
+
+@import "../../node_modules/rc-slider/assets/index.css";
+@import "../../node_modules/ace-collab-ext/ace-collab.css";
