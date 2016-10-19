@@ -2,3 +2,6 @@ node_modules
 connection.js
 .idea
 *.log
+build
+dist
+docker-build
