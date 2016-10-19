@@ -11,12 +11,9 @@ RUN chmod +x /usr/local/bin/confd
 
 # nginx
 COPY build /usr/share/nginx/html
-COPY examples /usr/share/nginx/html
 COPY nginx/default.conf /etc/nginx/conf.d/default.conf
 
 ADD bin/boot.sh /boot.sh
 RUN chmod +x /boot.sh
 
-# let's go
-# CMD ["supervisord", "--configuration", "/etc/supervisord.conf"]
 CMD ["/boot.sh"]

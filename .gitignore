@@ -4,3 +4,4 @@ connection.js
 *.log
 build
 dist
+docker-build

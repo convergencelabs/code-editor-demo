@@ -10,7 +10,7 @@ require_env_var() {
   fi
 }
 
-echo "Convergence JS Examples container starting up.  Checking required environment variables."
+echo "Convergence Code Editor.  Checking required environment variables."
 
 require_env_var $convergence_realtime_url "convergence_realtime_url"
 

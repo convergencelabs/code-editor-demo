@@ -5,6 +5,7 @@
   "scripts": {
     "start": "node server.js",
     "build": "gulp build",
+    "docker-build": "gulp docker-build",
     "clean": "gulp clean"
   },
   "dependencies": {
