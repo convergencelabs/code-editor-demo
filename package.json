@@ -13,7 +13,7 @@
   "devDependencies": {
     "ace-builds": "ajaxorg/ace-builds",
     "classnames": "2.2.5",
-    "convergence-client": "1.0.0-SNAPSHOT",
+    "convergence-client": "^1.0.0-SNAPSHOT",
     "core-decorators": "0.12.3",
     "events": "1.1.1",
     "flux": "3.0.0",
