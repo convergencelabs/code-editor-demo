@@ -2,8 +2,9 @@ import React from 'react';
 import Rcslider from 'rc-slider';
 import moment from 'moment';
 import FAButton from '../util/FAButton.jsx';
+import {autobind} from 'core-decorators';
 
-const dateFormat = 'M/d/YYYY @ h:mma';
+const dateFormat = 'MM/DD/YYYY @ h:mm:ss a';
 
 export default class PlaybackBar extends React.Component {
   static propTypes = {
@@ -16,40 +17,88 @@ export default class PlaybackBar extends React.Component {
     this.state = {
       maxVersion: this.props.model.maxVersion(),
       version: this.props.model.maxVersion(),
-      timestamp: moment(this.props.model.modifiedTime()).format(dateFormat),
+      timestamp: this._formatTime(this.props.model.currentTime()),
       hasNext: false,
-      hasPrev: true
+      hasPrev: true,
+      playing: false
     };
   }
 
-  _sliderChanged(val) {
+  _formatTime(date) {
+    return moment(date).format(dateFormat);
+  }
+
+  @autobind
+  handleSliderChanged(val) {
     this._onVersionChanged(val);
     this.props.model.playTo(val);
   }
 
-  _onPlay() {
-
+  @autobind
+  handlePlay() {
+    this.setState({playing: true});
+    setTimeout(() => {
+      this._stepAndSchedule();
+    }, 0);
   }
 
-  _onNext() {
+  @autobind
+  handleStop() {
+    this.setState({playing: false});
+  }
+
+  _stepAndSchedule() {
+    if (this.state.playing && this.props.model.version() < this.props.model.maxVersion()) {
+      this.handleNext();
+      setTimeout(() => {
+        this._stepAndSchedule();
+      }, 150);
+    } else {
+      this.setState({playing: false});
+    }
+  }
+
+  @autobind
+  handleNext() {
     this._onVersionChanged(this.state.version + 1);
     this.props.model.forward();
   }
 
-  _onPrev() {
+  @autobind
+  handlePrevious() {
     this._onVersionChanged(this.state.version - 1);
     this.props.model.backward();
   }
 
   _onVersionChanged(newVersion) {
+    const currentTime = this._formatTime(this.props.model.currentTime());
     this.setState({
       version: newVersion,
       hasNext: newVersion < this.state.maxVersion,
-      hasPrev: newVersion > 0
+      hasPrev: newVersion > 0,
+      timestamp: currentTime
     });
   }
 
   render() {
+    let playStop = null;
+
+    if (this.state.playing) {
+      playStop = (<FAButton
+        title="Stop"
+        icon="fa-stop"
+        onClick={this.handleStop}
+        enabled={this.state.hasNext}
+      />);
+    } else {
+      playStop = (<FAButton
+        title="Play"
+        icon="fa-play"
+        onClick={this.handlePlay}
+        enabled={this.state.hasNext}
+      />);
+    }
+
     return (
       <div className="playback-bar">
         <div className="playback-top">
@@ -61,21 +110,16 @@ export default class PlaybackBar extends React.Component {
             <FAButton
               title="Step Backward"
               icon="fa-step-backward"
-              onClick={() => this._onPrev()}
+              onClick={this.handlePrevious}
               enabled={this.state.hasPrev}
             />
             <FAButton
               title="Step Forward"
               icon="fa-step-forward"
-              onClick={() => this._onNext()}
+              onClick={this.handleNext}
               enabled={this.state.hasNext}
             />
-            <FAButton
-              title="Play"
-              icon="fa-play"
-              onClick={() => this._onPlay()}
-              enabled={this.state.hasNext}
-            />
+            {playStop}
           </div>
         </div>
         <Rcslider
@@ -84,7 +128,7 @@ export default class PlaybackBar extends React.Component {
           step={1}
           tipFormatter={null}
           value={this.state.version}
-          onChange={(e) => this._sliderChanged(e)}
+          onChange={this.handleSliderChanged}
         />
       </div>
     );
