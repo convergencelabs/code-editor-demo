@@ -1,6 +1,0 @@
-[template]
-src   = "connection.js"
-dest  = "/usr/share/nginx/html/connection.js"
-owner = "root"
-group = "root"
-mode  = "0644"

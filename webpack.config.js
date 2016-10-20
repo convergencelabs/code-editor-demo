@@ -32,11 +32,19 @@ var config = {
     loaders: [{
       test: /\.jsx?/,
       include: SRC_DIR + "/jsx",
-      loader: 'babel'
+      loader: 'babel',
+      query: {
+        'presets': ['es2015', 'stage-0', 'react'],
+        'plugins': ['transform-decorators-legacy']
+      }
     }, {
       test: /\.js?/,
       include: SRC_DIR + "/js",
-      loader: 'babel'
+      loader: 'babel',
+      query: {
+        'presets': ['es2015', 'stage-0', 'react'],
+        'plugins': ['transform-decorators-legacy']
+      }
     }, {
       test: /\.scss$/,
       include: SRC_DIR +  '/sass',

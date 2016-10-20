@@ -45,7 +45,7 @@ export default class ProjectsList extends React.Component {
         />);
       });
     } else {
-      contents = <div>Loading</div>;
+      contents = <div>Loading...</div>;
     }
 
     return (<div className="projects-list">{contents}</div>);

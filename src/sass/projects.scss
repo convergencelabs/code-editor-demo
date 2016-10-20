@@ -65,3 +65,15 @@
     text-align: right;
   }
 }
+
+.new-project-dialog {
+  label {
+    display: block;
+    margin-bottom: 5px;
+  }
+
+  input {
+    width: 250px;
+    padding: 2px;
+  }
+}

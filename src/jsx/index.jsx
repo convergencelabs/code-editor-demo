@@ -4,11 +4,14 @@ import ConvergenceDomain from 'convergence-client';
 
 import CodeEditor from "./CodeEditor.jsx";
 
-const domainUrl = 'https://localhost/realtime/domain/test/Examples';
-ConvergenceDomain.debugFlags.protocol.messages = true;
+if (typeof CodeEditorConfig !== 'undefined') {
+  const domainUrl = CodeEditorConfig.DOMAIN_URL;
+  ConvergenceDomain.debugFlags.protocol.messages = CodeEditorConfig.DEBUG;
 
-render(
-  <CodeEditor domainUrl={domainUrl} />,
-  document.getElementById('code-editor')
-);
-
+  render(
+    <CodeEditor domainUrl={domainUrl} />,
+    document.getElementById('code-editor')
+  );
+} else {
+  throw new Error("Cannot find configuration for the code editor");
+}

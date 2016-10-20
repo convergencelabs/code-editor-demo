@@ -30,8 +30,9 @@ export default class PlaybackBar extends React.Component {
 
   @autobind
   handleSliderChanged(val) {
-    this._onVersionChanged(val);
-    this.props.model.playTo(val);
+    this.props.model.playTo(val).then(() => {
+      this._onVersionChanged();
+    });
   }
 
   @autobind
@@ -48,11 +49,11 @@ export default class PlaybackBar extends React.Component {
   }
 
   _stepAndSchedule() {
-    if (this.state.playing && this.props.model.version() < this.props.model.maxVersion()) {
+    if (this.state.playing && this.props.model.targetVersion() < this.props.model.maxVersion()) {
       this.handleNext();
       setTimeout(() => {
         this._stepAndSchedule();
-      }, 150);
+      }, 200);
     } else {
       this.setState({playing: false});
     }
@@ -60,22 +61,26 @@ export default class PlaybackBar extends React.Component {
 
   @autobind
   handleNext() {
-    this._onVersionChanged(this.state.version + 1);
-    this.props.model.forward();
+    this.props.model.forward().then(() => {
+      this._onVersionChanged();
+    });
   }
 
   @autobind
   handlePrevious() {
-    this._onVersionChanged(this.state.version - 1);
-    this.props.model.backward();
+    this.props.model.backward().then(() => {
+      this._onVersionChanged();
+    });
   }
 
-  _onVersionChanged(newVersion) {
+  _onVersionChanged() {
     const currentTime = this._formatTime(this.props.model.currentTime());
+    const currentVersion = this.props.model.version();
+
     this.setState({
-      version: newVersion,
-      hasNext: newVersion < this.state.maxVersion,
-      hasPrev: newVersion > 0,
+      version: currentVersion,
+      hasNext: currentVersion < this.state.maxVersion,
+      hasPrev: currentVersion > 0,
       timestamp: currentTime
     });
   }
