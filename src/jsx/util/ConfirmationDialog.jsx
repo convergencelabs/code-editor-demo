@@ -2,24 +2,14 @@ import React, {PropTypes} from 'react';
 import Dialog from 'rc-dialog';
 import {autobind} from 'core-decorators';
 
-export default class NewProjectDialog extends React.Component {
+export default class ConfirmationDialog extends React.Component {
 
   static propTypes = {
+    message: PropTypes.string.isRequired,
     onCancel: PropTypes.func.isRequired,
-    onOk: PropTypes.func.isRequired
+    onOk: PropTypes.func.isRequired,
+    title: PropTypes.string.isRequired
   };
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      projectName: ""
-    };
-  }
-
-  @autobind
-  handleNameInput(e) {
-    this.setState({projectName: e.target.value});
-  }
 
   @autobind
   handleCancel() {
@@ -28,9 +18,8 @@ export default class NewProjectDialog extends React.Component {
 
   @autobind
   handleOk() {
-    this.props.onOk(this.state.projectName);
+    this.props.onOk();
   }
-
 
   render() {
     let footer = (
@@ -41,8 +30,8 @@ export default class NewProjectDialog extends React.Component {
 
     return (
       <Dialog
-        className="new-project-dialog"
-        title="New Project"
+        className="confirm-dialog"
+        title={this.props.title}
         footer={footer}
         visible
         wrapClassName=''
@@ -50,12 +39,7 @@ export default class NewProjectDialog extends React.Component {
         maskAnimation="fade"
         onClose={this.props.onCancel}
       >
-        <label>Project Name:</label>
-        <input
-          type="text"
-          onInput={this.handleNameInput}
-          value={this.state.projectName}
-        />
+        <div className="confirm-message">{this.props.message}</div>
       </Dialog>
     );
   }
