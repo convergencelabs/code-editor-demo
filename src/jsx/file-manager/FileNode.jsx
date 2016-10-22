@@ -5,6 +5,8 @@ import {openFile, deleteFile, renameFile, selectNode, openHistory} from '../../j
 import RemoteFileActionCreator from '../../js/actions/RemoteFileActionCreator';
 import {FileContextMenu} from './ContextMenu.jsx';
 import RenamableNode from './RenamableNode.jsx';
+import ConfirmationDialog from '../util/ConfirmationDialog.jsx';
+import {autobind} from 'core-decorators';
 
 export default class FileNode extends React.Component {
   static propTypes = {
@@ -20,7 +22,8 @@ export default class FileNode extends React.Component {
     this.remoteActionCreator.listenFor(['changed']);
 
     this.state = {
-      showContextMenu: false
+      showContextMenu: false,
+      showDeleteConfirm: false
     };
   }
 
@@ -31,12 +34,15 @@ export default class FileNode extends React.Component {
   handleClick = () => {
     selectNode(this.props.id, false);
   };
+
   handleOpen = () => {
     openFile(this.props.id);
   };
+
   handleDelete = () => {
-    deleteFile(this.props.id);
+    this.setState({showDeleteConfirm: true});
   };
+
   handleHistory = () => {
     openHistory(this.props.id);
   };
@@ -45,9 +51,11 @@ export default class FileNode extends React.Component {
     renameFile(this.props.id, newName);
     this.setState({renaming: false});
   };
+
   handleRenameCancel = () => {
     this.setState({renaming: false});
   };
+
   handleRenameSelect = () => {
     this.setState({renaming: true});
   };
@@ -56,12 +64,40 @@ export default class FileNode extends React.Component {
     this.setState({showContextMenu: true});
     e.preventDefault();
   };
+
   handleHideContextMenu = () => {
     this.setState({showContextMenu: false});
   };
 
+  @autobind
+  handleDeleteFileCancel() {
+    this.setState({showDeleteConfirm: false});
+  }
+
+
+  @autobind
+  handleDeleteFileOk() {
+    deleteFile(this.props.id);
+    this.setState({showDeleteConfirm: false});
+  }
+
+  _createDeleteConfirm() {
+    if (this.state.showDeleteConfirm) {
+      const nodeName = this.props.model.get('name').data();
+      const title = "Confirm Delete";
+      const message = `Delete file "${nodeName}"?`;
+      return (<ConfirmationDialog
+        onCancel={this.handleDeleteFileCancel}
+        onOk={this.handleDeleteFileOk}
+        title={title}
+        message={message}
+      />);
+    }
+  }
+
   render() {
     const nodeClasses = classNames("node", "file", this.props.selected ? 'selected' : '');
+    const deleteConfirm = this._createDeleteConfirm();
 
     let contextMenu;
     if(this.state.showContextMenu) {
@@ -75,6 +111,7 @@ export default class FileNode extends React.Component {
         />
       );
     }
+
     const nodeName = this.props.model.get('name').data();
 
     return (
@@ -88,6 +125,7 @@ export default class FileNode extends React.Component {
         <RenamableNode name={nodeName} renaming={this.state.renaming} 
           onCancel={this.handleRenameCancel} onComplete={this.handleRename} />
         {contextMenu}
+        {deleteConfirm}
       </div>
     );
   }  
