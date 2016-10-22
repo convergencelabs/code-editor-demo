@@ -81,6 +81,10 @@ export default class EditorsStore extends BaseStore {
           this.emitChange();
         }
         break;
+      case UserActions.CLOSE_ALL:
+        this.getEditors().forEach(editor => this.removeEditor(editor));
+        this.emitChange();
+        break;
     }
   }
 

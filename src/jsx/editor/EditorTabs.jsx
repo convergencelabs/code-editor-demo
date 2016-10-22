@@ -49,7 +49,7 @@ export default class EditorTabs extends React.Component {
     } else {
       contents =
         (<div className="editor-tabs-container">
-          <div className="editor-tab-buttons">{tabButtons}</div>
+          <div className="editor-tab-buttons"><div className="editor-tab-button-container">{tabButtons}</div></div>
           <div className="editor-tab-contents">{editors}</div>
         </div>);
     }

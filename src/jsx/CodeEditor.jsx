@@ -3,6 +3,7 @@ import {autobind} from 'core-decorators';
 import Home from './Home.jsx';
 import Login from './Login.jsx';
 import ProjectsDialog from './project/ProjectsDialog.jsx';
+import {closeAll} from '../js/actions/actionCreator';
 
 export default class CodeEditor extends React.Component {
   static propTypes = {
@@ -25,7 +26,13 @@ export default class CodeEditor extends React.Component {
 
   @autobind
   handleClose() {
-    // todo leave stuff
+    const projData = this.state.projectData;
+    projData.model.close();
+    projData.activity.leave();
+    projData.chatRoom.leave();
+
+    closeAll();
+
     this.setState({projectData: null});
   }
 
@@ -44,7 +51,7 @@ export default class CodeEditor extends React.Component {
     activity.join();
     chatRoom.join();
 
-    const projectData = {model, activity, chatRoom, domain};
+    const projectData = {model, activity, chatRoom};
 
     this.setState({projectData});
   }
@@ -60,7 +67,8 @@ export default class CodeEditor extends React.Component {
     } else if (this.state.projectData === null) {
       component =
         (<ProjectsDialog
-          collectionId={'projects'} onOpen={this.handleOpenProject}
+          collectionId={'projects'}
+          onOpen={this.handleOpenProject}
           modelService={this.state.domain.models()}
           onLogout={this.handleLogout}
         />);
@@ -69,9 +77,10 @@ export default class CodeEditor extends React.Component {
         (<Home
           rtModel={this.state.projectData.model}
           chatRoom={this.state.projectData.chatRoom}
-          domain={this.state.projectData.domain}
+          domain={this.state.domain}
           activity={this.state.projectData.activity}
           onLogout={this.handleLogout}
+          onClose={this.handleClose}
         />);
     }
 

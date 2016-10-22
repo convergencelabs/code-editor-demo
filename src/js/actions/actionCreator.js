@@ -78,3 +78,9 @@ export const deleteNode = (id) => {
     payload: {id}
   });
 };
+
+export const closeAll = () => {
+  appDispatcher.dispatch({
+    type: UserActions.CLOSE_ALL
+  });
+};

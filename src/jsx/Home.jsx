@@ -8,10 +8,14 @@ import ParticipantsList from './participants/ParticipantsList.jsx';
 import GroupChatPane from './chat/GroupChatPane.jsx';
 import Banner from './Banner.jsx';
 
-export default function Home({rtModel, chatRoom, domain, activity, onLogout}) {
+export default function Home({rtModel, chatRoom, domain, activity, onClose, onLogout}) {
   return (
     <div className="code-editor">
-      <Banner className="status-bar" username={domain.session().username()} onLogout={onLogout} />
+      <Banner
+        className="status-bar"
+        username={domain.session().username()}
+        onClose={onClose}
+        onLogout={onLogout} />
       <div className="top-pane">
         <SplitPanel direction="horizontal" defaultSize={200}>
           <Files rtModel={rtModel} />
@@ -34,6 +38,7 @@ Home.propTypes = {
   activity: PropTypes.object.isRequired,
   chatRoom: PropTypes.object.isRequired,
   domain: PropTypes.object.isRequired,
+  onClose: PropTypes.func.isRequired,
   onLogout: PropTypes.func.isRequired,
   rtModel: PropTypes.object.isRequired
 };
