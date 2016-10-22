@@ -21,6 +21,7 @@ export default class Editors extends React.Component {
 
   componentWillUnmount() {
     this.store.removeChangeListener(this.onChange);
+    this.store.dispose();
   }
 
   onChange = () => {

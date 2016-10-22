@@ -34,6 +34,7 @@ export default class TreeView extends React.Component {
   handleNewChildCancel = () => {
     cancelNewNode(this.props.folderId);
   }
+
   handleEntityNamed = (name) => {
     const newId = generateUUID();
     if(this.props.treeState.newNode.type === 'file') {

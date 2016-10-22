@@ -35,18 +35,17 @@ export default class EditorsStore extends BaseStore {
         this.emitChange();
         break;
       case UserActions.SELECT_NODE:
-        if(this.isFileOpen(payload.id)) {
+        if (this.isFileOpen(payload.id)) {
           this.activateTab(payload.id, false);
           this.emitChange();
         }
         break;
       case UserActions.CLOSE_TAB:
-        this.removeEditor(payload.editor).then(() => {
-          this.emitChange();
-        });
+        this.removeEditor(payload.editor);
+        this.emitChange();
         break;
       case UserActions.OPEN_FILE:
-        if(!this.isFileOpen(payload.id)) {
+        if (!this.isFileOpen(payload.id)) {
           this.openModel(payload.id).then(model => {
             this.createEditor(payload.id, model, false);
             this.emitChange();
@@ -54,7 +53,7 @@ export default class EditorsStore extends BaseStore {
         }
         break;
       case UserActions.OPEN_HISTORY:
-        if(!this.isFileHistoryOpen(payload.id)) {
+        if (!this.isFileHistoryOpen(payload.id)) {
           this.openHistoricalModel(payload.id).then(model => {
             this.createEditor(payload.id, model, true);
             this.emitChange();
@@ -77,19 +76,25 @@ export default class EditorsStore extends BaseStore {
         });
         break;
       case UserActions.RENAME_FILE:
-        if(this.setTabTitle(payload.id, payload.newName)) {
+        if (this.setTabTitle(payload.id, payload.newName)) {
           this.emitChange();
         }
         break;
-      case UserActions.CLOSE_ALL:
-        this.getEditors().forEach(editor => this.removeEditor(editor));
-        this.emitChange();
+      case UserActions.CLOSE_ALL: {
+        const editors = this.getEditors().slice(0);
+        editors.forEach(editor => {
+          this.removeEditor(editor);
+          this.emitChange();
+        });
         break;
+      }
     }
   }
 
   activateTab(id, historical) {
-    const editor = this.editors.find((editor) => { return editor.modelId === id && editor.historical === historical; });
+    const editor = this.editors.find((editor) => {
+      return editor.modelId === id && editor.historical === historical;
+    });
     this.activeEditor = editor;
   }
 
@@ -118,32 +123,40 @@ export default class EditorsStore extends BaseStore {
   }
 
   getEditorIndex(editor) {
-    return this.editors.findIndex((e) => { return e === editor; });
+    return this.editors.findIndex((e) => {
+      return e === editor;
+    });
   }
 
   isFileOpen(id) {
-    return this.editors.some(editor => { return editor.modelId === id && editor.historical === false; });
+    return this.editors.some(editor => {
+      return editor.modelId === id && editor.historical === false;
+    });
   }
 
   isFileHistoryOpen(id) {
-    return this.editors.some(editor => { return editor.modelId === id && editor.historical === true; });
+    return this.editors.some(editor => {
+      return editor.modelId === id && editor.historical === true;
+    });
   }
 
   removeEditor(editor) {
     const index = this.getEditorIndex(editor);
-    if(index >= 0) {
+
+    if (index >= 0) {
       if (!editor.historical) {
-        this.editors[index].model.close();
+        editor.model.close();
       }
+
       this.editors.splice(index, 1);
-      if(this.editors.length > 0) {
+
+      if (this.editors.length > 0) {
         this.activeEditor = this.editors[0];
       } else {
         delete this.activeEditor;
       }
-      return Promise.resolve(index);
     } else {
-      return Promise.reject();
+      throw new Error("Can't remove an editor that was not opened.");
     }
   }
 
@@ -153,7 +166,7 @@ export default class EditorsStore extends BaseStore {
 
   setTabTitle(id, title) {
     const index = this.getEditorIndex(id);
-    if(index >= 0) {
+    if (index >= 0) {
       this.editors[index].title = title;
     }
     return index >= 0;

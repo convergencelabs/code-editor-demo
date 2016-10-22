@@ -21,11 +21,13 @@ export default class Files extends React.Component {
   }
   componentWillUnmount() {
     this.store.removeChangeListener(this.onChange);
+    this.store.dispose();
   }
 
   onChange = () => {
     this.setState(this.getStateFromStore());
   }
+
   getStateFromStore = () => {
     return {
       treeNodes: this.store.getNodes(),

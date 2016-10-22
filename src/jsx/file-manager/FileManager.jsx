@@ -22,8 +22,8 @@ export default class FileManager extends React.Component {
     if(this.props.treeState.selectedId) {
       addNewNode('file', this.props.treeState.selectedId);
     }
-    
   }
+
   handleNewFolder = () => {
     if(this.props.treeState.selectedId) {
       addNewNode('folder', this.props.treeState.selectedId);

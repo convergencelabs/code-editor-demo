@@ -7,7 +7,7 @@ export class BaseStore extends EventEmitter {
   constructor() {
     super();
 
-    this.dispatchToken = appDispatcher.register(this.actionHandler.bind(this));
+    this._dispatchToken = appDispatcher.register(this.actionHandler.bind(this));
   }
 
   addChangeListener(callback) {
@@ -20,5 +20,9 @@ export class BaseStore extends EventEmitter {
 
   emitChange() {
     this.emit(CHANGE_EVENT);
+  }
+
+  dispose() {
+    appDispatcher.unregister(this._dispatchToken);
   }
 }
