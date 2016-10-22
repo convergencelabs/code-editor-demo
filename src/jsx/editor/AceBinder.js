@@ -52,7 +52,13 @@ export default class AceBinder {
 
     this._model.on("insert", (e) => {
       this._suppressEvents = true;
-      doc.insert(doc.indexToPosition(e.index), e.value);
+      const pos = doc.indexToPosition(e.index);
+
+      if (!this._collaborative) {
+        this._editor.scrollToLine(pos.row, true, false);
+      }
+
+      doc.insert(pos, e.value);
       this._suppressEvents = false;
     });
 
@@ -60,6 +66,11 @@ export default class AceBinder {
       const start = doc.indexToPosition(e.index);
       const end = doc.indexToPosition(e.index + e.value.length);
       this._suppressEvents = true;
+
+      if (!this._collaborative) {
+        this._editor.scrollToLine(start.row, true, false);
+      }
+
       doc.remove(new AceRange(start.row, start.column, end.row, end.column));
       this._suppressEvents = false;
     });
