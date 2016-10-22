@@ -5,6 +5,8 @@ import {addNewNode, deleteFolder, renameFolder, selectNode} from '../../js/actio
 import RemoteFolderActionCreator from '../../js/actions/RemoteFolderActionCreator';
 import {FolderContextMenu} from './ContextMenu.jsx';
 import RenamableNode from './RenamableNode.jsx';
+import ConfirmationDialog from '../util/ConfirmationDialog.jsx';
+import {autobind} from 'core-decorators';
 
 export default class FolderNode extends React.Component {
   static propTypes = {
@@ -22,24 +24,29 @@ export default class FolderNode extends React.Component {
     this.remoteActionCreator.listenFor(['changed']);
 
     this.state = {
-      showContextMenu: false
+      showContextMenu: false,
+      showDeleteConfirm: false
     };
   }
 
   handleClick = () => {
     selectNode(this.props.id);
   }
+
   handleRename = (newName) => {
     renameFolder(this.props.id, newName);
     this.setState({renaming: false});
   }
+
   handleRenameCancel = () => {
     this.setState({renaming: false});
   }
+
   handleContextMenu = (e) => {
     this.setState({showContextMenu: true});
     e.preventDefault();
   }
+
   handleHideContextMenu = () => {
     this.setState({showContextMenu: false});
   }
@@ -47,18 +54,47 @@ export default class FolderNode extends React.Component {
   handleRenameSelect = () => {
     this.setState({renaming: true});
   }
+
   handleDelete = () => {
-    deleteFolder(this.props.id);
+    this.setState({showDeleteConfirm: true});
   }
+
   handleNewFile = () => {
     addNewNode('file', this.props.id);
   }
+
   handleNewFolder = () => {
     addNewNode('folder', this.props.id);
   }
 
+  @autobind
+  handleDeleteFolderCancel() {
+    this.setState({showDeleteConfirm: false});
+  }
+
+
+  @autobind
+  handleDeleteFolderOk() {
+    deleteFolder(this.props.id);
+    this.setState({showDeleteConfirm: false});
+  }
+
+  _createDeleteConfirm() {
+    if (this.state.showDeleteConfirm) {
+      const nodeName = this.props.model.get('name').data();
+      const title = "Confirm Delete";
+      const message = `Delete folder "${nodeName}"?`;
+      return (<ConfirmationDialog
+        onCancel={this.handleDeleteFolderCancel}
+        onOk={this.handleDeleteFolderOk}
+        title={title}
+        message={message}
+      />);
+    }
+  }
 
   render() {
+    const deleteConfirm = this._createDeleteConfirm();
     const nodeClasses = classNames("folder-label", this.props.selected ? 'selected' : '');
     const iconClasses = classNames('fa', this.props.collapsed ? 'fa-folder-o' : 'fa-folder-open-o');
 
@@ -87,6 +123,7 @@ export default class FolderNode extends React.Component {
         <RenamableNode name={folderName} renaming={this.state.renaming} 
           onCancel={this.handleRenameCancel} onComplete={this.handleRename} />
         {contextMenu}
+        {deleteConfirm}
       </div>
     );
   }  
