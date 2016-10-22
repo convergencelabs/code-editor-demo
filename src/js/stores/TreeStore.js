@@ -97,6 +97,8 @@ export default class TreeStore extends BaseStore {
     const nodes = this.rtModel.valueAt(['tree', 'nodes']);
     const parent = findChildParentId(nodes, id);
     const children = nodes.get(parent).get('children');
+
+    // fixme in the api, we should have some and find
     children.forEach((childId, index) => { 
       if(childId.data() === id) {
         children.remove(index);
@@ -107,6 +109,8 @@ export default class TreeStore extends BaseStore {
     if(this.selectedNode === id) {
       delete this.selectedNode;
     }
+
+    // fixme I Don't think we remove the actual file. or the model.
   }
   renameFolder(id, newName) {
     const rtFolder = this.rtModel.valueAt(['tree', 'nodes', id]);

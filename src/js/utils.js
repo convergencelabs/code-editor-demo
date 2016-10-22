@@ -13,10 +13,12 @@ export function appendIdsToObjects(objectsById) {
 }
 
 export function findChildParentId(folders, childId) {
+  // fixme this is a O(n) operation super inefficient.
   let folderIds = folders.keys();
   for(let i = 0; i < folderIds.length; i++) {
     let folder = folders.get(folderIds[i]);
     if(folder.hasKey('children')) {
+      // fixme this is super inefficient
       let found = folder.get('children').data().some(id => { return id === childId; });
       if(found) {
         return folderIds[i];
