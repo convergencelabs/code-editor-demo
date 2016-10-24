@@ -18,9 +18,6 @@ export default class ParticipantsList extends React.Component {
 
   componentDidMount() {
     this.subscription = this.props.activity.participants().subscribe((participants) => {
-      this.props.activity.on("session_joined", this.handleSessionJoined);
-      this.props.activity.on("session_left", this.handleSessionLeft);
-
       this.setState({participants: participants});
     });
   }
@@ -29,21 +26,6 @@ export default class ParticipantsList extends React.Component {
     if (this.subscription !== undefined) {
       this.subscription.unsubscribe();
     }
-
-    this.props.activity.off("session_joined", this.handleSessionJoined);
-    this.props.activity.off("session_left", this.handleSessionLeft);
-  }
-
-  @autobind
-  handleSessionJoined(e) {
-    const newParticipants = this.state.participants.concat(e.participant);
-    this.setState({participants: newParticipants});
-  }
-
-  @autobind
-  handleSessionLeft(e) {
-    const newParticipants = this.state.participants.filter((element) => {return element.sessionId() !== e.sessionId;});
-    this.setState({participants: newParticipants});
   }
 
   createParticipant(participant) {
