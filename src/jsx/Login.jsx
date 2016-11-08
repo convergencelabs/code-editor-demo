@@ -16,16 +16,29 @@ export default class Login extends React.Component {
     this.state = {
       inProgress: false,
       username: "",
-      password: ""
+      password: "",
+      anonymous: CodeEditorConfig.ANONYMOUS_LOGIN
     };
   }
 
   @autobind
   handleLogin() {
     this.setState({inProgress: true});
-    ConvergenceDomain.connect(this.props.domainUrl, this.state.username, this.state.password).then(d => {
-      this.props.onLogin(d);
-    }).catch((e) => {
+
+    let promise = null;
+
+    if (this.state.anonymous) {
+      promise = ConvergenceDomain.connectAnonymously(this.props.domainUrl, this.state.username).then(d => {
+        this.props.onLogin(d);
+      });
+    } else {
+      promise = ConvergenceDomain.connect(this.props.domainUrl, this.state.username, this.state.password).then(d => {
+        this.props.onLogin(d);
+      });
+    }
+
+    promise.catch((e) => {
+      console.log(e);
       this.setState({message: e.message, inProgress: false});
     });
   }
@@ -52,7 +65,8 @@ export default class Login extends React.Component {
 
   @autobind
   validate() {
-    return this.state.username.length > 0 && this.state.password.length > 0;
+    return this.state.username.length > 0 &&
+      (this.state.password.length > 0 || this.state.anonymous) ;
   }
 
   render() {

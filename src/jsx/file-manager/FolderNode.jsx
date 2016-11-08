@@ -81,7 +81,7 @@ export default class FolderNode extends React.Component {
 
   _createDeleteConfirm() {
     if (this.state.showDeleteConfirm) {
-      const nodeName = this.props.model.get('name').data();
+      const nodeName = this.props.model.get('name').value();
       const title = "Confirm Delete";
       const message = `Delete folder "${nodeName}"?`;
       return (<ConfirmationDialog
@@ -110,7 +110,7 @@ export default class FolderNode extends React.Component {
         />
       );
     }
-    const folderName = this.props.model.get('name').data();
+    const folderName = this.props.model.get('name').value();
 
     return (
       <div 

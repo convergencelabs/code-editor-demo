@@ -161,7 +161,7 @@ export default class EditorsStore extends BaseStore {
   }
 
   getFileName(fileId) {
-    return this.rtModel.valueAt(['tree', 'nodes', fileId]).get('name').data();
+    return this.rtModel.elementAt(['tree', 'nodes', fileId]).get('name').value();
   }
 
   setTabTitle(id, title) {

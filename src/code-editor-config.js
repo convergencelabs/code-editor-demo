@@ -1,4 +1,5 @@
 var CodeEditorConfig = {
-  'DOMAIN_URL': 'https://localhost/realtime/domain/demo/code-editor',
+  'DOMAIN_URL': 'https://localhost/realtime/domain/test/code-editor',
+  'ANONYMOUS_LOGIN': true,
   DEBUG: true
 };

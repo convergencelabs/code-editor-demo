@@ -45,15 +45,19 @@ export default class CodeEditor extends React.Component {
   @autobind
   handleOpenProject(model) {
     const domain = this.state.domain;
-    const activity = domain.activities().activity(model.modelId());
-    const chatRoom = domain.chat().room(model.modelId());
 
-    activity.join();
-    chatRoom.join();
+    let activity = null;
+    let chatRoom = null;
 
-    const projectData = {model, activity, chatRoom};
-
-    this.setState({projectData});
+    Promise.all([
+      domain.activities().join(model.modelId()).then(a => activity = a),
+      domain.chat().joinRoom(model.modelId()).then(c => chatRoom = c)
+    ]).then(() => {
+      const projectData = {model, activity, chatRoom};
+      this.setState({projectData});
+    }).catch((e) => {
+      console.log(e);
+    });
   }
 
   render() {

@@ -12,31 +12,29 @@ export default class EditorPane extends React.Component {
   constructor(props) {
     super(props);
 
-    let participants = [];
-    if (!this.props.historical) {
-      participants = props.fileModel.connectedSessions();
-
-      this.props.fileModel.on("session_opened", (e) => {
-        const newParticipants = this.state.participants.concat({
-          sessionId: e.sessionId,
-          username: e.username
-        });
-        this.setState({participants: newParticipants});
-      });
-
-      this.props.fileModel.on("session_closed", (e) => {
-        const newParticipants = this.state.participants.filter((p) => {return p.sessionId !== e.sessionId;});
-        this.setState({participants: newParticipants});
-      });
-    }
-
     this.state = {
       cursor: {
         row: 0,
         column: 0
       },
-      participants: participants
+      participants: []
     };
+  }
+
+  componentDidMount() {
+    if (!this.props.historical) {
+      this._participantsSubscription = this.props.fileModel
+        .collaboratorsAsObservable()
+        .subscribe(participants => {
+          this.setState({participants: participants});
+        });
+    }
+  }
+
+  componentWillUnmount() {
+    if (this._participantsSubscription !== undefined) {
+      this._participantsSubscription.unsubscribe();
+    }
   }
 
   handleCursorMove = (cursor) => {
@@ -47,7 +45,7 @@ export default class EditorPane extends React.Component {
   render() {
     let playbackPanel;
     if (this.props.historical) {
-      playbackPanel = <PlaybackBar model={this.props.fileModel} />;
+      playbackPanel = <PlaybackBar model={this.props.fileModel}/>;
     }
 
     return (
@@ -56,7 +54,7 @@ export default class EditorPane extends React.Component {
         <Editor
           onCursorMove={this.handleCursorMove}
           model={this.props.fileModel}
-          historical={this.props.historical} />
+          historical={this.props.historical}/>
         <StatusBar
           fileType="JavaScript"
           cursor={this.state.cursor}

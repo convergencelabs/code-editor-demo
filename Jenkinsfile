@@ -22,7 +22,7 @@ node {
 
       stage 'NPM Build'
       sh '''
-          npm run docker-build
+          npm run docker-copy
       '''
 
       stage 'Docker Build'

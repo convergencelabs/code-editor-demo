@@ -48,7 +48,7 @@ export default class TreeView extends React.Component {
   renderChildren = (children, nodes) => {
     var childNodes = [];
     children.forEach(child => {
-      const id = child.data();
+      const id = child.value();
       let node = nodes.get(id);
       if(node.hasKey('children')) {
         childNodes.push(

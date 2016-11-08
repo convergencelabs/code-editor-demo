@@ -32,10 +32,9 @@ export default class ProjectsDialog extends React.Component {
   }
 
   _loadProjects() {
-    this.props.modelService
-      .query()
-      .collection(PROJECT_COLLECTION_ID)
-      .execute().subscribe((result) => {
+    this.props.modelService.query({
+      collection: PROJECT_COLLECTION_ID
+    }).then((result) => {
       // fixme we need some projections here so I can get back specific data.
       const projects = result.map((model) => {
         return {
@@ -147,9 +146,9 @@ export default class ProjectsDialog extends React.Component {
         <CenteredPanel>
           <div className="projects-dialog">
             <div className="title">
-              <img src="assets/img/cl_logo.png" />
+              <img src="assets/img/cl_logo.png"/>
               <span>Projects</span>
-              <i className="fa fa-power-off" onClick={this.props.onLogout} />
+              <i className="fa fa-power-off" onClick={this.props.onLogout}/>
             </div>
             <ProjectsList
               projects={this.state.projects}

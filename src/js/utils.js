@@ -19,7 +19,7 @@ export function findChildParentId(folders, childId) {
     let folder = folders.get(folderIds[i]);
     if(folder.hasKey('children')) {
       // fixme this is super inefficient
-      let found = folder.get('children').data().some(id => { return id === childId; });
+      let found = folder.get('children').value().some(id => { return id === childId; });
       if(found) {
         return folderIds[i];
       }

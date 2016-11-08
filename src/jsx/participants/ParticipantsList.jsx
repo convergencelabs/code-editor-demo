@@ -17,7 +17,7 @@ export default class ParticipantsList extends React.Component {
   }
 
   componentDidMount() {
-    this.subscription = this.props.activity.participants().subscribe((participants) => {
+    this.subscription = this.props.activity.asObservable().subscribe((participants) => {
       this.setState({participants: participants});
     });
   }

@@ -115,7 +115,7 @@ export default class AceBinder {
     });
 
     this._setLocalCursor();
-    this._cusorReference.publish();
+    this._cusorReference.share();
 
     this._session.selection.on('changeCursor', () => this._setLocalCursor());
 
@@ -158,7 +158,7 @@ export default class AceBinder {
 
     this._selectionReference = this._model.rangeReference(selectionKey);
     this._setLocalSelection();
-    this._selectionReference.publish();
+    this._selectionReference.share();
 
     this._session.selection.on('changeSelection', () => this._setLocalSelection());
 
@@ -251,7 +251,7 @@ export default class AceBinder {
 
     setTimeout(() => {
       this._setLocalView();
-      this._viewReference.publish();
+      this._viewReference.share();
     }, 0);
   }
 
