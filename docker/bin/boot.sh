@@ -13,6 +13,7 @@ require_env_var() {
 echo "Convergence Code Editor.  Checking required environment variables."
 
 require_env_var $convergence_realtime_url "convergence_realtime_url"
+require_env_var $anonymous_auth "anonymous_auth"
 
 echo "All required variables are set.  Booting."
 echo ""
