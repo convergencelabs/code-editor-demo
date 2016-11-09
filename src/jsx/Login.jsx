@@ -74,7 +74,7 @@ export default class Login extends React.Component {
         <div className="login-dialog">
           <div className="login-title">
             <img src="assets/img/cl_logo.png" />
-            <span >Code Editor Login</span>
+            <span >Convergence Code Editor</span>
           </div>
           <div className="login-contents">
             <div>
