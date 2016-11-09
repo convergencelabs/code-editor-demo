@@ -48,12 +48,14 @@ export default class CodeEditor extends React.Component {
 
     let activity = null;
     let chatRoom = null;
+    let user = null;
 
     Promise.all([
       domain.activities().join(model.modelId()).then(a => activity = a),
-      domain.chat().joinRoom(model.modelId()).then(c => chatRoom = c)
+      domain.chat().joinRoom(model.modelId()).then(c => chatRoom = c),
+      domain.identity().user(model.session().username()).then(u => user = u)
     ]).then(() => {
-      const projectData = {model, activity, chatRoom};
+      const projectData = {model, activity, chatRoom, user};
       this.setState({projectData});
     }).catch((e) => {
       console.log(e);
@@ -83,6 +85,7 @@ export default class CodeEditor extends React.Component {
           chatRoom={this.state.projectData.chatRoom}
           domain={this.state.domain}
           activity={this.state.projectData.activity}
+          user={this.state.projectData.user}
           onLogout={this.handleLogout}
           onClose={this.handleClose}
         />);

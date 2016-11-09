@@ -8,12 +8,13 @@ import ParticipantsList from './participants/ParticipantsList.jsx';
 import GroupChatPane from './chat/GroupChatPane.jsx';
 import Banner from './Banner.jsx';
 
-export default function Home({rtModel, chatRoom, domain, activity, onClose, onLogout}) {
+export default function Home({rtModel, chatRoom, domain, activity, onClose, onLogout, user}) {
+  const displayName = user.displayName() ? user.displayName() : user.username();
   return (
     <div className="code-editor">
       <Banner
         className="status-bar"
-        username={domain.session().username()}
+        username={displayName}
         onClose={onClose}
         onLogout={onLogout} />
       <div className="top-pane">
@@ -23,7 +24,7 @@ export default function Home({rtModel, chatRoom, domain, activity, onClose, onLo
             <Editors rtModel={rtModel} />
             <div className="right-pane">
               <div className="section-title">Participants</div>
-              <ParticipantsList activity={activity} />
+              <ParticipantsList activity={activity} identityService={domain.identity()} />
               <div className="section-title">Group Chat</div>
               <GroupChatPane chatRoom={chatRoom} domain={domain} />
             </div>
@@ -40,5 +41,6 @@ Home.propTypes = {
   domain: PropTypes.object.isRequired,
   onClose: PropTypes.func.isRequired,
   onLogout: PropTypes.func.isRequired,
-  rtModel: PropTypes.object.isRequired
+  rtModel: PropTypes.object.isRequired,
+  user: PropTypes.object.isRequired
 };

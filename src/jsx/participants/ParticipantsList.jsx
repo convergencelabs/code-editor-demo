@@ -5,7 +5,8 @@ import colorAssigner from '../../js/color-util.js';
 
 export default class ParticipantsList extends React.Component {
   static propTypes = {
-    activity: React.PropTypes.object.isRequired
+    activity: React.PropTypes.object.isRequired,
+    identityService: React.PropTypes.object.isRequired
   };
 
   constructor(props) {
@@ -17,8 +18,19 @@ export default class ParticipantsList extends React.Component {
   }
 
   componentDidMount() {
-    this.subscription = this.props.activity.asObservable().subscribe((participants) => {
-      this.setState({participants: participants});
+    this.subscription = this.props.activity.participantsAsObservable().subscribe(participants => {
+      var usernames = participants.map(p => p.username());
+      this.props.identityService.users(usernames).then(users => {
+        const resolved = participants.map(participant => {
+          const user = users[participant.username()];
+          const displayName = user ? user.displayName() : "Unknown";
+          return {
+            displayName:displayName,
+            sessionId: participant.sessionId()
+          };
+        });
+        this.setState({participants: resolved});
+      });
     });
   }
 
@@ -30,9 +42,9 @@ export default class ParticipantsList extends React.Component {
 
   createParticipant(participant) {
     return (<Participant
-      key={participant.sessionId()}
-      displayName={participant.username()}
-      color={colorAssigner.getColorAsHex(participant.sessionId())} />);
+      key={participant.sessionId}
+      displayName={participant.displayName}
+      color={colorAssigner.getColorAsHex(participant.sessionId)} />);
   }
 
   render() {
