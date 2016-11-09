@@ -5,6 +5,7 @@ import EditorTabs from '../editor/EditorTabs.jsx';
 
 export default class Editors extends React.Component {
   static propTypes = {
+    identityCache: PropTypes.object.isRequired,
     rtModel: PropTypes.object.isRequired,
   };
 
@@ -37,7 +38,11 @@ export default class Editors extends React.Component {
 
   render() {
     return (
-      <EditorTabs editors={this.state.editors} activeEditor={this.state.activeEditor} />
+      <EditorTabs
+        editors={this.state.editors}
+        activeEditor={this.state.activeEditor}
+        identityCache={this.props.identityCache}
+      />
     );
   }
 }

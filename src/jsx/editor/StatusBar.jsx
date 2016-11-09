@@ -6,6 +6,7 @@ export default class StatusBar extends React.Component {
   static propTypes = {
     cursor: PropTypes.object.isRequired,
     fileType: PropTypes.string.isRequired,
+    identityCache: PropTypes.object.isRequired,
     multiUser: PropTypes.bool,
     participants: PropTypes.array
   };
@@ -20,7 +21,7 @@ export default class StatusBar extends React.Component {
 
     let participantsList = null;
     if (this.props.multiUser) {
-      participantsList = <EditorParticipants participants={this.props.participants} />;
+      participantsList = <EditorParticipants participants={this.props.participants} identityCache={this.props.identityCache}/>;
     }
 
     return (

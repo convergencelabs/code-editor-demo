@@ -38,7 +38,6 @@ export default class Login extends React.Component {
     }
 
     promise.catch((e) => {
-      console.log(e);
       this.setState({message: e.message, inProgress: false});
     });
   }
@@ -66,7 +65,7 @@ export default class Login extends React.Component {
   @autobind
   validate() {
     return this.state.username.length > 0 &&
-      (this.state.password.length > 0 || this.state.anonymous) ;
+      (this.state.password.length > 0 || this.state.anonymous);
   }
 
   render() {
@@ -78,18 +77,22 @@ export default class Login extends React.Component {
             <span >Code Editor Login</span>
           </div>
           <div className="login-contents">
-            <label>Username</label>
-            <input
-              type="text"
-              value={this.state.username}
-              onInput={this.handleUsername}
-              onKeyDown={this.handleKeyDown} />
-            <label>Password</label>
-            <input
-              type="password"
-              value={this.state.password}
-              onInput={this.handlePassword}
-              onKeyDown={this.handleKeyDown} />
+            <div>
+              <label>Username</label>
+              <input
+                type="text"
+                value={this.state.username}
+                onInput={this.handleUsername}
+                onKeyDown={this.handleKeyDown} />
+            </div>
+            <div style={{display: this.state.anonymous ? "none" : "block"}}>
+              <label>Password</label>
+              <input
+                type="password"
+                value={this.state.password}
+                onInput={this.handlePassword}
+                onKeyDown={this.handleKeyDown} />
+            </div>
           </div>
           <div className="login-buttons">
             <button className="app-button" disabled={!this.validate()} onClick={this.handleLogin}>Login</button>

@@ -1,12 +1,19 @@
 import React, {PropTypes} from 'react';
 import ace from 'brace';
+
 import AceBinder from './AceBinder.js';
 
 require('brace/mode/javascript');
+require('brace/mode/java');
+require('brace/mode/text');
+require('brace/mode/html');
+
 require('brace/theme/monokai');
+
 
 export default class Editor extends React.Component {
   static propTypes = {
+    fileMode: PropTypes.string.isRequired,
     historical: PropTypes.bool.isRequired,
     model: PropTypes.object,
     onCursorMove: PropTypes.func.isRequired
@@ -21,7 +28,7 @@ export default class Editor extends React.Component {
 
     this._editor = ace.edit(this._container);
     this._editor.setTheme("ace/theme/monokai");
-    this._editor.getSession().setMode('ace/mode/javascript');
+    this._editor.getSession().setMode(this.props.fileMode);
     this._editor.getSession().setValue(contentModel.value());
 
     this._editor.getSession().selection.on('changeCursor', () => {

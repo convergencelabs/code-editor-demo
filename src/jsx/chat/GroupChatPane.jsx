@@ -9,7 +9,9 @@ export default class GroupChatPane extends React.Component {
 
   static propTypes = {
     chatRoom: React.PropTypes.object.isRequired,
-    domain: React.PropTypes.object.isRequired
+    displayName: React.PropTypes.string.isRequired,
+    domain: React.PropTypes.object.isRequired,
+    identityCache: React.PropTypes.object.isRequired
   };
 
   constructor(props) {
@@ -29,18 +31,20 @@ export default class GroupChatPane extends React.Component {
 
   @autobind
   _onRemoteMessage(event) {
-    const messages = this.state.messages.slice(0);
-    messages.push(
-      <ChatMessage
-        username={event.username}
-        color={colorAssigner.getColorAsHex(event.sessionId)}
-        message={event.message}
-        timestamp={new Date(event.timestamp)}
-        key={this.state.messages.length}
-        local={false}
-      />
-    );
-    this.setState({messages: messages});
+    this.props.identityCache.user(event.username).then(user => {
+      const messages = this.state.messages.slice(0);
+      messages.push(
+        <ChatMessage
+          username={user.displayName()}
+          color={colorAssigner.getColorAsHex(event.sessionId)}
+          message={event.message}
+          timestamp={new Date(event.timestamp)}
+          key={this.state.messages.length}
+          local={false}
+        />
+      );
+      this.setState({messages: messages});
+    });
   }
 
   @autobind
@@ -48,7 +52,7 @@ export default class GroupChatPane extends React.Component {
     const messages = this.state.messages.slice(0);
     messages.push(
       <ChatMessage
-        username={this.props.domain.session().username()}
+        username={this.props.displayName}
         color={colorAssigner.getColorAsHex(this.props.domain.session().sessionId())}
         message={message}
         timestamp={new Date()}

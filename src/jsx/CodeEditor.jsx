@@ -4,6 +4,7 @@ import Home from './Home.jsx';
 import Login from './Login.jsx';
 import ProjectsDialog from './project/ProjectsDialog.jsx';
 import {closeAll} from '../js/actions/actionCreator';
+import IdentityCache from '../js/identity-cache.js';
 
 export default class CodeEditor extends React.Component {
   static propTypes = {
@@ -45,6 +46,7 @@ export default class CodeEditor extends React.Component {
   @autobind
   handleOpenProject(model) {
     const domain = this.state.domain;
+    const identityCache = new IdentityCache(domain.identity());
 
     let activity = null;
     let chatRoom = null;
@@ -53,9 +55,9 @@ export default class CodeEditor extends React.Component {
     Promise.all([
       domain.activities().join(model.modelId()).then(a => activity = a),
       domain.chat().joinRoom(model.modelId()).then(c => chatRoom = c),
-      domain.identity().user(model.session().username()).then(u => user = u)
+      identityCache.user(model.session().username()).then(u => user = u)
     ]).then(() => {
-      const projectData = {model, activity, chatRoom, user};
+      const projectData = {model, activity, chatRoom, user, identityCache};
       this.setState({projectData});
     }).catch((e) => {
       console.log(e);
@@ -86,6 +88,7 @@ export default class CodeEditor extends React.Component {
           domain={this.state.domain}
           activity={this.state.projectData.activity}
           user={this.state.projectData.user}
+          identityCache={this.state.projectData.identityCache}
           onLogout={this.handleLogout}
           onClose={this.handleClose}
         />);

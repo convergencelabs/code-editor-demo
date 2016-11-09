@@ -8,6 +8,7 @@ export default class EditorTabs extends React.Component {
   static propTypes = {
     activeEditor: PropTypes.object,
     editors: PropTypes.array.isRequired,
+    identityCache: PropTypes.object.isRequired
   };
 
   constructor(props) {
@@ -37,7 +38,12 @@ export default class EditorTabs extends React.Component {
       const className = classNames('editor-container', (editor === this.props.activeEditor ? 'active' : 'inactive'));
       return (
         <div key={editor.modelId + ":" + editor.historical} className={className}>
-          <EditorPane fileModel={editor.model} historical={editor.historical} />
+          <EditorPane
+            fileModel={editor.model}
+            fileName={editor.title}
+            historical={editor.historical}
+            identityCache={this.props.identityCache}
+          />
         </div>
       );
     });
@@ -75,8 +81,8 @@ function EditorTabButton(props) {
   );
 }
 EditorTabButton.propTypes = {
-  editor: PropTypes.object.isRequired,
   active: PropTypes.bool.isRequired,
+  editor: PropTypes.object.isRequired,
   onClick: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
 };

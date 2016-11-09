@@ -6,7 +6,7 @@ import colorAssigner from '../../js/color-util.js';
 export default class ParticipantsList extends React.Component {
   static propTypes = {
     activity: React.PropTypes.object.isRequired,
-    identityService: React.PropTypes.object.isRequired
+    identityCache: React.PropTypes.object.isRequired
   };
 
   constructor(props) {
@@ -20,7 +20,7 @@ export default class ParticipantsList extends React.Component {
   componentDidMount() {
     this.subscription = this.props.activity.participantsAsObservable().subscribe(participants => {
       var usernames = participants.map(p => p.username());
-      this.props.identityService.users(usernames).then(users => {
+      this.props.identityCache.users(usernames).then(users => {
         const resolved = participants.map(participant => {
           const user = users[participant.username()];
           const displayName = user ? user.displayName() : "Unknown";
