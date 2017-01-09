@@ -85,6 +85,7 @@ export default class Login extends React.Component {
                 onInput={this.handleUsername}
                 onKeyDown={this.handleKeyDown} />
             </div>
+            <div style={{display: this.state.anonymous ? "block" : "none"}} className="hint">(Anonymous authentication is enabled)</div>
             <div style={{display: this.state.anonymous ? "none" : "block"}}>
               <label>Password</label>
               <input
@@ -93,6 +94,7 @@ export default class Login extends React.Component {
                 onInput={this.handlePassword}
                 onKeyDown={this.handleKeyDown} />
             </div>
+
           </div>
           <div className="login-buttons">
             <button className="app-button" disabled={!this.validate()} onClick={this.handleLogin}>Login</button>
