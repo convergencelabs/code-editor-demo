@@ -35,7 +35,7 @@ export default class GroupChatPane extends React.Component {
       const messages = this.state.messages.slice(0);
       messages.push(
         <ChatMessage
-          username={user.displayName()}
+          username={user.displayName}
           color={colorAssigner.getColorAsHex(event.sessionId)}
           message={event.message}
           timestamp={new Date(event.timestamp)}
