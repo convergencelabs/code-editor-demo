@@ -7,7 +7,7 @@ const spawn = require('child_process').spawn;
 
 const dockerPushTag = 'nexus.convergencelabs.tech:18444/convergence-code-editor';
 
-gulp.task('default', ['webpack', 'sass', 'copy-index', 'copy-assets'], function() {
+gulp.task('default', ['webpack', 'copy-index', 'copy-assets'], function() {
 });
 
 gulp.task('copy-index', function() {
@@ -30,7 +30,7 @@ gulp.task('clean', function () {
   return del(['build', 'docker-build']);
 });
 
-gulp.task('docker-copy', ['build'], function () {
+gulp.task('docker-copy', ['default'], function () {
   mkdirp('docker-build');
 
   return merge([
@@ -40,7 +40,7 @@ gulp.task('docker-copy', ['build'], function () {
 });
 
 gulp.task('docker-build', ['docker-copy'], function(cb) {
-  var docker = spawn('docker', ['build', '-t', dockerPushTag, 'docker-build']);
+  const docker = spawn('docker', ['build', '-t', dockerPushTag, 'docker-build']);
 
   docker.stdout.on('data', function (data) {
     console.log("" + data);
@@ -59,7 +59,7 @@ gulp.task('docker-build', ['docker-copy'], function(cb) {
 });
 
 gulp.task('docker', ['docker-build'], function(cb) {
-  var docker = spawn('docker', ['push', dockerPushTag]);
+  const docker = spawn('docker', ['push', dockerPushTag]);
 
   docker.stdout.on('data', function (data) {
     console.log("" + data);
