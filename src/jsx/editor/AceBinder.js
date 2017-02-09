@@ -105,7 +105,7 @@ export default class AceBinder {
   /////////////////////////////////////////////////////////////////////////////
   _bindCursor() {
     this._cursorManager = new AceMultiCursorManager(this._editor);
-    this._cusorReference = this._model.indexReference(cursorKey);
+    this._cursorReference = this._model.indexReference(cursorKey);
 
     const references = this._model.references({key: cursorKey});
     references.forEach((reference) => {
@@ -115,7 +115,7 @@ export default class AceBinder {
     });
 
     this._setLocalCursor();
-    this._cusorReference.share();
+    this._cursorReference.share();
 
     this._session.selection.on('changeCursor', () => this._setLocalCursor());
 
@@ -129,7 +129,7 @@ export default class AceBinder {
   _setLocalCursor() {
     const position = this._editor.getCursorPosition();
     const index = this._document.positionToIndex(position);
-    this._cusorReference.set(index);
+    this._cursorReference.set(index);
   }
 
   _addCursor(reference) {
@@ -180,8 +180,8 @@ export default class AceBinder {
     if (!this._editor.selection.isEmpty()) {
       const aceRanges = this._editor.selection.getAllRanges();
       const indexRanges = aceRanges.map((aceRagne) => {
-        var start = this._document.positionToIndex(aceRagne.start);
-        var end = this._document.positionToIndex(aceRagne.end);
+        const start = this._document.positionToIndex(aceRagne.start);
+        const end = this._document.positionToIndex(aceRagne.end);
         return {start: start, end: end};
       });
 
@@ -215,7 +215,7 @@ export default class AceBinder {
     let end = range.end;
 
     if (start > end) {
-      var temp = start;
+      let temp = start;
       start = end;
       end = temp;
     }
@@ -226,7 +226,7 @@ export default class AceBinder {
   }
 
   /////////////////////////////////////////////////////////////////////////////
-  // Selection Binding
+  // Radar View Binding
   /////////////////////////////////////////////////////////////////////////////
   _bindRadarView() {
     this._radarView = new AceRadarView(this._radarViewElement, this._editor);

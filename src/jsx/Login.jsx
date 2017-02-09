@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react';
 import {autobind} from 'core-decorators';
-import ConvergenceDomain from 'convergence-client';
+import {Convergence} from '@convergence/convergence';
 import CenteredPanel from './CenteredPanel.jsx';
 
 export default class Login extends React.Component {
@@ -28,11 +28,11 @@ export default class Login extends React.Component {
     let promise = null;
 
     if (this.state.anonymous) {
-      promise = ConvergenceDomain.connectAnonymously(this.props.domainUrl, this.state.username).then(d => {
+      promise = Convergence.connectAnonymously(this.props.domainUrl, this.state.username).then(d => {
         this.props.onLogin(d);
       });
     } else {
-      promise = ConvergenceDomain.connect(this.props.domainUrl, this.state.username, this.state.password).then(d => {
+      promise = Convergence.connect(this.props.domainUrl, this.state.username, this.state.password).then(d => {
         this.props.onLogin(d);
       });
     }
@@ -85,7 +85,7 @@ export default class Login extends React.Component {
                 onInput={this.handleUsername}
                 onKeyDown={this.handleKeyDown} />
             </div>
-            <div style={{display: this.state.anonymous ? "block" : "none"}} className="hint">(Anonymous authentication is enabled)</div>
+            <div style={{display: this.state.anonymous ? "block" : "none"}} className="hint">(Any username will work)</div>
             <div style={{display: this.state.anonymous ? "none" : "block"}}>
               <label>Password</label>
               <input

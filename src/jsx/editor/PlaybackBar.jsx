@@ -17,7 +17,7 @@ export default class PlaybackBar extends React.Component {
     this.state = {
       maxVersion: this.props.model.maxVersion(),
       version: this.props.model.maxVersion(),
-      timestamp: this._formatTime(this.props.model.currentTime()),
+      timestamp: this._formatTime(this.props.model.time()),
       hasNext: false,
       hasPrev: true,
       playing: false
@@ -74,7 +74,7 @@ export default class PlaybackBar extends React.Component {
   }
 
   _onVersionChanged() {
-    const currentTime = this._formatTime(this.props.model.currentTime());
+    const currentTime = this._formatTime(this.props.model.time());
     const currentVersion = this.props.model.version();
 
     this.setState({

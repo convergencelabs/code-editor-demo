@@ -21,7 +21,7 @@
     "brace": "0.8.0",
     "classnames": "2.2.5",
     "color-assigner": "1.0.0",
-    "convergence-client": "^1.0.0-SNAPSHOT",
+    "@convergence/convergence": "1.0.0-alpha.1",
     "core-decorators": "0.12.3",
     "css-loader": "0.25.0",
     "eslint": "3.6.0",

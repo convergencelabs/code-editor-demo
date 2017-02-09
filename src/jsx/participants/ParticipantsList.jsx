@@ -19,14 +19,14 @@ export default class ParticipantsList extends React.Component {
 
   componentDidMount() {
     this.subscription = this.props.activity.participantsAsObservable().subscribe(participants => {
-      var usernames = participants.map(p => p.username());
+      const usernames = participants.map(p => p.username);
       this.props.identityCache.users(usernames).then(users => {
         const resolved = participants.map(participant => {
-          const user = users[participant.username()];
-          const displayName = user ? user.displayName() : "Unknown";
+          const user = users[participant.username];
+          const displayName = user ? user.displayName : "Unknown";
           return {
             displayName:displayName,
-            sessionId: participant.sessionId()
+            sessionId: participant.sessionId
           };
         });
         this.setState({participants: resolved});

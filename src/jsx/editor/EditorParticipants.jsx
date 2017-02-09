@@ -6,9 +6,9 @@ import colorAssigner from '../../js/color-util';
 const EditorParticipants = function (props) {
   var participants = props.participants.map((participant) => {
     return (<div
-      key={participant.sessionId()}
+      key={participant.sessionId}
       className="participant-indicator"
-      style={{background: colorAssigner.getColorAsHex(participant.sessionId())}} />);
+      style={{background: colorAssigner.getColorAsHex(participant.sessionId)}} />);
   });
 
   return (

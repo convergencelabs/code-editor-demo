@@ -7,14 +7,7 @@ const spawn = require('child_process').spawn;
 
 const dockerPushTag = 'nexus.convergencelabs.tech:18444/convergence-code-editor';
 
-gulp.task('default', ['webpack', 'sass', 'copy-assets'], function() {
-  return gulp.src('src/index.html')
-    .pipe(gulp.dest('build'));
-});
-
-gulp.task('build', ['webpack', 'copy-index', 'copy-assets'], function() {
-  return gulp.src('src/index.html')
-    .pipe(gulp.dest('build'));
+gulp.task('default', ['webpack', 'sass', 'copy-index', 'copy-assets'], function() {
 });
 
 gulp.task('copy-index', function() {

@@ -9,7 +9,7 @@ import GroupChatPane from './chat/GroupChatPane.jsx';
 import Banner from './Banner.jsx';
 
 export default function Home({rtModel, chatRoom, domain, activity, onClose, onLogout, user, identityCache}) {
-  const displayName = user.displayName() ? user.displayName() : user.username();
+  const displayName = user.displayName ? user.displayName : user.username;
   return (
     <div className="code-editor">
       <Banner
