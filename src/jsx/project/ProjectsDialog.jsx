@@ -32,9 +32,7 @@ export default class ProjectsDialog extends React.Component {
   }
 
   _loadProjects() {
-    this.props.modelService.query({
-      collection: PROJECT_COLLECTION_ID
-    }).then((result) => {
+    this.props.modelService.query(`SELECT FROM ${PROJECT_COLLECTION_ID}`).then((result) => {
       // fixme we need some projections here so I can get back specific data.
       const projects = result.map((model) => {
         return {
