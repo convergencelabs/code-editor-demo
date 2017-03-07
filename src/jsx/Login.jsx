@@ -78,14 +78,13 @@ export default class Login extends React.Component {
           </div>
           <div className="login-contents">
             <div>
-              <label>Username</label>
+              <label>Display name</label>
               <input
                 type="text"
                 value={this.state.username}
                 onInput={this.handleUsername}
                 onKeyDown={this.handleKeyDown} />
             </div>
-            <div style={{display: this.state.anonymous ? "block" : "none"}} className="hint">(Any username will work)</div>
             <div style={{display: this.state.anonymous ? "none" : "block"}}>
               <label>Password</label>
               <input
