@@ -99,21 +99,25 @@ export default class EditorsStore extends BaseStore {
   }
 
   createModel(id) {
-    return this.modelService.create(this.collectionId, id, {
-      content: ''
+    return this.modelService.create({
+      collection: this.collectionId,
+      id,
+      data: {
+        content: ''
+      }
     });
   }
 
   openModel(modelId) {
-    return this.modelService.open(this.collectionId, modelId);
+    return this.modelService.open(modelId);
   }
 
   openHistoricalModel(modelId) {
-    return this.modelService.history(this.collectionId, modelId);
+    return this.modelService.history(modelId);
   }
 
   deleteModel(modelId) {
-    return this.modelService.remove(this.collectionId, modelId);
+    return this.modelService.remove(modelId);
   }
 
   createEditor(id, model, historical) {

@@ -36,7 +36,7 @@ export default class ProjectsDialog extends React.Component {
       // fixme we need some projections here so I can get back specific data.
       const projects = result.map((model) => {
         return {
-          name: model.modelId,
+          name: model.data.c.name.v,
           id: model.modelId
         };
       });
@@ -46,9 +46,9 @@ export default class ProjectsDialog extends React.Component {
   }
 
   @autobind
-  handleOpenProject(projectId) {
+  handleOpenProject(modelId) {
     // set opening to true.
-    this.props.modelService.open(PROJECT_COLLECTION_ID, projectId).then((model) => {
+    this.props.modelService.open(modelId).then(model => {
       this.props.onOpen(model);
     }).catch((e) => {
       // replace with UI notification.
@@ -84,8 +84,10 @@ export default class ProjectsDialog extends React.Component {
   @autobind
   handleNewProjectOk(projectName) {
     this.setState({newProjectVisible: false});
-    this.props.modelService.create(PROJECT_COLLECTION_ID, projectName,
-      {
+    this.props.modelService.create({
+      collection: PROJECT_COLLECTION_ID,
+      data: {
+        "name": projectName,
         "tree": {
           "nodes": {
             "root": {
@@ -94,8 +96,9 @@ export default class ProjectsDialog extends React.Component {
             }
           }
         }
-      }).then(() => {
-      this.handleOpenProject(projectName);
+      }
+    }).then(modelId => {
+      this.handleOpenProject(modelId);
     });
 
   }
@@ -117,7 +120,7 @@ export default class ProjectsDialog extends React.Component {
 
   @autobind
   handleDeleteProjectOk() {
-    this.props.modelService.remove(PROJECT_COLLECTION_ID, this.state.selected).then(() => {
+    this.props.modelService.remove(this.state.selected).then(() => {
       this.setState({deleteProjectVisible: false});
       this._loadProjects();
     });

@@ -25,7 +25,7 @@ export default class ProjectItem extends React.Component {
       <div
         className={className}
         onClick={this.handleClick}
-        onDoubleClick={this.handleDoubleClick} >{this.props.project.id}</div>
+        onDoubleClick={this.handleDoubleClick} >{this.props.project.name}</div>
     );
   }
 }
