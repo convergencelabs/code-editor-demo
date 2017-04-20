@@ -36,7 +36,7 @@ export default class ProjectsDialog extends React.Component {
       // fixme we need some projections here so I can get back specific data.
       const projects = result.map((model) => {
         return {
-          name: model.data.c.name.v,
+          name: model.data.name,
           id: model.modelId
         };
       });
