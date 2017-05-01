@@ -78,7 +78,7 @@ export default class Login extends React.Component {
           </div>
           <div className="login-contents">
             <div>
-              <label>Display name</label>
+              <label>Display Name</label>
               <input
                 type="text"
                 value={this.state.username}

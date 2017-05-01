@@ -10,7 +10,7 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "@convergence/convergence": "1.0.0-alpha.12",
+    "@convergence/convergence": "1.0.0-alpha.17",
     "ace-collab-ext": "1.0.0",
     "babel-core": "6.17.0",
     "babel-eslint": "7.0.0",

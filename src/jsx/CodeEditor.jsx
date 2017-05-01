@@ -54,7 +54,10 @@ export default class CodeEditor extends React.Component {
 
     Promise.all([
       domain.activities().join(model.modelId()).then(a => activity = a),
-      domain.chat().joinRoom(model.modelId()).then(c => chatRoom = c),
+      domain.chat()
+        .create({id: model.modelId(), type: "room", membership: "public", ignoreExistsError: true})
+        .then(channelId => domain.chat().join(channelId))
+        .then(c => chatRoom = c),
       identityCache.user(model.session().username()).then(u => user = u)
     ]).then(() => {
       const projectData = {model, activity, chatRoom, user, identityCache};
