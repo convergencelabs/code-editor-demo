@@ -1,10 +1,11 @@
-This is a collaborative code editor using the [Ace code editor](https://ace.c9.io) and Convergence javascript client. 
+This is a collaborative code editor using the [Ace code editor](https://ace.c9.io) and Convergence JavaScript client. 
 
 Getting started
 =======
 1. Clone this repository
 1. `npm install`
-1. `npm run example` to launch a lightweight web server for running the editor locally.  
+1. Updated the src/code-editor-config.js to point to your domain.
+1. `npm start` to launch a lightweight web server for running the editor locally.  
 
 ### Features
 1. Proper conflict resolution (try editing the same code with two users simultaneously)
