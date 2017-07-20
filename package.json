@@ -4,14 +4,15 @@
   "description": "A realtime collaborative code editor using Ace and Convergence",
   "scripts": {
     "start": "node server.js",
-    "build": "gulp build",
+    "build": "gulp",
     "docker-copy": "gulp docker-copy",
     "clean": "gulp clean"
   },
   "dependencies": {},
   "devDependencies": {
-    "@convergence/convergence": "1.0.0-alpha.17",
-    "ace-collab-ext": "1.0.0",
+    "@convergence/convergence": "1.0.0-alpha.24",
+    "@convergence/ace-collab-ext": "0.1.1",
+    "@convergence/color-assigner": "0.1.1",
     "babel-core": "6.17.0",
     "babel-eslint": "7.0.0",
     "babel-loader": "6.2.5",
@@ -21,7 +22,6 @@
     "babel-preset-stage-0": "6.16.0",
     "brace": "0.8.0",
     "classnames": "2.2.5",
-    "color-assigner": "1.0.0",
     "core-decorators": "0.12.3",
     "css-loader": "0.25.0",
     "eslint": "3.6.0",

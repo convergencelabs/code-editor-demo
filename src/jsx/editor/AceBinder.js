@@ -1,9 +1,6 @@
 import ace from 'brace';
 const AceRange = ace.acequire('ace/range').Range;
-import {AceMultiCursorManager} from 'ace-collab-ext';
-import {AceMultiSelectionManager} from 'ace-collab-ext';
-import {AceRadarView} from 'ace-collab-ext';
-import {AceViewportUtil} from 'ace-collab-ext';
+import {AceMultiSelectionManager, AceRadarView, AceViewportUtil, AceMultiCursorManager} from '@convergence/ace-collab-ext';
 import colorAssigner from '../../js/color-util.js';
 
 const cursorKey = "cursor";
@@ -104,7 +101,7 @@ export default class AceBinder {
   // Cursor Binding
   /////////////////////////////////////////////////////////////////////////////
   _bindCursor() {
-    this._cursorManager = new AceMultiCursorManager(this._editor);
+    this._cursorManager = new AceMultiCursorManager(this._editor.getSession());
     this._cursorReference = this._model.indexReference(cursorKey);
 
     const references = this._model.references({key: cursorKey});
@@ -154,7 +151,7 @@ export default class AceBinder {
   /////////////////////////////////////////////////////////////////////////////
 
   _bindSelection() {
-    this._selectionManager = new AceMultiSelectionManager(this._editor);
+    this._selectionManager = new AceMultiSelectionManager(this._editor.getSession());
 
     this._selectionReference = this._model.rangeReference(selectionKey);
     this._setLocalSelection();
