@@ -42,6 +42,8 @@
   }
 
   .projects-list {
+    overflow: auto;
+    max-height: 350px;
     flex: 1;
     border: 1px solid lightgrey;
     margin-bottom: 10px;
