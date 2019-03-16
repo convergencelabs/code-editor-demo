@@ -77,7 +77,7 @@ export default class Login extends React.Component {
               <input
                 type="text"
                 value={this.state.username}
-                onInput={this.handleUsername}
+                onChange={this.handleUsername}
                 onKeyDown={this.handleKeyDown}/>
             </div>
             <div style={{display: this.state.anonymous ? "none" : "block"}}>
@@ -85,7 +85,7 @@ export default class Login extends React.Component {
               <input
                 type="password"
                 value={this.state.password}
-                onInput={this.handlePassword}
+                onChange={this.handlePassword}
                 onKeyDown={this.handleKeyDown}/>
             </div>
 

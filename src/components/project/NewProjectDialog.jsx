@@ -50,7 +50,7 @@ export default class NewProjectDialog extends React.Component {
         <label>Project Name:</label>
         <input
           type="text"
-          onInput={this.handleNameInput}
+          onChange={this.handleNameInput}
           value={this.state.projectName}
         />
       </Dialog>
