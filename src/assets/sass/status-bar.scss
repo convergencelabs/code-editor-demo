@@ -1,0 +1,45 @@
+@import 'variables.scss';
+
+.status-bar {
+  background: #40423a;
+  border-top: 1px solid $border-color;
+  color: lightgray;
+  font-family: $app-font;
+  font-size: 12px;
+  padding: 3px 5px;
+
+  .status-bar-content {
+    .status-bar-cursor-indicator {
+      float: left;
+      margin: 0 5px;
+    }
+
+    .status-bar-file-type {
+      float: right;
+      margin: 0 5px;
+    }
+
+    .status-bar-participants {
+      float: right;
+      margin-right: 50px;
+
+      span {
+        margin-right: 5px;
+      }
+
+      .participant-indicators {
+        display: inline-block;
+
+        .participant-indicator {
+          position: relative;
+          top: 1px;
+          display: inline-block;
+          width: 10px;
+          height: 10px;
+          margin-left: 5px;
+          border: 1px solid darkgray;
+        }
+      }
+    }
+  }
+}

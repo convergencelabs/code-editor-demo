@@ -1,0 +1,93 @@
+@import 'variables.scss';
+
+.file-manager {
+  white-space: nowrap;
+  font-family: 'CamingoCode', Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  flex: 1;
+  background-color: #40423a;
+  color: white;
+  -webkit-user-select: none;
+  user-select: none;
+  overflow: auto;
+
+  .file-actions {
+    padding: 5px; font-size: 12px;
+    border-bottom: 1px solid rgba(0,0,0,0.25);
+
+    button { font-size: 1em; outline: none; border: none; border-radius: 4px; background-color: #BDBDBD; cursor: pointer; }
+    button:hover { 
+      background-color: #f5f5f5; 
+
+      i:last-child { background-color: #f5f5f5; }
+    }
+    button + button { margin-left: 10px; }
+
+    .fa-stack {
+      width: 1.3em; height: 1.25em; 
+
+      i { position: absolute; }
+      i:first-child { font-size: 1em; left: 4px; top: 4px; }
+      i:last-child { font-size: 0.6em; background: #BDBDBD; left: 0; top: 2px; }
+    }
+    .fa-stack.add-folder { margin: 2px 0 -2px; }
+
+    .icon-button { 
+      padding-top: 4px; padding-bottom: 2px; vertical-align: middle; 
+
+      i { height: 1em; width: 1.3em; }
+    }
+  }
+
+  .file-tree {
+    white-space: nowrap; margin: 3px 0 0 5px;
+
+    .inline-input {
+      font-family: $app-font;
+      font-size: 14px;
+      background: lightgray;
+      border: 1px solid darkgray;
+
+      &:focus {
+        outline: none;
+      }
+    }
+
+    .sub-tree { overflow-y: hidden; padding: 0 2px; float: left; clear: left; }
+
+    .node { 
+      float: left; clear: left; cursor: pointer;
+
+      i { margin-right: 6px; display: inline-block; vertical-align: middle; }
+    }
+    .node.file {
+      padding: 0px 5px 5px; color: #FFEDF4;
+
+      i { margin-left: 2px; margin-right: 8px; font-size: 14px; }
+    }
+    .new-node { padding: 0 5px 3px 5px; }
+
+    /* style for the children nodes container */
+    .node-children { margin-left: 11px; margin-bottom: 2px; clear: left; overflow-y: auto; }
+    .node-children.collapsed { height: 0px; }
+
+    .arrow { 
+      position: relative; cursor: pointer; display: inline-block; user-select: none; 
+
+      .caret { display: inline-block; vertical-align: middle; margin-right: 3px; }
+    }
+    /* rotate the triangle to close it */
+    .arrow.collapsed .caret { transform: rotate(-90deg); }
+
+    .folder-label { 
+      padding: 0 5px 4px; display: inline-block; color: #CCEDD1;
+
+      i { margin-right: 5px;  }
+    }
+
+    .node.file.selected, .folder-label.selected { background-color: #0E7B9E; border-radius: 4px; }
+  }
+}
+
+
+

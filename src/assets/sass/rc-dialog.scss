@@ -1,0 +1,48 @@
+// import this first so that we can then override things.
+
+@import "../../../node_modules/rc-dialog/assets/index.css";
+
+$dialogBackground: #40423a;
+$dialogForeground: white;
+
+.rc-dialog {
+  display: inline-block;
+  margin: inherit;
+  width: inherit;
+
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+
+  min-width: 200px;
+}
+
+.rc-dialog-content {
+  border: 1px solid lightgray;
+  font-family: $app-font;
+  font-size: 14px;
+}
+
+.rc-dialog-header {
+  color: $dialogForeground;
+  background: $dialogBackground;
+}
+
+.rc-dialog-body {
+  color: $dialogForeground;
+  background: $dialogBackground;
+}
+
+.rc-dialog-footer {
+  color: $dialogForeground;
+  background: $dialogBackground;
+
+  .rc-dialog-buttons {
+
+  }
+}
+
+.rc-dialog-close {
+  color: white;
+}

@@ -1,0 +1,19 @@
+@import 'variables.scss';
+
+.participants-list {
+  width: 100%;
+  height: 200px;
+  background: #40423a;
+  color: lightgray;
+  font-family: $app-font;
+  font-size: 12px;
+}
+
+.participant {
+  border-bottom: 2px solid #5b5b5b;
+}
+
+.participant-username {
+  padding: 4px;
+  border-left: 4px solid;
+}

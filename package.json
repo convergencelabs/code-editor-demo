@@ -1,0 +1,57 @@
+{
+  "name": "@convergence/code-editor-demo",
+  "version": "0.1.0",
+  "description": "A mock up of a code editor built using React, Ace, Flux, and Convergence",
+  "keywords": ["realtime", "collaboration", "ace", "convergence", "react", "flux"],
+  "author": {
+    "name": "Convergence Labs, Inc",
+    "email": "info@convergencelabs.com",
+    "url": "https://convergencelabs.com"
+  },
+  "contributors": [],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/convergencelabs/code-editor.git"
+  },
+  "bugs": {
+    "url": "https://github.com/convergencelabs/code-editor/issues"
+  },
+  "license": "MIT",
+  "private": true,
+  "homepage": ".",
+  "dependencies": {
+    "@convergence/ace-collab-ext": "0.4.0",
+    "@convergence/color-assigner": "0.3.0",
+    "@convergence/convergence": "1.0.0-beta.8",
+    "ace-builds": "1.4.3",
+    "classnames": "2.2.6",
+    "flux": "3.0.0",
+    "font-awesome": "4.6.3",
+    "moment": "2.24.0",
+    "node-sass": "4.11.0",
+    "prop-types": "^15.7.2",
+    "rc-dialog": "7.3.0",
+    "rc-slider": "8.6.7",
+    "react": "16.8.4",
+    "react-dom": "16.8.4",
+    "react-onclickoutside": "6.8.0",
+    "react-scripts": "2.1.8",
+    "react-split-pane": "0.1.85",
+    "react-uikit-icons": "2.0.2"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
+}
