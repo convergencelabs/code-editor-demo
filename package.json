@@ -11,10 +11,10 @@
   "contributors": [],
   "repository": {
     "type": "git",
-    "url": "https://github.com/convergencelabs/code-editor.git"
+    "url": "https://github.com/convergencelabs/code-editor-demo.git"
   },
   "bugs": {
-    "url": "https://github.com/convergencelabs/code-editor/issues"
+    "url": "https://github.com/convergencelabs/code-editor-demo/issues"
   },
   "license": "MIT",
   "private": true,
