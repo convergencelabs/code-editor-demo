@@ -1,6 +1,5 @@
 import React from 'react';
 import Participant from './Participant.jsx';
-import {autobind} from 'core-decorators';
 import colorAssigner from '../../js/color-util.js';
 
 export default class ParticipantsList extends React.Component {
