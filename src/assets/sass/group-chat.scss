@@ -1,0 +1,60 @@
+@import 'variables.scss';
+
+.group-chat {
+  position: relative;
+  flex: 1;
+  background: #40423a;
+  display: flex;
+  flex-direction: column;
+
+  .chat-container {
+    flex: 1;
+    overflow: auto;
+
+    .chat-message-wrapper {
+      border-bottom: 2px solid #5b5b5b;
+
+      .chat-message {
+        font-family: $app-font;
+        font-size: 12px;
+        clear: both;
+        border-left: 3px solid;
+        color: white;
+        padding: 2px 5px 2px 5px;
+
+        .chat-message-time {
+          float: right;
+          font-size: 10px;
+        }
+
+        .chat-message-username {
+          font-size: 10px;
+        }
+
+        .chat-message-text {
+          margin-top: 4px;
+        }
+
+      }
+    }
+  }
+
+  .chat-input {
+    padding: 2px;
+    display: flex;
+    border-top: 1px solid $border-color;
+
+    textarea {
+      padding: 4px;
+      flex: 1;
+      background: #2F3129;
+      border: none;
+      color: lightgray;
+      resize: none;
+    }
+
+    textarea:focus {
+      outline: none;
+    }
+  }
+}

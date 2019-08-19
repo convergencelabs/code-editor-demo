@@ -1,0 +1,47 @@
+@import 'variables.scss';
+
+.banner {
+  background: #2F3129;
+  color: white;
+  font-family: $app-font;
+  font-size: 14px;
+  border-bottom: 1px solid $border-color;
+  padding: 2px;
+
+  .logo {
+    margin: 3px 10px 0 5px;
+    height: 20px;
+  }
+
+  .title {
+    position: relative;
+    top: -4px;
+  }
+
+  .tray {
+    padding-top: 6px;
+    float: right;
+
+    .user-icon {
+      margin: 0 5px;
+    }
+
+    .close-icon {
+      margin: 0 0 0 20px;
+      cursor: pointer;
+
+      &:hover {
+        color: $highlight-color;
+      }
+    }
+
+    .logout-icon {
+      margin: 0 10px 0 10px;
+      cursor: pointer;
+
+      &:hover {
+        color: $highlight-color;
+      }
+    }
+  }
+}

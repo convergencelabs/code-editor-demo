@@ -1,0 +1,75 @@
+@import 'variables.scss';
+
+.login-dialog {
+
+  input, label {
+    clear: left;
+  }
+
+  input {
+    background: lightgrey;
+    border: 1px solid darkgray;
+  }
+
+  border: 1px solid lightgrey;
+  padding: 10px;
+  background: #40423a;
+  color: white;
+  font-family: $app-font;
+
+  .login-title {
+    font-size: 18px;
+
+    img {
+      height: 30px;
+      vertical-align: middle;
+      margin-right: 20px;
+    }
+
+    span {
+      font-weight: bold;
+      position: relative;
+      top: 2px;
+    }
+
+    margin-bottom: 10px;
+  }
+
+  .login-contents {
+    label {
+      font-size: 14px;
+      margin-top: 15px;
+    }
+
+    label, input {
+      display: block;
+    }
+
+    input {
+      margin-top: 5px;
+      width: 300px;
+      padding: 3px;
+      &:focus {
+        outline: none;
+      }
+    }
+  }
+
+  .hint {
+    padding-top: 5px;
+    color: #999;
+    font-style: italic;
+    font-size: 0.75em;
+  }
+
+  .login-buttons {
+    text-align: right;
+    padding: 3px 0;
+    margin-top: 15px;
+  }
+
+  .login-message {
+    color: red;
+    font-size: 14px;
+  }
+}

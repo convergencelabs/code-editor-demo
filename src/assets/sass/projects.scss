@@ -1,0 +1,81 @@
+@import 'variables.scss';
+
+.projects-dialog {
+  border: 1px solid lightgrey;
+  padding: 10px;
+  background: #40423a;
+  color: white;
+  font-family: $app-font;
+
+  min-width: 250px;
+  min-height: 250px;
+
+  display: flex;
+  flex-direction: column;
+
+  .title {
+    font-size: 18px;
+
+    img {
+      height: 30px;
+      vertical-align: middle;
+      margin-right: 20px;
+    }
+
+    span {
+      font-weight: bold;
+      position: relative;
+      top: 2px;
+    }
+
+    i {
+      float: right;
+      font-size: 14px;
+      cursor: pointer;
+
+      &:hover {
+        color: $highlight-color;
+      }
+    }
+
+    margin-bottom: 10px;
+  }
+
+  .projects-list {
+    overflow: auto;
+    max-height: 350px;
+    flex: 1;
+    border: 1px solid lightgrey;
+    margin-bottom: 10px;
+    font-size: 14px;
+
+    div {
+      padding: 4px;
+      cursor: default;
+      user-select: none;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+    }
+
+    div.selected {
+      background: cornflowerblue;
+    }
+  }
+
+  .buttons {
+    text-align: right;
+  }
+}
+
+.new-project-dialog {
+  label {
+    display: block;
+    margin-bottom: 5px;
+  }
+
+  input {
+    width: 250px;
+    padding: 2px;
+  }
+}
