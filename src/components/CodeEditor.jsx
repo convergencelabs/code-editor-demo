@@ -5,6 +5,7 @@ import ProjectsDialog from './project/ProjectsDialog.jsx';
 import {closeAll} from '../actions/actionCreator';
 import {Convergence} from '@convergence/convergence';
 import PropTypes from 'prop-types';
+import { getUrlParam } from '../js/utils.js';
 
 export default class CodeEditor extends React.Component {
   static propTypes = {
@@ -14,21 +15,27 @@ export default class CodeEditor extends React.Component {
   constructor(props) {
     super(props);
 
-    const userMatch = window.location.search.match(/\?user=(\w+)/);
-    if (userMatch && userMatch.length > 1) {
-      Convergence.connectAnonymously(props.domainUrl, userMatch[1]).then(d => {
-        this.setState({domain: d});
-      });
-    }
-
     this.state = {
       domain: null,
       projectData: null
     };
   }
 
+  componentDidMount() {
+    this.tryAutoLogin();
+  }
+
   handleLogin = (domain) => {
     this.setState({domain});
+  }
+
+  tryAutoLogin = () => {
+    let username = getUrlParam('user');
+    if (username) {
+      Convergence.connectAnonymously(this.props.domainUrl, username).then(d => {
+        this.setState({domain: d});
+      });
+    }
   }
 
   handleClose = () => {

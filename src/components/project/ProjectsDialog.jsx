@@ -5,6 +5,7 @@ import ProjectsList from './ProjectsList.jsx';
 import NewProjectDialog from './NewProjectDialog.jsx';
 import ConfirmationDialog from '../util/ConfirmationDialog.jsx';
 import logo from "../../assets/img/cl_logo.png";
+import { getUrlParam } from '../../js/utils.js';
 
 // fixme abstract this to somewhere else.
 const PROJECT_COLLECTION_ID = "projects";
@@ -29,13 +30,23 @@ export default class ProjectsDialog extends React.Component {
       deleteProjectVisible: false
     };
 
-    this._loadProjects();
+    if (!this._checkForDesiredProject()) {
+      this._loadProjects();
+    }
+  }
+
+  _checkForDesiredProject() {
+    let modelId = getUrlParam('project');
+    if (modelId) {
+      return this.handleOpenProject(modelId);
+    }
+    return false;
   }
 
   _loadProjects() {
     this.props.modelService.query(`SELECT FROM ${PROJECT_COLLECTION_ID}`).then((result) => {
       // fixme we need some projections here so I can get back specific data.
-      const projects = result.map((model) => {
+      const projects = result.data.map((model) => {
         return {
           name: model.data.name,
           id: model.modelId

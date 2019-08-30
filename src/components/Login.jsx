@@ -91,7 +91,7 @@ export default class Login extends React.Component {
 
           </div>
           <div className="login-buttons">
-            <button className="app-button" disabled={!this.validate()} onClick={this.handleLogin}>Login</button>
+            <button className="app-button" disabled={!this.validate()} onClick={this.handleLogin}>Enter</button>
           </div>
           <div className="login-message">{this.state.message}</div>
         </div>

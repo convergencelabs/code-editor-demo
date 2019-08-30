@@ -1,6 +1,6 @@
 import {UserActions} from '../constants/ActionTypes';
 import {BaseStore} from './BaseStore';
-import {findChildParentId} from '../utils';
+import {findChildParentId} from '../js/utils';
 
 export default class TreeStore extends BaseStore {
   constructor(rtModel) {

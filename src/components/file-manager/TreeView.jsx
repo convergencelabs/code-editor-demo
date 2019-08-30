@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import {generateUUID} from '../../utils';
+import {generateUUID} from '../../js/utils';
 import {createFile, createFolder, cancelNewNode} from '../../actions/actionCreator';
 import Collapser from './Collapser.jsx';
 import InlineInput from './InlineInput.jsx';

@@ -1,5 +1,5 @@
 const CodeEditorConfig = {
-  CONVERGENCE_URL: 'http:/localhost:8080/convergence/default',
+  CONVERGENCE_URL: 'http://localhost:9080/convergence/default',
   ANONYMOUS_AUTH: true
 };
 

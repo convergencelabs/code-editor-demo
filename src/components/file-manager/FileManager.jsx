@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {addNewNode, deleteFile, deleteFolder} from '../../actions/actionCreator';
-import {isNodeFolder} from '../../utils';
+import {isNodeFolder} from '../../js/utils';
 import ActionButton from './ActionButton.jsx';
 import TreeView from './TreeView.jsx';
 
