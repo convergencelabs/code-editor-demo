@@ -1,16 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import {addNewNode, deleteFolder, renameFolder, selectNode} from '../../actions/actionCreator';
+import {addNewNode, renameFolder, selectNode, deleteFolder, deleteFile} from '../../actions/actionCreator';
 import RemoteFolderActionCreator from '../../actions/RemoteFolderActionCreator';
 import {FolderContextMenu} from './ContextMenu.jsx';
 import RenamableNode from './RenamableNode.jsx';
 import ConfirmationDialog from '../util/ConfirmationDialog.jsx';
+import { TREE_ROOT_ID } from '../../constants/tree';
 
 export default class FolderNode extends React.Component {
   static propTypes = {
     collapsed: PropTypes.bool,
     id: PropTypes.string.isRequired,
+    markedForDelete: PropTypes.bool,
     model: PropTypes.object.isRequired,
     onCollapse: PropTypes.func.isRequired,
     selected: PropTypes.bool,
@@ -26,6 +28,16 @@ export default class FolderNode extends React.Component {
       showContextMenu: false,
       showDeleteConfirm: false
     };
+  }
+
+  componentDidUpdate() {
+    if (this.props.markedForDelete && this.isEmpty()) {
+      deleteFile(this.props.id);
+    }
+  }
+
+  isEmpty() {
+    return this.props.model.get('children').length() === 0;
   }
 
   handleClick = () => {
@@ -71,8 +83,8 @@ export default class FolderNode extends React.Component {
   }
 
   handleDeleteFolderOk = () => {
-    deleteFolder(this.props.id);
     this.setState({showDeleteConfirm: false});
+    deleteFolder(this.props.id);
   }
 
   _createDeleteConfirm() {
@@ -103,6 +115,7 @@ export default class FolderNode extends React.Component {
           onSelectNewFile={this.handleNewFile} 
           onSelectNewFolder={this.handleNewFolder} 
           onSelectRename={this.handleRenameSelect} 
+          canDelete={this.props.id !== TREE_ROOT_ID}
         />
       );
     }
@@ -116,8 +129,11 @@ export default class FolderNode extends React.Component {
         onContextMenu={this.handleContextMenu}
       >
         <i className={iconClasses} />
-        <RenamableNode name={folderName} renaming={this.state.renaming} 
-          onCancel={this.handleRenameCancel} onComplete={this.handleRename} />
+        <RenamableNode 
+          name={folderName} 
+          renaming={this.state.renaming} 
+          onCancel={this.handleRenameCancel} 
+          onComplete={this.handleRename} />
         {contextMenu}
         {deleteConfirm}
       </div>

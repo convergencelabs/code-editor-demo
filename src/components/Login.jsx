@@ -78,7 +78,8 @@ export default class Login extends React.Component {
                 type="text"
                 value={this.state.username}
                 onChange={this.handleUsername}
-                onKeyDown={this.handleKeyDown}/>
+                onKeyDown={this.handleKeyDown}
+                autoFocus />
             </div>
             <div style={{display: this.state.anonymous ? "none" : "block"}}>
               <label>Password</label>

@@ -2,6 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './assets/sass/code-editor.scss';
 import CodeEditor from "./components/CodeEditor";
+import { LogLevel, Convergence } from '@convergence/convergence';
+
+Convergence.configureLogging({
+  root: LogLevel.DEBUG
+});
 
 if (typeof CodeEditorConfig !== "undefined") {
   const domainUrl = window.CodeEditorConfig.CONVERGENCE_URL;

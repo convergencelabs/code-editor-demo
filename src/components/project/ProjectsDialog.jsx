@@ -5,7 +5,7 @@ import ProjectsList from './ProjectsList.jsx';
 import NewProjectDialog from './NewProjectDialog.jsx';
 import ConfirmationDialog from '../util/ConfirmationDialog.jsx';
 import logo from "../../assets/img/cl_logo.png";
-import { getUrlParam } from '../../js/utils.js';
+import { getUrlParam } from '../../utils';
 
 // fixme abstract this to somewhere else.
 const PROJECT_COLLECTION_ID = "projects";

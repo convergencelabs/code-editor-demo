@@ -5,7 +5,7 @@ import ProjectsDialog from './project/ProjectsDialog.jsx';
 import {closeAll} from '../actions/actionCreator';
 import {Convergence} from '@convergence/convergence';
 import PropTypes from 'prop-types';
-import { getUrlParam } from '../js/utils.js';
+import { getUrlParam } from '../utils';
 
 export default class CodeEditor extends React.Component {
   static propTypes = {
@@ -63,7 +63,12 @@ export default class CodeEditor extends React.Component {
     Promise.all([
       domain.activities().join(model.modelId()).then(a => activity = a),
       domain.chat()
-        .create({id: model.modelId(), type: "room", membership: "public", ignoreExistsError: true})
+        .create({
+          id: model.modelId(), 
+          type: "room", 
+          membership: "public", 
+          ignoreExistsError: true
+        })
         .then(channelId => domain.chat().join(channelId))
         .then(c => chatRoom = c)
     ]).then(() => {

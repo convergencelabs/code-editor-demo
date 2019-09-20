@@ -10,6 +10,7 @@ import ConfirmationDialog from '../util/ConfirmationDialog.jsx';
 export default class FileNode extends React.Component {
   static propTypes = {
     id: PropTypes.string.isRequired,
+    markedForDelete: PropTypes.bool,
     model: PropTypes.object.isRequired,
     selected: PropTypes.bool,
   };
@@ -24,6 +25,12 @@ export default class FileNode extends React.Component {
       showContextMenu: false,
       showDeleteConfirm: false
     };
+  }
+
+  componentDidUpdate() {
+    if (this.props.markedForDelete) {
+      deleteFile(this.props.id);
+    }
   }
 
   componentWillUnmount() {

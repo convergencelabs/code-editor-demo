@@ -1,7 +1,11 @@
 import {UserActions} from '../constants/ActionTypes';
 import {BaseStore} from './BaseStore';
-import {findChildParentId} from '../js/utils';
+import {findChildParentId, isNodeFolder} from '../utils';
+import { TREE_ROOT_ID } from '../constants/tree';
 
+/**
+ * Fixme the data structure for this could be cleaned up / simplified
+ */
 export default class TreeStore extends BaseStore {
   constructor(rtModel) {
     super();
@@ -15,13 +19,11 @@ export default class TreeStore extends BaseStore {
     this.newNode = {};
   }
 
-  getNodes() {
-    return this.rtModel.elementAt(['tree', 'nodes']);
-  }
   getTreeState() {
     return {
       selectedId: this.selectedNode,
-      newNode: this.newNode
+      newNode: this.newNode,
+      folderMarkedForDeletion: this.folderMarkedForDeletion
     };
   }
 
@@ -32,16 +34,16 @@ export default class TreeStore extends BaseStore {
         this.createFile(payload.id, payload.name, payload.parentId);
         break;
       case UserActions.DELETE_FILE:
-        this.deleteFile(payload.id);
+        this.deleteNode(payload.id);
+        break;
+      case UserActions.DELETE_FOLDER:
+        this.folderMarkedForDeletion = payload.id;
         break;
       case UserActions.RENAME_FILE: 
         this.renameFile(payload.id, payload.newName);
         break;
       case UserActions.CREATE_FOLDER:
         this.createFolder(payload.id, payload.name, payload.parentId);
-        break;
-      case UserActions.DELETE_FOLDER:
-        this.deleteFolder(payload.id);
         break;
       case UserActions.RENAME_FOLDER:
         this.renameFolder(payload.id, payload.newName);
@@ -64,67 +66,58 @@ export default class TreeStore extends BaseStore {
   }
 
   createFile(newId, name, parentId) {
-    const nodes = this.rtModel.elementAt(['tree', 'nodes']);
+    const nodes = this.getNodes();
     nodes.set(newId, {name: name});
     const parentFolder = this.rtModel.elementAt(['tree', 'nodes', parentId, 'children']);
     parentFolder.push(newId);
   }
-  deleteFile(id) {  
-    const nodes = this.rtModel.elementAt(['tree', 'nodes']);
-    const parent = findChildParentId(nodes, id);
-    const children = nodes.get(parent).get('children');
-    children.forEach((childId, index) => { 
-      if(childId.value() === id) {
-        children.remove(index);
-      }
-    });
-    this.rtModel.elementAt(['tree', 'nodes']).remove(id);
-
-    if(this.selectedNode === id) {
-      delete this.selectedNode;
-    }
-  }
   renameFile(id, newName) {
-    const rtFile = this.rtModel.elementAt(['tree', 'nodes', id]);
+    const rtFile = this.getNode(id);
     rtFile.set('name', newName);
   }
 
   createFolder(newId, name, parentId) {
-    const nodes = this.rtModel.elementAt(['tree', 'nodes']);
+    const nodes = this.getNodes();
     nodes.set(newId, {name: name, children: []});
     nodes.elementAt([parentId, 'children']).push(newId);
   }
-  deleteFolder(id) {
-    const nodes = this.rtModel.elementAt(['tree', 'nodes']);
-    const parent = findChildParentId(nodes, id);
-    const children = nodes.get(parent).get('children');
 
-    // fixme in the api, we should have some and find
-    children.forEach((childId, index) => { 
-      if(childId.value() === id) {
-        children.remove(index);
-      }
-    });
+  renameFolder(id, newName) {
+    const rtFolder = this.getNode(id);
+    rtFolder.set('name', newName);
+  }
+
+  deleteNode(id) { 
+    const nodes = this.getNodes();
+    const parent = findChildParentId(nodes, id);
+
+    // delete the parent's reference to this node 
+    const parentsChildren = nodes.get(parent).get('children');
+    const childIndex = parentsChildren.findIndex(childId => childId.value() === id);
+    parentsChildren.remove(childIndex);
+
+    // delete the node 
     nodes.remove(id);
 
     if(this.selectedNode === id) {
       delete this.selectedNode;
     }
-
-    // fixme I Don't think we remove the actual file. or the model.
-  }
-  renameFolder(id, newName) {
-    const rtFolder = this.rtModel.elementAt(['tree', 'nodes', id]);
-    rtFolder.set('name', newName);
   }
 
   addNewNode(type, nodeId) {
-    const nodes = this.rtModel.elementAt(['tree', 'nodes']);
-    const rtNode = nodes.get(nodeId);
+    const nodes = this.getNodes();
+    nodeId = nodeId || TREE_ROOT_ID;
     let parentFolderId = nodeId;
-    if(!rtNode.hasKey('children')) {
+    if(!isNodeFolder(nodes, nodeId)) {
       parentFolderId = findChildParentId(nodes, nodeId);
     } 
     this.newNode = {type, folderId: parentFolderId};
+  }
+
+  getNodes() {
+    return this.rtModel.elementAt(['tree', 'nodes']);
+  }
+  getNode(id) {
+    return this.rtModel.elementAt(['tree', 'nodes', id]);
   }
 }

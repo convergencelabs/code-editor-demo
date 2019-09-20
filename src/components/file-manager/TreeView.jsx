@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import {generateUUID} from '../../js/utils';
+import {generateUUID} from '../../utils';
 import {createFile, createFolder, cancelNewNode} from '../../actions/actionCreator';
 import Collapser from './Collapser.jsx';
 import InlineInput from './InlineInput.jsx';
@@ -14,6 +14,7 @@ export default class TreeView extends React.Component {
     defaultCollapsed: PropTypes.bool,
     folder: PropTypes.object.isRequired,
     folderId: PropTypes.string.isRequired,
+    markedForDelete: PropTypes.bool,
     treeNodes: PropTypes.object.isRequired,
     treeState: PropTypes.object.isRequired,
   };
@@ -32,6 +33,10 @@ export default class TreeView extends React.Component {
 
   handleNewChildCancel = () => {
     cancelNewNode(this.props.folderId);
+  }
+
+  isMarkedForDelete = () => {
+    return this.props.markedForDelete || this.props.treeState.folderMarkedForDeletion === this.props.folderId;
   }
 
   handleEntityNamed = (name) => {
@@ -55,6 +60,7 @@ export default class TreeView extends React.Component {
             defaultCollapsed={this.props.defaultCollapsed} 
             folder={node} 
             folderId={id}
+            markedForDelete={this.isMarkedForDelete()}
             treeNodes={this.props.treeNodes}
             key={id}
             treeState={this.props.treeState} />
@@ -65,6 +71,7 @@ export default class TreeView extends React.Component {
             id={id}
             key={id}
             model={node}
+            markedForDelete={this.isMarkedForDelete()}
             selected={this.props.treeState.selectedId === id} />
         );
       }
@@ -101,6 +108,7 @@ export default class TreeView extends React.Component {
           <FolderNode 
             collapsed={collapsed}
             id={folderId}
+            markedForDelete={this.isMarkedForDelete()}
             model={folder} 
             onCollapse={this.handleCollapserClick}
             selected={treeState.selectedId === folderId}

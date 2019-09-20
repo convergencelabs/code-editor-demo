@@ -33,7 +33,7 @@ export function FolderContextMenu(props) {
       <div className="context-menu" onClick={props.onHide}>
         <ul>
           <li onClick={props.onSelectRename}>Rename...</li>
-          <li onClick={props.onSelectDelete}>Delete folder</li>
+          {props.canDelete ? <li onClick={props.onSelectDelete}>Delete folder</li> : null}
           <li onClick={props.onSelectNewFile}>New file</li>
           <li onClick={props.onSelectNewFolder}>New folder</li>
         </ul>
@@ -42,6 +42,7 @@ export function FolderContextMenu(props) {
   );
 }
 FolderContextMenu.propTypes = {
+  canDelete: PropTypes.bool,
   onHide: PropTypes.func.isRequired,
   onSelectDelete: PropTypes.func.isRequired,
   onSelectNewFile: PropTypes.func.isRequired,

@@ -1,9 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {addNewNode, deleteFile, deleteFolder} from '../../actions/actionCreator';
-import {isNodeFolder} from '../../js/utils';
+import {isNodeFolder} from '../../utils';
 import ActionButton from './ActionButton.jsx';
 import TreeView from './TreeView.jsx';
+import { TREE_ROOT_ID } from '../../constants/tree';
+import ConfirmationDialog from '../util/ConfirmationDialog';
 
 export default class FileManager extends React.Component {
   static propTypes = {
@@ -14,32 +16,59 @@ export default class FileManager extends React.Component {
   constructor(props) {
     super(props);
 
-    this.rootId = 'root';
+    this.rootId = TREE_ROOT_ID;
+
+    this.state = {
+      showDeleteConfirm: false
+    };
   }
 
   handleNewFile = () => {
-    if(this.props.treeState.selectedId) {
-      addNewNode('file', this.props.treeState.selectedId);
-    }
+    addNewNode('file', this.props.treeState.selectedId);
   }
 
   handleNewFolder = () => {
-    if(this.props.treeState.selectedId) {
-      addNewNode('folder', this.props.treeState.selectedId);
-    }
+    addNewNode('folder', this.props.treeState.selectedId);
   }
-  handleDeleteNode = () => {
+
+  handleDelete = () => {
+    this.setState({showDeleteConfirm: true});
+  }
+
+  handleDeleteFolderCancel = () => {
+    this.setState({showDeleteConfirm: false});
+  }
+
+  handleDeleteFolderOk = () => {
     const id = this.props.treeState.selectedId;
     if(isNodeFolder(this.props.treeNodes, id)) {
       deleteFolder(id);
     } else {
       deleteFile(id);
     }
+    this.setState({showDeleteConfirm: false});
   }
+
+  renderConfirmDeleteNode() {
+    if (this.state.showDeleteConfirm) {
+      const selectedId = this.props.treeState.selectedId;
+      const folder = this.props.treeNodes.get(selectedId);
+      const nodeName = folder.get('name').value();
+      const title = "Confirm Delete";
+      const message = `Delete folder "${nodeName}"?`;
+      return (<ConfirmationDialog
+        onCancel={this.handleDeleteFolderCancel}
+        onOk={this.handleDeleteFolderOk}
+        title={title}
+        message={message}
+      />);
+    }
+  }
+
   render() {
     const folder = this.props.treeNodes.get(this.rootId);
     const selectedId = this.props.treeState.selectedId;
-    const deleteBtnStyle = {display: !selectedId || selectedId === 'root' ? 'none' : 'inline'};
+    const deleteBtnStyle = {display: !selectedId || selectedId === this.rootId ? 'none' : 'inline'};
 
     return (
       <div className="file-manager">
@@ -56,7 +85,7 @@ export default class FileManager extends React.Component {
             title="New folder" />
           <button 
             className="icon-button"
-            onClick={this.handleDeleteNode} 
+            onClick={this.handleDelete} 
             style={deleteBtnStyle}
             title="Delete selected"
             type="button" 
@@ -71,6 +100,7 @@ export default class FileManager extends React.Component {
             folderId={this.rootId}
             {...this.props} />
         </div>
+        { this.renderConfirmDeleteNode() }
       </div>
     );
   }
