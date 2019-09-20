@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {addNewNode, deleteFile, deleteFolder} from '../../actions/actionCreator';
+import { addNewNode, deleteFile, markFolderForDelete } from '../../actions/actionCreator';
 import {isNodeFolder} from '../../utils';
 import ActionButton from './ActionButton.jsx';
 import TreeView from './TreeView.jsx';
@@ -42,7 +42,7 @@ export default class FileManager extends React.Component {
   handleDeleteFolderOk = () => {
     const id = this.props.treeState.selectedId;
     if(isNodeFolder(this.props.treeNodes, id)) {
-      deleteFolder(id);
+      markFolderForDelete(id);
     } else {
       deleteFile(id);
     }

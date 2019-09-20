@@ -34,9 +34,10 @@ export default class TreeStore extends BaseStore {
         this.createFile(payload.id, payload.name, payload.parentId);
         break;
       case UserActions.DELETE_FILE:
+      case UserActions.DELETE_FOLDER:
         this.deleteNode(payload.id);
         break;
-      case UserActions.DELETE_FOLDER:
+      case UserActions.MARK_FOLDER_FOR_DELETION:
         this.folderMarkedForDeletion = payload.id;
         break;
       case UserActions.RENAME_FILE: 

@@ -40,6 +40,18 @@ export const createFolder = (id, name, parentId) => {
     payload: {id, name, parentId}
   });
 };
+
+// rather than iterating through all a node's children 
+// and deleting them as well, which would require 
+// additional dispatches (which flux doesn't allow),
+// we simply "mark" them for deletion which cascades
+// to all parent nodes.  then nodes delete themselves
+export const markFolderForDelete = (id) => {
+  appDispatcher.dispatch({
+    type: UserActions.MARK_FOLDER_FOR_DELETION, 
+    payload: {id}
+  });
+};
 export const deleteFolder = (id) => {
   appDispatcher.dispatch({
     type: UserActions.DELETE_FOLDER, 

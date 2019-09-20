@@ -69,8 +69,12 @@ export default class EditorsStore extends BaseStore {
         });
         break;
       case UserActions.DELETE_FILE:
-        this.removeEditor(this.getEditor(payload.id));
-        this.emitChange();
+        this.deleteModel(payload.id).then(() => {
+          const editor = this.getEditor(payload.id);
+          this.removeEditor(editor);
+        }).then(() => {
+          this.emitChange();
+        });
         break;
       case UserActions.RENAME_FILE:
         if (this.setTabTitle(payload.id, payload.newName)) {
@@ -151,7 +155,12 @@ export default class EditorsStore extends BaseStore {
 
     if (index >= 0) {
       if (!editor.historical) {
-        editor.model.close();
+        console.log('closing model', editor.modelId);
+        try {
+          editor.model.close();
+        } catch (e) {
+          console.log('caught', e);
+        }
       }
 
       this.editors.splice(index, 1);

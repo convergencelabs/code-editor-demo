@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import {addNewNode, renameFolder, selectNode, deleteFolder, deleteFile} from '../../actions/actionCreator';
+import { addNewNode, renameFolder, selectNode, deleteFolder, markFolderForDelete } from '../../actions/actionCreator';
 import RemoteFolderActionCreator from '../../actions/RemoteFolderActionCreator';
 import {FolderContextMenu} from './ContextMenu.jsx';
 import RenamableNode from './RenamableNode.jsx';
@@ -32,7 +32,7 @@ export default class FolderNode extends React.Component {
 
   componentDidUpdate() {
     if (this.props.markedForDelete && this.isEmpty()) {
-      deleteFile(this.props.id);
+      deleteFolder(this.props.id);
     }
   }
 
@@ -84,7 +84,7 @@ export default class FolderNode extends React.Component {
 
   handleDeleteFolderOk = () => {
     this.setState({showDeleteConfirm: false});
-    deleteFolder(this.props.id);
+    markFolderForDelete(this.props.id);
   }
 
   _createDeleteConfirm() {
