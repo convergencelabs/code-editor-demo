@@ -1,6 +1,0 @@
-[template]
-src   = "code-editor-config.js"
-dest  = "/usr/share/nginx/html/code-editor-config.js"
-owner = "root"
-group = "root"
-mode  = "0644"
