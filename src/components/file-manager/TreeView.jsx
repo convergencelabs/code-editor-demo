@@ -70,7 +70,7 @@ export default class TreeView extends React.Component {
           <FileNode 
             id={id}
             key={id}
-            model={node}
+            treeNode={node}
             markedForDelete={this.isMarkedForDelete()}
             selected={this.props.treeState.selectedId === id} />
         );

@@ -11,15 +11,15 @@ export default class FileNode extends React.Component {
   static propTypes = {
     id: PropTypes.string.isRequired,
     markedForDelete: PropTypes.bool,
-    model: PropTypes.object.isRequired,
     selected: PropTypes.bool,
+    treeNode: PropTypes.object.isRequired,
   };
 
   constructor(props) {
     super(props);
 
-    this.remoteActionCreator = new RemoteFileActionCreator(props.id, props.model);
-    this.remoteActionCreator.listenFor(['changed']);
+    this.remoteActionCreator = new RemoteFileActionCreator(props.id, props.treeNode);
+    this.remoteActionCreator.listenFor(['changed', 'deleted']);
 
     this.state = {
       showContextMenu: false,
@@ -86,7 +86,7 @@ export default class FileNode extends React.Component {
 
   _createDeleteConfirm() {
     if (this.state.showDeleteConfirm) {
-      const nodeName = this.props.model.get('name').value();
+      const nodeName = this.props.treeNode.get('name').value();
       const title = "Confirm Delete";
       const message = `Delete file "${nodeName}"?`;
       return (<ConfirmationDialog
@@ -115,7 +115,7 @@ export default class FileNode extends React.Component {
       );
     }
 
-    const nodeName = this.props.model.get('name').value();
+    const nodeName = this.props.treeNode.get('name').value();
 
     return (
       <div 
@@ -125,8 +125,12 @@ export default class FileNode extends React.Component {
         onDoubleClick={this.handleOpen}
       >
         <i className="fa fa-file-code-o" /> 
-        <RenamableNode name={nodeName} renaming={this.state.renaming} 
-          onCancel={this.handleRenameCancel} onComplete={this.handleRename} />
+        <RenamableNode 
+          name={nodeName} 
+          renaming={this.state.renaming} 
+          onCancel={this.handleRenameCancel} 
+          onComplete={this.handleRename} 
+        />
         {contextMenu}
         {deleteConfirm}
       </div>

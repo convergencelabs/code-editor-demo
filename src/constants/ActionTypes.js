@@ -18,5 +18,6 @@ export const UserActions = {
 
 export const RemoteActions = {
   FILE_CHANGED: 'FILE_CHANGED',
-  FOLDER_CHANGED: 'FOLDER_CHANGED'
+  FOLDER_CHANGED: 'FOLDER_CHANGED',
+  FILE_DELETED: 'FILE_DELETED'
 };

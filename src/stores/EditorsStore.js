@@ -1,4 +1,4 @@
-import {UserActions} from '../constants/ActionTypes';
+import {UserActions, RemoteActions} from '../constants/ActionTypes';
 import {BaseStore} from './BaseStore';
 import EditorData from '../editorData';
 
@@ -89,6 +89,14 @@ export default class EditorsStore extends BaseStore {
         });
         break;
       }
+      case RemoteActions.FILE_DELETED: {
+        const editor = this.getEditor(payload.id);
+        if (editor) {
+          this.removeEditor(editor);
+          this.emitChange();
+        }
+        break;
+      }
       default:
     }
   }
@@ -155,12 +163,7 @@ export default class EditorsStore extends BaseStore {
 
     if (index >= 0) {
       if (!editor.historical) {
-        console.log('closing model', editor.modelId);
-        try {
-          editor.model.close();
-        } catch (e) {
-          console.log('caught', e);
-        }
+        editor.model.close();
       }
 
       this.editors.splice(index, 1);

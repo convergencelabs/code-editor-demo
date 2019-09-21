@@ -1,11 +1,12 @@
 import {RemoteActions} from '../constants/ActionTypes';
 import appDispatcher from '../appDispatcher';
+import { RealTimeObject } from '@convergence/convergence';
 
 export default class RemoteFileActionCreator {
 
-  constructor(fileId, model) {
+  constructor(fileId, treeNode) {
     this.fileId = fileId;
-    this.fileModel = model;
+    this.rtTreeNode = treeNode;
     this.listeningOn = [];
   }
 
@@ -14,7 +15,10 @@ export default class RemoteFileActionCreator {
       this.listeningOn.push(action);
       switch(action) {
         case 'changed':
-          this.fileModel.on('model_changed', this.fileChanged);
+          this.rtTreeNode.on(RealTimeObject.Events.MODEL_CHANGED, this.fileChanged);
+          break;
+        case 'deleted':
+          this.rtTreeNode.on(RealTimeObject.Events.DETACHED, this.fileDeleted);
           break;
         default:
       }
@@ -27,12 +31,24 @@ export default class RemoteFileActionCreator {
       payload: {id: this.fileId}
     });
   };
+  
+  fileDeleted = () => {
+    // this will also be fired on the client that did the 
+    // deletion, so it's not actually a remote event and 
+    // we can ignore it.
+    if (!appDispatcher.isDispatching()) {
+      appDispatcher.dispatch({
+        type: RemoteActions.FILE_DELETED,
+        payload: {id: this.fileId}
+      });
+    }
+  }
 
   cleanUp() {
     this.listeningOn.forEach(action => {
       switch(action) {
         case 'changed':
-          this.fileModel.off('model_changed', this.fileChanged);
+          this.rtTreeNode.off('model_changed', this.fileChanged);
           break;
         default:
       }
