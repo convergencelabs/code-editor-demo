@@ -1,5 +1,11 @@
 @import 'variables.scss';
 
+/* https://www.fontsquirrel.com/license/camingocode */
+@font-face {
+  font-family: 'CamingoCode';
+  src: url('../fonts/CamingoCode-Regular.ttf');
+}
+
 $fa-font-path: "../../../node_modules/font-awesome/fonts";
 @import "../../../node_modules/font-awesome/scss/font-awesome";
 
@@ -11,12 +17,6 @@ body {
   left: 0;
   right: 0;
   margin: 0;
-}
-
-/* https://www.fontsquirrel.com/license/camingocode */
-@font-face {
-  font-family: 'CamingoCode';
-  src: url('../fonts/CamingoCode-Regular.ttf');
 }
 
 .popover-menu {
