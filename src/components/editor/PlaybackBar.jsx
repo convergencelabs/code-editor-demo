@@ -123,7 +123,7 @@ export default class PlaybackBar extends React.Component {
           </div>
         </div>
         <Rcslider
-          min={0}
+          min={1}
           max={this.state.maxVersion}
           step={1}
           tipFormatter={null}

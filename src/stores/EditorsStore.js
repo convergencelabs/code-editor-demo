@@ -163,7 +163,9 @@ export default class EditorsStore extends BaseStore {
 
     if (index >= 0) {
       if (!editor.historical) {
-        editor.model.close();
+        if (editor.model.isOpen()) {
+          editor.model.close();
+        }
       }
 
       this.editors.splice(index, 1);
