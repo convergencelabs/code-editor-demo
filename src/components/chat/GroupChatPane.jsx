@@ -44,19 +44,6 @@ export default class GroupChatPane extends React.Component {
   }
 
   handleChatSubmit = (message) => {
-    const messages = this.state.messages.slice(0);
-    messages.push(
-      <ChatMessage
-        username={this.props.displayName}
-        color={colorAssigner.getColorAsHex(this.props.domain.session().sessionId())}
-        message={message}
-        timestamp={new Date()}
-        local
-        key={this.state.messages.length}
-      />
-    );
-
-    this.setState({messages: messages});
     this.props.chatRoom.send(message);
   }
 

@@ -1,6 +1,6 @@
 
 # Convergence Code Editor Demo 
-This project provides a mockup of collaborative code editor using the [React](https://reactjs.org/), the [Ace Editor](https://ace.c9.io) and Convergence for persistence and realtime collaboration. 
+This project provides a mock up of collaborative code editor using the [React](https://reactjs.org/), the [Ace Editor](https://ace.c9.io) and Convergence for persistence and realtime collaboration. 
 
 *Note: This is merely a demonstration, and not intended to be a full fledged / real code editor.*
 
