@@ -33,7 +33,7 @@ export default class GroupChatPane extends React.Component {
     messages.push(
       <ChatMessage
         username={event.user.displayName}
-        color={colorAssigner.getColorAsHex(event.sessionId)}
+        color={colorAssigner.getColorAsHex(event.user.username)}
         message={event.message}
         timestamp={new Date(event.timestamp)}
         key={this.state.messages.length}
