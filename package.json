@@ -35,7 +35,7 @@
     "flux": "3.0.0",
     "font-awesome": "4.6.3",
     "moment": "2.24.0",
-    "node-sass": "4.13.0",
+    "node-sass": "4.13.1",
     "prop-types": "^15.7.2",
     "rc-dialog": "7.3.0",
     "rc-slider": "8.6.7",
