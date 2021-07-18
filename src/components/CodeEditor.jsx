@@ -60,8 +60,10 @@ export default class CodeEditor extends React.Component {
     let activity = null;
     let chatRoom = null;
 
+    const options = {autoCreate:{ephemeral: true, worldPermissions: ["join", "view_state", "set_state"] }};
+
     Promise.all([
-      domain.activities().join(model.modelId()).then(a => activity = a),
+      domain.activities().join("code-editor", model.modelId(), options).then(a => activity = a),
       domain.chat()
         .create({
           id: model.modelId(), 
